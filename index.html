@@ -78,6 +78,17 @@ h1{
   font-size:10px;
   color:#556070;
   font-weight:600;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transform:translateY(-6px);
+  transition:max-height 0.35s ease, opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+}
+
+.info-total.visible{
+  max-height:20px;
+  opacity:1;
+  transform:translateY(0);
 }
 
 .mode{
@@ -308,7 +319,9 @@ function cari(){
   if(!input){
     resultDiv.innerHTML='<div class="empty"><div class="empty-icon">⌨</div>mulai ketik huruf</div>'
     document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
-    document.getElementById('infoTotal').textContent=''
+    const t=document.getElementById('infoTotal')
+    t.classList.remove('visible')
+    setTimeout(()=>{t.textContent=''},350)
     return
   }
 
@@ -328,7 +341,9 @@ function render(){
   const resultDiv=document.getElementById('result')
   const total=hasil.length
   document.getElementById('info').textContent=total.toLocaleString()+' kata'
-  document.getElementById('infoTotal').textContent='total '+database.length.toLocaleString()+' kata'
+  const t=document.getElementById('infoTotal')
+  t.textContent='total '+database.length.toLocaleString()+' kata'
+  requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('visible')))
 
   if(!total){
     resultDiv.innerHTML='<div class="empty"><div class="empty-icon">∅</div>tidak ditemukan</div>'
