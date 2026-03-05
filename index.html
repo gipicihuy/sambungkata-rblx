@@ -236,11 +236,11 @@ tr.divider td{
 
 .toast-roblox{
   pointer-events:auto;
-  background:#111c2b;
-  border:1px solid rgba(0,230,118,0.18);
-  border-left:3px solid var(--green);
+  background:#1a0f0f;
+  border:1px solid rgba(255,61,87,0.25);
+  border-left:3px solid var(--red);
   border-radius:10px;
-  box-shadow:0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,230,118,0.07);
+  box-shadow:0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,61,87,0.07);
   color:var(--text);
   font-family:'Plus Jakarta Sans',sans-serif;
   min-width:260px;
@@ -251,7 +251,7 @@ tr.divider td{
 
 .toast-roblox .toast-header{
   background:transparent;
-  border-bottom:1px solid rgba(255,255,255,0.06);
+  border-bottom:1px solid rgba(255,61,87,0.1);
   padding:9px 12px 8px;
   color:#fff;
   font-size:12px;
@@ -263,19 +263,19 @@ tr.divider td{
   width:16px;
   height:16px;
   border-radius:4px;
-  background:var(--green);
+  background:var(--red);
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  font-size:9px;
-  color:#000;
+  font-size:10px;
+  color:#fff;
   font-weight:800;
   margin-right:7px;
   flex-shrink:0;
 }
 
 .toast-roblox .toast-header .me-auto{
-  color:#c8d8e8;
+  color:#e8c8c8;
 }
 
 .toast-roblox .btn-close{
@@ -288,13 +288,13 @@ tr.divider td{
 .toast-roblox .toast-body{
   padding:9px 12px 11px;
   font-size:12px;
-  color:#94a3b8;
+  color:#b89090;
   font-weight:600;
   line-height:1.55;
 }
 
 .toast-roblox .toast-body strong{
-  color:var(--green);
+  color:#ff6b7a;
   font-weight:800;
 }
 </style>
@@ -304,14 +304,13 @@ tr.divider td{
 <div class="toast-container" id="toastContainer">
   <div id="toastRoblox" class="toast toast-roblox align-items-center" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="6000">
     <div class="toast-header">
-      <span class="icon-roblox">R</span>
-      <span class="me-auto">Info Roblox</span>
-      <small class="text-muted me-2" style="font-size:10px;color:#4a6070!important;">sambung kata</small>
+      <span class="icon-roblox">!</span>
+      <span class="me-auto">Warning</span>
+      <small class="text-muted me-2" style="font-size:10px;color:#7a5050!important;">note</small>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
     <div class="toast-body">
-      ⚠️ <strong>Tidak semua kata valid</strong> di map Roblox.<br>
-      Coba beberapa pilihan — ada yang mungkin <strong>ditolak</strong> game-nya.
+      note: tidak semua kata yang disini masuk di map roblox <strong>Sambung Kata</strong>
     </div>
   </div>
 </div>
