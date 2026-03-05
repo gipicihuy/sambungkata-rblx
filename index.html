@@ -236,51 +236,49 @@ tr.divider td{
 
 .toast-roblox{
   pointer-events:auto;
-  background:#1a0f0f;
-  border:1px solid rgba(255,61,87,0.25);
-  border-left:3px solid var(--red);
-  border-radius:10px;
-  box-shadow:0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,61,87,0.07);
-  color:var(--text);
+  background:#2d1b1b;
+  border:1px solid #5c2e2e;
+  border-left:3px solid #d9534f;
+  border-radius:8px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.4);
+  color:#f0d9d9;
   font-family:'Plus Jakarta Sans',sans-serif;
   min-width:260px;
   max-width:340px;
   padding:0;
-  backdrop-filter:blur(12px);
 }
 
 .toast-roblox .toast-header{
   background:transparent;
-  border-bottom:1px solid rgba(255,61,87,0.1);
+  border-bottom:1px solid #3d2222;
   padding:9px 12px 8px;
-  color:#fff;
+  color:#f0d9d9;
   font-size:12px;
   font-weight:700;
-  letter-spacing:0.2px;
 }
 
 .toast-roblox .toast-header .icon-roblox{
   width:16px;
   height:16px;
-  border-radius:4px;
-  background:var(--red);
+  border-radius:3px;
+  background:#d9534f;
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  font-size:10px;
+  font-size:11px;
   color:#fff;
-  font-weight:800;
+  font-weight:900;
   margin-right:7px;
   flex-shrink:0;
 }
 
 .toast-roblox .toast-header .me-auto{
-  color:#e8c8c8;
+  color:#f0d9d9;
 }
 
 .toast-roblox .btn-close{
   filter:invert(1);
-  opacity:0.4;
+  opacity:0.5;
   width:10px;
   height:10px;
 }
@@ -288,14 +286,14 @@ tr.divider td{
 .toast-roblox .toast-body{
   padding:9px 12px 11px;
   font-size:12px;
-  color:#b89090;
-  font-weight:600;
+  color:#c9a8a8;
+  font-weight:500;
   line-height:1.55;
 }
 
 .toast-roblox .toast-body strong{
-  color:#ff6b7a;
-  font-weight:800;
+  color:#f0d9d9;
+  font-weight:700;
 }
 </style>
 </head>
@@ -306,7 +304,6 @@ tr.divider td{
     <div class="toast-header">
       <span class="icon-roblox">!</span>
       <span class="me-auto">Warning</span>
-      <small class="text-muted me-2" style="font-size:10px;color:#7a5050!important;">note</small>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
     <div class="toast-body">
