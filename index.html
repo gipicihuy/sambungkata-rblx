@@ -52,9 +52,31 @@ h1{
   color:#fff;
 }
 
+.dev-tag{
+  font-size:10px;
+  font-weight:700;
+  margin-top:2px;
+  letter-spacing:0.3px;
+  color:var(--green);
+  opacity:0.85;
+}
+
+.info-block{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:3px;
+}
+
 .info{
   font-size:12px;
   color:#cbd5e1;
+  font-weight:600;
+}
+
+.info-total{
+  font-size:10px;
+  color:#556070;
   font-weight:600;
 }
 
@@ -196,9 +218,12 @@ tr.divider td{
   <div class="header">
     <div>
       <h1>Sambung Kata</h1>
-      <div style="font-size:10px;color:#556070;font-weight:600;margin-top:1px;">by Givy</div>
+      <div class="dev-tag">by Givy</div>
     </div>
-    <div class="info" id="info">memuat...</div>
+    <div class="info-block">
+      <div class="info" id="info">memuat...</div>
+      <div class="info-total" id="infoTotal"></div>
+    </div>
   </div>
 
   <div class="mode">
@@ -254,12 +279,19 @@ function lowerBound(arr,target){
   return l
 }
 
+function updateInfoTotal(){
+  const totalEl=document.getElementById('infoTotal')
+  if(database.length>0){
+    totalEl.textContent='total '+database.length.toLocaleString()+' kata'
+  }
+}
+
 fetch('kbbi.json')
 .then(r=>r.json())
 .then(data=>{
-  // Membersihkan data: hapus spasi luar, hapus duplikat, hapus string kosong
   database=[...new Set(data.map(k=>k.trim()).filter(k=>k.length>0))].sort()
   document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
+  updateInfoTotal()
 })
 
 function setMode(m){
@@ -276,6 +308,7 @@ function cari(){
   if(!input){
     resultDiv.innerHTML='<div class="empty"><div class="empty-icon">⌨</div>mulai ketik huruf</div>'
     document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
+    document.getElementById('infoTotal').textContent=''
     return
   }
 
@@ -295,6 +328,7 @@ function render(){
   const resultDiv=document.getElementById('result')
   const total=hasil.length
   document.getElementById('info').textContent=total.toLocaleString()+' kata'
+  document.getElementById('infoTotal').textContent='total '+database.length.toLocaleString()+' kata'
 
   if(!total){
     resultDiv.innerHTML='<div class="empty"><div class="empty-icon">∅</div>tidak ditemukan</div>'
