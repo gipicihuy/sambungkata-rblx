@@ -30,13 +30,16 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .mode button.active{background:var(--green);color:#000;}
 input{width:100%;padding:9px 12px;font-size:16px;font-weight:700;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:#fff;outline:none;}
 input:focus{border-color:var(--green);}
-.legend{display:flex;gap:12px;margin-top:8px;font-size:9px;color:var(--subtext);text-transform:uppercase;align-items:center;}
-.legend span{display:flex;align-items:center;gap:4px;line-height:1;}
-.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block;vertical-align:middle;}
-.dot.h1{background:var(--red);}.dot.h2{background:var(--orange);}.dot.h3{background:var(--yellow);}
+input:disabled{opacity:0.45;cursor:not-allowed;}
 .result{flex:1;overflow-y:auto;padding:6px 0 80px;display:flex;flex-direction:column;}
 .result::-webkit-scrollbar{width:3px;}
 .result::-webkit-scrollbar-thumb{background:var(--muted);border-radius:10px;}
+
+/* loading bar */
+.loading-bar-wrap{height:2px;background:transparent;flex-shrink:0;overflow:hidden;}
+.loading-bar{height:2px;width:0%;background:var(--green);transition:width 0.4s ease;box-shadow:0 0 8px rgba(0,230,118,0.6);}
+.loading-bar.indeterminate{width:40%;animation:indeterminate 1.2s ease-in-out infinite;}
+@keyframes indeterminate{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
 
 /* AWALAN table */
 table{width:100%;border-collapse:collapse;}
@@ -54,54 +57,13 @@ tr.divider td{border-top:1px solid var(--border);}
 
 /* AKHIRAN grouped grid */
 .alpha-section{padding:0 0 4px;}
+.alpha-header{display:flex;align-items:center;gap:10px;padding:10px 14px 9px;background:rgba(0,230,118,0.05);border-top:2px solid rgba(0,230,118,0.25);border-bottom:1px solid rgba(0,230,118,0.1);}
+.alpha-letter{font-size:15px;font-weight:800;color:#000;background:var(--green);border-radius:7px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:-0.5px;box-shadow:0 0 10px rgba(0,230,118,0.3);}
+.alpha-count{font-size:11px;color:var(--green);font-weight:700;margin-left:auto;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.2);border-radius:5px;padding:2px 8px;}
 
-/* === HEADER KELOMPOK HURUF === */
-.alpha-header{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 14px 9px;
-  background:rgba(0,230,118,0.05);
-  border-top:2px solid rgba(0,230,118,0.25);
-  border-bottom:1px solid rgba(0,230,118,0.1);
-}
-.alpha-letter{
-  font-size:15px;
-  font-weight:800;
-  color:#000;
-  background:var(--green);
-  border-radius:7px;
-  width:34px;
-  height:34px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-shrink:0;
-  letter-spacing:-0.5px;
-  box-shadow:0 0 10px rgba(0,230,118,0.3);
-}
-.alpha-label{
-  font-size:14px;
-  font-weight:800;
-  color:#fff;
-  letter-spacing:-0.3px;
-}
-.alpha-count{
-  font-size:11px;
-  color:var(--green);
-  font-weight:700;
-  margin-left:auto;
-  background:rgba(0,230,118,0.1);
-  border:1px solid rgba(0,230,118,0.2);
-  border-radius:5px;
-  padding:2px 8px;
-}
-
-/* FIX: padding & border hanya muncul kalau sudah ada isi (tombol huruf) */
 .alpha-jump{display:none;flex-wrap:wrap;gap:6px;background:var(--surface);flex-shrink:0;}
 .alpha-jump.visible{display:flex;}
 .alpha-jump.visible:not(:empty){padding:10px 14px;border-bottom:1px solid var(--border);}
-
 .jump-btn{padding:7px 11px;font-size:13px;font-weight:800;border:1px solid rgba(255,255,255,0.12);border-radius:7px;background:var(--bg);color:#cbd5e1;cursor:pointer;transition:all 0.12s;line-height:1;}
 .jump-btn:hover{background:rgba(0,230,118,0.12);border-color:rgba(0,230,118,0.35);color:var(--green);}
 .jump-btn:active{transform:scale(0.93);}
@@ -156,12 +118,15 @@ tr.divider td{border-top:1px solid var(--border);}
     <button id="modeAwal" class="active" onclick="setMode('awal')">Awalan</button>
     <button id="modeAkhir" onclick="setMode('akhir')">Akhiran</button>
   </div>
-  <input type="text" id="huruf" maxlength="3" placeholder="ketik 1–3 huruf" autocomplete="off">
+  <input type="text" id="huruf" maxlength="3" placeholder="memuat kata..." autocomplete="off" disabled>
 </div>
 
+<div class="loading-bar-wrap" id="loadingWrap">
+  <div class="loading-bar indeterminate" id="loadingBar"></div>
+</div>
 <div class="alpha-jump" id="alphaJump"></div>
 <div class="result" id="result">
-  <div class="empty"><div class="empty-icon">⌨</div>mulai ketik huruf</div>
+  <div class="empty"><div class="empty-icon">⏳</div>sedang memuat kata...</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -170,6 +135,7 @@ let database=[]
 let mode='awal'
 let hasil=[]
 let lastInput=''
+let dbReady=false
 
 const hardnessRank={
   'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,
@@ -198,18 +164,49 @@ function lowerBound(arr,target){
   return l
 }
 
+// Worker jalan di background thread — parse + sort 80k kata tanpa freeze UI
+const workerCode=`
+self.onmessage=function(e){
+  const db=[...new Set(e.data.map(k=>k.trim()).filter(k=>k.length>0))].sort()
+  self.postMessage(db)
+}
+`
+const workerBlob=new Blob([workerCode],{type:'application/javascript'})
+const workerUrl=URL.createObjectURL(workerBlob)
+
 fetch('kbbi.json')
-.then(r=>r.json())
-.then(data=>{
-  database=[...new Set(data.map(k=>k.trim()).filter(k=>k.length>0))].sort()
-  document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
-  document.getElementById('infoTotal').textContent='total '+database.length.toLocaleString()+' kata'
-  const el=document.getElementById('toastRoblox')
-  new bootstrap.Toast(el,{delay:6000}).show()
-  cari()
-})
+  .then(r=>r.json())
+  .then(raw=>{
+    const worker=new Worker(workerUrl)
+    worker.postMessage(raw)
+    worker.onmessage=function(e){
+      database=e.data
+      dbReady=true
+      worker.terminate()
+      URL.revokeObjectURL(workerUrl)
+
+      // Animasi bar selesai lalu hilang
+      const bar=document.getElementById('loadingBar')
+      bar.classList.remove('indeterminate')
+      bar.style.width='100%'
+      setTimeout(()=>{ document.getElementById('loadingWrap').style.display='none' },400)
+
+      // Aktifkan input
+      const inp=document.getElementById('huruf')
+      inp.disabled=false
+      inp.placeholder='ketik 1–3 huruf'
+
+      document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
+      document.getElementById('infoTotal').textContent='total '+database.length.toLocaleString()+' kata'
+      document.getElementById('result').innerHTML='<div class="empty"><div class="empty-icon">⌨</div>mulai ketik huruf</div>'
+
+      new bootstrap.Toast(document.getElementById('toastRoblox'),{delay:6000}).show()
+      cari()
+    }
+  })
 
 function setMode(m){
+  if(!dbReady)return
   mode=m
   document.getElementById('modeAwal').classList.toggle('active',m==='awal')
   document.getElementById('modeAkhir').classList.toggle('active',m==='akhir')
@@ -220,6 +217,7 @@ function setMode(m){
 }
 
 function cari(){
+  if(!dbReady)return
   const input=document.getElementById('huruf').value.toLowerCase().trim()
   lastInput=input
   const resultDiv=document.getElementById('result')
@@ -319,9 +317,8 @@ function renderGrid(){
 }
 
 function buildJumpBar(groups){
-  const all='abcdefghijklmnopqrstuvwxyz'.split('')
   const aj=document.getElementById('alphaJump')
-  aj.innerHTML=all
+  aj.innerHTML='abcdefghijklmnopqrstuvwxyz'.split('')
     .filter(l=>groups[l]&&groups[l].length>0)
     .map(l=>`<button class="jump-btn" onclick="jumpTo('${l}')">${l.toUpperCase()}</button>`)
     .join('')
