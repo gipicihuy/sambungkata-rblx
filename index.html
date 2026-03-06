@@ -201,11 +201,23 @@ let hasil=[]
 let lastInput=''
 let dbReady=false
 
-// ── TRENDING HARDCODED ──
-// Awalan: huruf depan yang susah dilawan
-const TREND_AWAL = ['ks','x','ax','ox','ex','ty','cy','ly','gy']
-// Akhiran: huruf belakang yang susah dilawan (buat nyerang lawan)
-const TREND_AKHIR = ['ks','x','ax','ox','ex','ty','cy','ly','gy']
+// ── TRENDING — load dari settings.json ──
+let TREND_AWAL = []
+let TREND_AKHIR = []
+
+fetch('settings.json')
+  .then(r => r.json())
+  .then(cfg => {
+    TREND_AWAL  = cfg.trending_awal  || []
+    TREND_AKHIR = cfg.trending_akhir || []
+    renderTrending()
+  })
+  .catch(() => {
+    // fallback kalau settings.json ga ada
+    TREND_AWAL  = ['ks','x','ax','ox','ex','ty','cy','ly','gy']
+    TREND_AKHIR = ['ks','x','ax','ox','ex','ty','cy','ly','gy']
+    renderTrending()
+  })
 
 function renderTrending(){
   const wrap = document.getElementById('trendingWrap')
