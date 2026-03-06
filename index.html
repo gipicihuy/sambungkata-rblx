@@ -96,6 +96,12 @@ tr.divider td{border-top:1px solid var(--border);}
 }
 /* ===================================================== */
 
+.alpha-jump{display:none;flex-wrap:wrap;gap:4px;margin-top:8px;}
+.alpha-jump.visible{display:flex;}
+.jump-btn{padding:4px 7px;font-size:11px;font-weight:800;border:1px solid var(--border);border-radius:5px;background:var(--bg);color:#94a3b8;cursor:pointer;transition:all 0.12s;line-height:1;}
+.jump-btn:hover{background:rgba(0,230,118,0.1);border-color:rgba(0,230,118,0.3);color:var(--green);}
+.jump-btn.has-data{color:#cbd5e1;border-color:rgba(255,255,255,0.12);}
+.jump-btn.no-data{opacity:0.25;cursor:default;pointer-events:none;}
 .alpha-divider{height:1px;background:var(--border);}
 .word-grid{display:flex;flex-wrap:wrap;gap:5px;padding:9px 12px 12px;}
 .word-chip{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:5px 9px;font-size:13px;font-weight:600;color:#e2eaf4;cursor:pointer;transition:background 0.1s,border-color 0.1s;display:flex;align-items:center;gap:0;user-select:none;}
@@ -153,6 +159,7 @@ tr.divider td{border-top:1px solid var(--border);}
     <span><div class="dot h2"></div>Susah</span>
     <span><div class="dot h3"></div>Lumayan</span>
   </div>
+  <div class="alpha-jump" id="alphaJump"></div>
 </div>
 
 <div class="result" id="result">
@@ -209,6 +216,9 @@ function setMode(m){
   document.getElementById('modeAwal').classList.toggle('active',m==='awal')
   document.getElementById('modeAkhir').classList.toggle('active',m==='akhir')
   document.getElementById('legend').style.display=m==='akhir'?'none':'flex'
+  const aj=document.getElementById('alphaJump')
+  if(m==='akhir') aj.classList.add('visible')
+  else { aj.classList.remove('visible'); aj.innerHTML='' }
   cari()
 }
 
@@ -276,10 +286,10 @@ function renderGrid(){
   showInfo(hasil.length)
   if(!hasil.length){
     resultDiv.innerHTML='<div class="empty"><div class="empty-icon">∅</div>tidak ditemukan</div>'
+    buildJumpBar({})
     return
   }
 
-  // group by first letter
   const groups={}
   for(const w of hasil){
     const first=w[0].toLowerCase()
@@ -300,7 +310,7 @@ function renderGrid(){
     }).join('')
 
     if(li>0) html+='<div class="alpha-divider"></div>'
-    html+=`<div class="alpha-section">
+    html+=`<div class="alpha-section" id="sec-${l}">
       <div class="alpha-header">
         <div class="alpha-letter">${l.toUpperCase()}</div>
         <div class="alpha-count">${words.length} kata</div>
@@ -310,6 +320,21 @@ function renderGrid(){
   }
 
   resultDiv.innerHTML=html
+  buildJumpBar(groups)
+}
+
+function buildJumpBar(groups){
+  const all='abcdefghijklmnopqrstuvwxyz'.split('')
+  const aj=document.getElementById('alphaJump')
+  aj.innerHTML=all.map(l=>{
+    const has=groups[l]&&groups[l].length>0
+    return `<button class="jump-btn ${has?'has-data':'no-data'}" onclick="jumpTo('${l}')">${l.toUpperCase()}</button>`
+  }).join('')
+}
+
+function jumpTo(l){
+  const el=document.getElementById('sec-'+l)
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'})
 }
 
 document.getElementById('huruf').addEventListener('input',cari)
