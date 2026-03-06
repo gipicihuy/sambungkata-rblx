@@ -55,7 +55,7 @@ tr.divider td{border-top:1px solid var(--border);}
 /* AKHIRAN grouped grid */
 .alpha-section{padding:0 0 4px;}
 
-/* === HEADER KELOMPOK HURUF — lebih gede & mencolok === */
+/* === HEADER KELOMPOK HURUF === */
 .alpha-header{
   display:flex;
   align-items:center;
@@ -64,7 +64,6 @@ tr.divider td{border-top:1px solid var(--border);}
   background:rgba(0,230,118,0.05);
   border-top:2px solid rgba(0,230,118,0.25);
   border-bottom:1px solid rgba(0,230,118,0.1);
-
 }
 .alpha-letter{
   font-size:15px;
@@ -97,10 +96,12 @@ tr.divider td{border-top:1px solid var(--border);}
   border-radius:5px;
   padding:2px 8px;
 }
-/* ===================================================== */
 
-.alpha-jump{display:none;flex-wrap:wrap;gap:6px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
+/* FIX: padding & border hanya muncul kalau sudah ada isi (tombol huruf) */
+.alpha-jump{display:none;flex-wrap:wrap;gap:6px;background:var(--surface);flex-shrink:0;}
 .alpha-jump.visible{display:flex;}
+.alpha-jump.visible:not(:empty){padding:10px 14px;border-bottom:1px solid var(--border);}
+
 .jump-btn{padding:7px 11px;font-size:13px;font-weight:800;border:1px solid rgba(255,255,255,0.12);border-radius:7px;background:var(--bg);color:#cbd5e1;cursor:pointer;transition:all 0.12s;line-height:1;}
 .jump-btn:hover{background:rgba(0,230,118,0.12);border-color:rgba(0,230,118,0.35);color:var(--green);}
 .jump-btn:active{transform:scale(0.93);}
@@ -156,7 +157,6 @@ tr.divider td{border-top:1px solid var(--border);}
     <button id="modeAkhir" onclick="setMode('akhir')">Akhiran</button>
   </div>
   <input type="text" id="huruf" maxlength="3" placeholder="ketik 1–3 huruf" autocomplete="off">
-
 </div>
 
 <div class="alpha-jump" id="alphaJump"></div>
@@ -206,7 +206,7 @@ fetch('kbbi.json')
   document.getElementById('infoTotal').textContent='total '+database.length.toLocaleString()+' kata'
   const el=document.getElementById('toastRoblox')
   new bootstrap.Toast(el,{delay:6000}).show()
-  cari() // re-trigger in case user already typed
+  cari()
 })
 
 function setMode(m){
@@ -253,7 +253,6 @@ function showInfo(count){
   requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('visible')))
 }
 
-/* AWALAN: list table */
 function renderTable(){
   const resultDiv=document.getElementById('result')
   showInfo(hasil.length)
@@ -277,7 +276,6 @@ function renderTable(){
   resultDiv.innerHTML=html
 }
 
-/* AKHIRAN: grouped by first letter */
 function renderGrid(){
   const resultDiv=document.getElementById('result')
   showInfo(hasil.length)
@@ -333,7 +331,6 @@ function jumpTo(l){
   const el=document.getElementById('sec-'+l)
   if(!el) return
   const resultDiv=document.getElementById('result')
-  // cek apakah ini section pertama
   const firstSection=resultDiv.querySelector('.alpha-section')
   if(firstSection&&firstSection.id==='sec-'+l){
     resultDiv.scrollTo({top:0,behavior:'smooth'})
