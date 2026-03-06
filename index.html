@@ -213,7 +213,6 @@ function setMode(m){
   mode=m
   document.getElementById('modeAwal').classList.toggle('active',m==='awal')
   document.getElementById('modeAkhir').classList.toggle('active',m==='akhir')
-  document.getElementById('legend').style.display=m==='akhir'?'none':'flex'
   const aj=document.getElementById('alphaJump')
   if(m==='akhir') aj.classList.add('visible')
   else { aj.classList.remove('visible'); aj.innerHTML='' }
