@@ -228,15 +228,12 @@ function renderTrending(){
   if(inp){ wrap.classList.remove('visible'); return }
 
   const list = mode === 'awal' ? TREND_AWAL : TREND_AKHIR
-  const labelText = mode === 'awal'
-    ? '🔥 awalan populer'
-    : '⚡ akhiran populer'
 
-  label.innerHTML = labelText
+  label.innerHTML = 'Populer'
 
   chips.innerHTML = list.map((q,i) => {
     const hot = i < 3
-    return `<div class="trend-chip${hot?' hot':''}" onclick="applyTrend('${q}')">${q.toUpperCase()}</div>`
+    return `<div class="trend-chip${hot?' hot':''}" onclick="applyTrend('${q}')">${q.toUpperCase()} 🔥</div>`
   }).join('')
 
   wrap.classList.add('visible')
