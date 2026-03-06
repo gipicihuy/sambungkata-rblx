@@ -333,7 +333,9 @@ function buildJumpBar(groups){
 
 function jumpTo(l){
   const el=document.getElementById('sec-'+l)
-  if(el) el.scrollIntoView({behavior:'smooth',block:'start'})
+  if(!el) return
+  const resultDiv=document.getElementById('result')
+  resultDiv.scrollTo({top:el.offsetTop-8,behavior:'smooth'})
 }
 
 document.getElementById('huruf').addEventListener('input',cari)
