@@ -101,11 +101,11 @@ tr.divider td{border-top:1px solid var(--border);}
 .word-chip{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:5px 9px;font-size:13px;font-weight:600;color:#e2eaf4;cursor:pointer;transition:background 0.1s,border-color 0.1s;display:flex;align-items:center;gap:5px;user-select:none;}
 .word-chip:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);}
 .word-chip:active{transform:scale(0.95);}
-.chip-end{font-size:9px;font-weight:800;padding:2px 4px;border-radius:3px;}
-.h1 .chip-end{background:rgba(255,61,87,0.15);color:var(--red);}
-.h2 .chip-end{background:rgba(255,140,0,0.15);color:var(--orange);}
-.h3 .chip-end{background:rgba(255,214,0,0.12);color:var(--yellow);}
-.hn .chip-end{background:rgba(255,255,255,0.04);color:var(--muted);}
+.chip-end{font-size:11px;font-weight:800;padding:3px 6px;border-radius:4px;letter-spacing:0.3px;}
+.h1 .chip-end{background:rgba(255,61,87,0.25);color:#ff6b7a;}
+.h2 .chip-end{background:rgba(255,140,0,0.25);color:#ffaa33;}
+.h3 .chip-end{background:rgba(255,214,0,0.2);color:#ffd600;}
+.hn .chip-end{background:rgba(255,255,255,0.1);color:#94a3b8;}
 
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#94a3b8;font-size:14px;font-weight:600;gap:6px;}
 .empty-icon{font-size:28px;opacity:0.3;}
@@ -294,15 +294,14 @@ function renderGrid(){
     const words=groups[l]
     const chips=words.map(w=>{
       const hk=getHardKey(w)
-      const last=w[w.length-1].toUpperCase()
-      return `<div class="word-chip ${hk}" onclick="navigator.clipboard.writeText('${w}')">${w}<span class="chip-end">${last}</span></div>`
+      const suffix=input.toUpperCase()
+      return `<div class="word-chip ${hk}" onclick="navigator.clipboard.writeText('${w}')">${w}<span class="chip-end">${suffix}</span></div>`
     }).join('')
 
     if(li>0) html+='<div class="alpha-divider"></div>'
     html+=`<div class="alpha-section">
       <div class="alpha-header">
         <div class="alpha-letter">${l.toUpperCase()}</div>
-        <div class="alpha-label">Kata berawalan ${l.toUpperCase()}</div>
         <div class="alpha-count">${words.length} kata</div>
       </div>
       <div class="word-grid">${chips}</div>
