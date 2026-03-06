@@ -152,7 +152,7 @@ tr.divider td{border-top:1px solid var(--border);}
     <button id="modeAkhir" onclick="setMode('akhir')">Akhiran</button>
   </div>
   <input type="text" id="huruf" maxlength="3" placeholder="ketik 1–3 huruf" autocomplete="off">
-  <div class="legend">
+  <div class="legend" id="legend">
     <span><div class="dot h1"></div>Super susah</span>
     <span><div class="dot h2"></div>Susah</span>
     <span><div class="dot h3"></div>Lumayan</span>
@@ -168,6 +168,7 @@ tr.divider td{border-top:1px solid var(--border);}
 let database=[]
 let mode='awal'
 let hasil=[]
+let lastInput=''
 
 const hardnessRank={
   'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,
@@ -204,17 +205,20 @@ fetch('kbbi.json')
   document.getElementById('infoTotal').textContent='total '+database.length.toLocaleString()+' kata'
   const el=document.getElementById('toastRoblox')
   new bootstrap.Toast(el,{delay:6000}).show()
+  cari() // re-trigger in case user already typed
 })
 
 function setMode(m){
   mode=m
   document.getElementById('modeAwal').classList.toggle('active',m==='awal')
   document.getElementById('modeAkhir').classList.toggle('active',m==='akhir')
+  document.getElementById('legend').style.display=m==='akhir'?'none':'flex'
   cari()
 }
 
 function cari(){
   const input=document.getElementById('huruf').value.toLowerCase().trim()
+  lastInput=input
   const resultDiv=document.getElementById('result')
   const t=document.getElementById('infoTotal')
 
@@ -294,7 +298,7 @@ function renderGrid(){
     const words=groups[l]
     const chips=words.map(w=>{
       const hk=getHardKey(w)
-      const suffix=input.toUpperCase()
+      const suffix=lastInput.toUpperCase()
       return `<div class="word-chip ${hk}" onclick="navigator.clipboard.writeText('${w}')">${w}<span class="chip-end">${suffix}</span></div>`
     }).join('')
 
