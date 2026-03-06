@@ -86,6 +86,68 @@ tr.divider td{border-top:1px solid var(--border);}
 .toast-roblox .btn-close{filter:invert(1);opacity:0.5;width:10px;height:10px;}
 .toast-roblox .toast-body{padding:9px 12px 11px;font-size:12px;color:#c9a8a8;font-weight:500;line-height:1.55;}
 .toast-roblox .toast-body strong{color:#f0d9d9;font-weight:700;}
+
+/* ── TRENDING ── */
+.trending-wrap{
+  flex-shrink:0;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transition:max-height 0.32s ease, opacity 0.25s ease;
+}
+.trending-wrap.visible{
+  max-height:120px;
+  opacity:1;
+}
+.trending-inner{padding:8px 14px 10px;}
+.trending-label{
+  display:flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:800;letter-spacing:0.8px;
+  color:var(--subtext);text-transform:uppercase;
+  margin-bottom:7px;
+}
+.trending-label svg{opacity:0.7;}
+.trending-chips{display:flex;flex-wrap:wrap;gap:5px;}
+.trend-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 9px 5px 8px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:6px;
+  font-size:12px;font-weight:700;
+  color:#cbd5e1;
+  cursor:pointer;
+  transition:background 0.12s, border-color 0.12s, transform 0.1s;
+  user-select:none;
+  position:relative;
+  overflow:hidden;
+}
+.trend-chip:hover{
+  background:rgba(0,230,118,0.08);
+  border-color:rgba(0,230,118,0.28);
+  color:#e2eaf4;
+}
+.trend-chip:active{transform:scale(0.93);}
+.trend-rank{
+  font-size:9px;font-weight:800;
+  width:14px;height:14px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:3px;
+  flex-shrink:0;
+}
+.trend-chip:nth-child(1) .trend-rank{background:rgba(255,214,0,0.18);color:#ffd600;}
+.trend-chip:nth-child(2) .trend-rank{background:rgba(203,213,225,0.14);color:#cbd5e1;}
+.trend-chip:nth-child(3) .trend-rank{background:rgba(255,140,0,0.15);color:#ff8c00;}
+.trend-chip:nth-child(n+4) .trend-rank{background:rgba(255,255,255,0.06);color:var(--subtext);}
+.trend-text{letter-spacing:0.3px;text-transform:uppercase;}
+.trend-bar{
+  position:absolute;bottom:0;left:0;height:2px;
+  background:linear-gradient(90deg,rgba(0,230,118,0.4),rgba(0,230,118,0.1));
+  transition:width 0.6s ease;
+}
+.trend-count{font-size:9px;color:var(--subtext);font-weight:600;}
 </style>
 </head>
 <body>
@@ -124,6 +186,20 @@ tr.divider td{border-top:1px solid var(--border);}
 <div class="loading-bar-wrap" id="loadingWrap">
   <div class="loading-bar indeterminate" id="loadingBar"></div>
 </div>
+
+<!-- TRENDING SECTION -->
+<div class="trending-wrap" id="trendingWrap">
+  <div class="trending-inner">
+    <div class="trending-label">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+        <path d="M1 8L4 4.5L6.5 6.5L9 2" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      trending dicari
+    </div>
+    <div class="trending-chips" id="trendingChips"></div>
+  </div>
+</div>
+
 <div class="alpha-jump" id="alphaJump"></div>
 <div class="result" id="result">
   <div class="empty"><div class="empty-icon">⏳</div>sedang memuat kata...</div>
@@ -136,6 +212,80 @@ let mode='awal'
 let hasil=[]
 let lastInput=''
 let dbReady=false
+
+// ── TRENDING ──
+const TREND_KEY='sk_trending_v1'
+const TREND_MAX=8       // max entry trending disimpen
+const TREND_SHOW=6      // max chip tampil
+const TREND_MIN_LEN=1   // min panjang query dicatat
+
+let trendData={}        // { "ka": 12, "sa": 5, ... }
+let trendSaveTimeout=null
+let trendLoaded=false
+
+async function loadTrending(){
+  try{
+    const res=await window.storage.get(TREND_KEY,true)
+    trendData=res?JSON.parse(res.value):{}
+  }catch(e){trendData={}}
+  trendLoaded=true
+  renderTrending()
+}
+
+async function saveTrending(){
+  try{
+    // potong hanya top TREND_MAX biar key ga besar
+    const sorted=Object.entries(trendData).sort((a,b)=>b[1]-a[1]).slice(0,TREND_MAX)
+    const obj=Object.fromEntries(sorted)
+    await window.storage.set(TREND_KEY,JSON.stringify(obj),true)
+  }catch(e){}
+}
+
+function recordSearch(q){
+  if(!q||q.length<TREND_MIN_LEN)return
+  trendData[q]=(trendData[q]||0)+1
+  renderTrending()
+  // debounce save — jangan spam API setiap ketikan
+  clearTimeout(trendSaveTimeout)
+  trendSaveTimeout=setTimeout(saveTrending,1500)
+}
+
+function renderTrending(){
+  const wrap=document.getElementById('trendingWrap')
+  const chips=document.getElementById('trendingChips')
+  const inp=document.getElementById('huruf').value.trim()
+
+  // sembunyikan trending kalau user lagi ngetik
+  if(inp){wrap.classList.remove('visible');return}
+
+  const entries=Object.entries(trendData)
+    .sort((a,b)=>b[1]-a[1])
+    .slice(0,TREND_SHOW)
+
+  if(!entries.length){wrap.classList.remove('visible');return}
+
+  const maxCount=entries[0][1]||1
+  chips.innerHTML=entries.map(([q,cnt],i)=>{
+    const pct=Math.round((cnt/maxCount)*100)
+    return `<div class="trend-chip" onclick="applyTrend('${q}')">
+      <span class="trend-rank">${i+1}</span>
+      <span class="trend-text">${q}</span>
+      <span class="trend-count">${cnt}</span>
+      <div class="trend-bar" style="width:${pct}%"></div>
+    </div>`
+  }).join('')
+
+  wrap.classList.add('visible')
+}
+
+function applyTrend(q){
+  const inp=document.getElementById('huruf')
+  inp.value=q
+  inp.focus()
+  cari()
+}
+
+// ────────────────
 
 const hardnessRank={
   'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,
@@ -164,7 +314,6 @@ function lowerBound(arr,target){
   return l
 }
 
-// Worker jalan di background thread — parse + sort 80k kata tanpa freeze UI
 const workerCode=`
 self.onmessage=function(e){
   const db=[...new Set(e.data.map(k=>k.trim()).filter(k=>k.length>0))].sort()
@@ -185,13 +334,11 @@ fetch('kbbi.json')
       worker.terminate()
       URL.revokeObjectURL(workerUrl)
 
-      // Animasi bar selesai lalu hilang
       const bar=document.getElementById('loadingBar')
       bar.classList.remove('indeterminate')
       bar.style.width='100%'
       setTimeout(()=>{ document.getElementById('loadingWrap').style.display='none' },400)
 
-      // Aktifkan input
       const inp=document.getElementById('huruf')
       inp.disabled=false
       inp.placeholder='ketik 1–3 huruf'
@@ -201,6 +348,9 @@ fetch('kbbi.json')
       document.getElementById('result').innerHTML='<div class="empty"><div class="empty-icon">⌨</div>mulai ketik huruf</div>'
 
       new bootstrap.Toast(document.getElementById('toastRoblox'),{delay:6000}).show()
+
+      // load trending setelah db ready
+      loadTrending()
       cari()
     }
   })
@@ -216,12 +366,23 @@ function setMode(m){
   cari()
 }
 
+// debounce record — catat setelah user berhenti 600ms
+let recordTimeout=null
 function cari(){
   if(!dbReady)return
   const input=document.getElementById('huruf').value.toLowerCase().trim()
   lastInput=input
   const resultDiv=document.getElementById('result')
   const t=document.getElementById('infoTotal')
+
+  // update trending visibility setiap ketikan
+  renderTrending()
+
+  // debounce record pencarian
+  clearTimeout(recordTimeout)
+  if(input.length>=TREND_MIN_LEN){
+    recordTimeout=setTimeout(()=>recordSearch(input),600)
+  }
 
   if(!input){
     resultDiv.innerHTML='<div class="empty"><div class="empty-icon">⌨</div>mulai ketik huruf</div>'
