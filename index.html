@@ -96,7 +96,7 @@ tr.divider td{border-top:1px solid var(--border);}
 }
 /* ===================================================== */
 
-.alpha-jump{display:none;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.alpha-jump{display:none;flex-wrap:wrap;gap:6px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
 .alpha-jump.visible{display:flex;}
 .jump-btn{padding:7px 11px;font-size:13px;font-weight:800;border:1px solid rgba(255,255,255,0.12);border-radius:7px;background:var(--bg);color:#cbd5e1;cursor:pointer;transition:all 0.12s;line-height:1;}
 .jump-btn:hover{background:rgba(0,230,118,0.12);border-color:rgba(0,230,118,0.35);color:var(--green);}
@@ -158,9 +158,9 @@ tr.divider td{border-top:1px solid var(--border);}
     <span><div class="dot h2"></div>Susah</span>
     <span><div class="dot h3"></div>Lumayan</span>
   </div>
-  <div class="alpha-jump" id="alphaJump"></div>
 </div>
 
+<div class="alpha-jump" id="alphaJump"></div>
 <div class="result" id="result">
   <div class="empty"><div class="empty-icon">⌨</div>mulai ketik huruf</div>
 </div>
