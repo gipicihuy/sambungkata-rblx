@@ -50,12 +50,58 @@ td.badge{padding:11px 16px 11px 4px;text-align:right;}
 tr.divider td{border-top:1px solid var(--border);}
 
 /* AKHIRAN grouped grid */
-.alpha-section{padding:10px 12px 6px;}
-.alpha-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.alpha-letter{font-size:11px;font-weight:800;color:var(--green);background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.2);border-radius:5px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.alpha-count{font-size:10px;color:var(--subtext);font-weight:600;}
-.alpha-divider{height:1px;background:var(--border);margin:0 12px;}
-.word-grid{display:flex;flex-wrap:wrap;gap:5px;}
+.alpha-section{padding:0 0 4px;}
+
+/* === HEADER KELOMPOK HURUF — lebih gede & mencolok === */
+.alpha-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px 9px;
+  background:rgba(0,230,118,0.05);
+  border-top:2px solid rgba(0,230,118,0.25);
+  border-bottom:1px solid rgba(0,230,118,0.1);
+  position:sticky;
+  top:0;
+  z-index:10;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.alpha-letter{
+  font-size:15px;
+  font-weight:800;
+  color:#000;
+  background:var(--green);
+  border-radius:7px;
+  width:34px;
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  letter-spacing:-0.5px;
+  box-shadow:0 0 10px rgba(0,230,118,0.3);
+}
+.alpha-label{
+  font-size:14px;
+  font-weight:800;
+  color:#fff;
+  letter-spacing:-0.3px;
+}
+.alpha-count{
+  font-size:11px;
+  color:var(--green);
+  font-weight:700;
+  margin-left:auto;
+  background:rgba(0,230,118,0.1);
+  border:1px solid rgba(0,230,118,0.2);
+  border-radius:5px;
+  padding:2px 8px;
+}
+/* ===================================================== */
+
+.alpha-divider{height:1px;background:var(--border);}
+.word-grid{display:flex;flex-wrap:wrap;gap:5px;padding:9px 12px 12px;}
 .word-chip{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:5px 9px;font-size:13px;font-weight:600;color:#e2eaf4;cursor:pointer;transition:background 0.1s,border-color 0.1s;display:flex;align-items:center;gap:5px;user-select:none;}
 .word-chip:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);}
 .word-chip:active{transform:scale(0.95);}
@@ -260,6 +306,7 @@ function renderGrid(){
     html+=`<div class="alpha-section">
       <div class="alpha-header">
         <div class="alpha-letter">${l.toUpperCase()}</div>
+        <div class="alpha-label">Kata berawalan ${l.toUpperCase()}</div>
         <div class="alpha-count">${words.length} kata</div>
       </div>
       <div class="word-grid">${chips}</div>
