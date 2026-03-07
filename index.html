@@ -167,17 +167,18 @@ function renderTrending(){
   const inp=document.getElementById('huruf').value.trim()
   if(inp){wrap.classList.remove('visible');return}
   const list=mode==='awal'?TREND_AWAL:TREND_AKHIR
-  label.innerHTML='Populer'
-  chips.innerHTML=list.map((q,i)=>{
-    const hot=i<3
-    return `<div class="trend-chip${hot?' hot':''}" onclick="applyTrend('${q}')">${q.toUpperCase()} 🔥</div>`
+  label.innerHTML='🔥 Populer'
+  chips.innerHTML=list.map(item=>{
+    const q=typeof item==='object'?item.q:item
+    const hot=typeof item==='object'?!!item.hot:false
+    return `<div class="trend-chip${hot?' hot':''}" onclick="applyTrend('${q}')">${q.toUpperCase()}${hot?' 🔥':''}</div>`
   }).join('')
   wrap.classList.add('visible')
 }
 
 function applyTrend(q){
   const inp=document.getElementById('huruf')
-  inp.value=q
+  inp.value=typeof q==='object'?q.q:q
   inp.focus()
   cari()
 }
