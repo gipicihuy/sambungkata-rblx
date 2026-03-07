@@ -1,4 +1,14 @@
 {
-  "trending_awal": ["x", "ax", "ox", "ix", "ex"],
-  "trending_akhir": ["if", "x", "ks"]
+  "trending_awal": [
+    {"q": "x", "hot": true},
+    {"q": "ax", "hot": false},
+    {"q": "ox", "hot": true},
+    {"q": "ix", "hot": false},
+    {"q": "ex", "hot": false}
+  ],
+  "trending_akhir": [
+    {"q": "if", "hot": true},
+    {"q": "x", "hot": false},
+    {"q": "ks", "hot": true}
+  ]
 }
