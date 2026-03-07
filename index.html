@@ -211,7 +211,7 @@ function lowerBound(arr,target){
   return l
 }
 
-function initDB(){
+function window.addEventListener("load", initDB){
   const raw = window.__KBBI__
   if(!raw || !Array.isArray(raw)){
     document.getElementById('result').innerHTML=
@@ -256,7 +256,7 @@ function initDB(){
   }
 }
 
-initDB()
+window.addEventListener("load", initDB)
 
 function setMode(m){
   if(!dbReady)return
