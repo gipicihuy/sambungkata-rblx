@@ -44,17 +44,6 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 .awal-card:active{transform:scale(0.95);}
 .awal-card .card-word{font-size:15px;font-weight:600;color:#e2eaf4;white-space:nowrap;line-height:1;}
 .awal-card .card-word .chip-prefix{color:var(--green);font-weight:800;}
-/* Rare = merah, cuma warna, no badge */
-.awal-card.rare{background:rgba(255,61,87,0.08);border-color:rgba(255,61,87,0.32);}
-.awal-card.rare:hover{background:rgba(255,61,87,0.15);border-color:rgba(255,61,87,0.55);}
-.awal-card.rare .card-word{color:#ffb3bf;}
-.awal-card.rare .card-word .chip-prefix{color:#ff3d57;}
-/* Legend */
-.legend-bar{display:none;align-items:center;gap:14px;padding:6px 14px 5px;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--surface);}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;color:var(--subtext);}
-.legend-dot{width:7px;height:7px;border-radius:50%;}
-.legend-dot.green{background:var(--green);}
-.legend-dot.red{background:var(--red);}
 .alpha-section{padding:0 0 4px;}
 .alpha-header{display:flex;align-items:center;gap:10px;padding:10px 14px 9px;background:rgba(0,230,118,0.05);border-top:2px solid rgba(0,230,118,0.25);border-bottom:1px solid rgba(0,230,118,0.1);}
 .alpha-letter{font-size:15px;font-weight:800;color:#000;background:var(--green);border-radius:7px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:-0.5px;box-shadow:0 0 10px rgba(0,230,118,0.3);}
@@ -67,7 +56,7 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 .jump-btn:active{transform:scale(0.93);}
 .alpha-divider{height:1px;background:var(--border);}
 .word-grid{display:flex;flex-wrap:wrap;gap:5px;padding:9px 12px 12px;}
-.word-chip{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:5px 9px;font-size:13px;font-weight:600;color:#e2eaf4;cursor:pointer;transition:background 0.1s,border-color 0.1s;display:flex;align-items:center;user-select:none;}
+.word-chip{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:5px 9px;font-size:13px;font-weight:600;color:#e2eaf4;cursor:pointer;transition:background 0.1s,border-color 0.1s;display:flex;align-items:center;gap:0;user-select:none;}
 .word-chip:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);}
 .word-chip:active{transform:scale(0.95);}
 .chip-suffix{color:var(--green);font-weight:800;}
@@ -85,6 +74,7 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 .trending-wrap.visible{max-height:200px;opacity:1;}
 .trending-inner{padding:8px 14px 10px;}
 .trending-label{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:800;letter-spacing:0.8px;color:var(--subtext);text-transform:uppercase;margin-bottom:7px;}
+.trending-label svg{opacity:0.7;}
 .trending-chips{display:flex;flex-wrap:wrap;gap:5px;}
 .trend-chip{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:6px;font-size:12px;font-weight:800;color:#cbd5e1;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;transition:background 0.12s,border-color 0.12s,color 0.12s,transform 0.1s;user-select:none;}
 .trend-chip:hover{background:rgba(0,230,118,0.09);border-color:rgba(0,230,118,0.3);color:var(--green);}
@@ -130,11 +120,6 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
   <div class="loading-bar indeterminate" id="loadingBar"></div>
 </div>
 
-<div class="legend-bar" id="legendBar">
-  <div class="legend-item"><div class="legend-dot green"></div>counter banyak</div>
-  <div class="legend-item"><div class="legend-dot red"></div>counter sedikit — susah dilawan</div>
-</div>
-
 <div class="trending-wrap" id="trendingWrap">
   <div class="trending-inner">
     <div class="trending-label" id="trendingLabel">
@@ -161,44 +146,28 @@ let lastInput=''
 let dbReady=false
 let TREND_AWAL=[]
 let TREND_AKHIR=[]
-let prefixCountCache={}
-let RARE_THRESHOLD=30
-
-function buildPrefixCountCache(){
-  prefixCountCache={}
-  for(let cc=97;cc<=122;cc++){
-    const c=String.fromCharCode(cc)
-    const start=lowerBound(database,c)
-    const end=lowerBound(database,String.fromCharCode(cc+1))
-    prefixCountCache[c]=end-start
-  }
-}
-
-function calcRareThreshold(){
-  const vals=Object.values(prefixCountCache).filter(v=>v>0)
-  if(!vals.length)return
-  const max=Math.max(...vals)
-  RARE_THRESHOLD=Math.max(30,Math.floor(max*0.05))
-}
-
-function isRareWord(word){
-  if(!word)return false
-  const lastChar=word[word.length-1].toLowerCase()
-  return (prefixCountCache[lastChar]||0)<RARE_THRESHOLD
-}
 
 fetch('settings.json')
   .then(r=>r.json())
-  .then(cfg=>{TREND_AWAL=cfg.trending_awal||[];TREND_AKHIR=cfg.trending_akhir||[];renderTrending()})
-  .catch(()=>{TREND_AWAL=['ks','x','ax','ox','ex','ty','cy','ly','gy'];TREND_AKHIR=['ks','x','ax','ox','ex','ty','cy','ly','gy'];renderTrending()})
+  .then(cfg=>{
+    TREND_AWAL=cfg.trending_awal||[]
+    TREND_AKHIR=cfg.trending_akhir||[]
+    renderTrending()
+  })
+  .catch(()=>{
+    TREND_AWAL=['ks','x','ax','ox','ex','ty','cy','ly','gy']
+    TREND_AKHIR=['ks','x','ax','ox','ex','ty','cy','ly','gy']
+    renderTrending()
+  })
 
 function renderTrending(){
   const wrap=document.getElementById('trendingWrap')
   const chips=document.getElementById('trendingChips')
+  const label=document.getElementById('trendingLabel')
   const inp=document.getElementById('huruf').value.trim()
   if(inp){wrap.classList.remove('visible');return}
   const list=mode==='awal'?TREND_AWAL:TREND_AKHIR
-  document.getElementById('trendingLabel').innerHTML='🔥 Populer'
+  label.innerHTML='🔥 Populer'
   chips.innerHTML=list.map(item=>{
     const q=typeof item==='object'?item.q:item
     const hot=typeof item==='object'?!!item.hot:false
@@ -210,10 +179,16 @@ function renderTrending(){
 function applyTrend(q){
   const inp=document.getElementById('huruf')
   inp.value=typeof q==='object'?q.q:q
-  inp.focus();cari()
+  inp.focus()
+  cari()
 }
 
-const hardnessRank={'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,'g':7,'h':8,'j':9,'k':10,'b':11,'c':12,'d':13,'p':14,'t':15,'l':16,'m':17,'n':18,'r':19,'s':20,'u':21,'i':22,'e':23,'o':24,'a':25}
+const hardnessRank={
+  'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,
+  'g':7,'h':8,'j':9,'k':10,'b':11,'c':12,'d':13,
+  'p':14,'t':15,'l':16,'m':17,'n':18,'r':19,'s':20,
+  'u':21,'i':22,'e':23,'o':24,'a':25
+}
 
 function getHardness(word){
   if(!word)return 99
@@ -235,7 +210,12 @@ function lowerBound(arr,target){
   return l
 }
 
-const workerCode=`self.onmessage=function(e){const db=[...new Set(e.data.map(k=>k.trim()).filter(k=>k.length>0))].sort();self.postMessage(db)}`
+const workerCode=`
+self.onmessage=function(e){
+  const db=[...new Set(e.data.map(k=>k.trim()).filter(k=>k.length>0))].sort()
+  self.postMessage(db)
+}
+`
 const workerBlob=new Blob([workerCode],{type:'application/javascript'})
 const workerUrl=URL.createObjectURL(workerBlob)
 
@@ -249,8 +229,6 @@ fetch('kbbi.json')
       dbReady=true
       worker.terminate()
       URL.revokeObjectURL(workerUrl)
-      buildPrefixCountCache()
-      calcRareThreshold()
       const bar=document.getElementById('loadingBar')
       bar.classList.remove('indeterminate')
       bar.style.width='100%'
@@ -262,7 +240,8 @@ fetch('kbbi.json')
       document.getElementById('infoTotal').textContent='total '+database.length.toLocaleString()+' kata'
       document.getElementById('result').innerHTML='<div class="empty"><div class="empty-icon">⌨</div>mulai ketik huruf</div>'
       new bootstrap.Toast(document.getElementById('toastRoblox'),{delay:6000}).show()
-      renderTrending();cari()
+      renderTrending()
+      cari()
     }
   })
 
@@ -274,24 +253,23 @@ function setMode(m){
   const aj=document.getElementById('alphaJump')
   if(m==='akhir')aj.classList.add('visible')
   else{aj.classList.remove('visible');aj.innerHTML=''}
-  if(m!=='awal')document.getElementById('legendBar').style.display='none'
-  renderTrending();cari()
+  renderTrending()
+  cari()
 }
 
+let recordTimeout=null
 function cari(){
   if(!dbReady)return
   const input=document.getElementById('huruf').value.toLowerCase().trim()
   lastInput=input
   const resultDiv=document.getElementById('result')
   const t=document.getElementById('infoTotal')
-  const legend=document.getElementById('legendBar')
   renderTrending()
   if(!input){
     resultDiv.innerHTML='<div class="empty"><div class="empty-icon">⌨</div>mulai ketik huruf</div>'
     document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
     t.classList.remove('visible')
     setTimeout(()=>{t.textContent=''},350)
-    legend.style.display='none'
     return
   }
   if(mode==='awal'){
@@ -303,7 +281,6 @@ function cari(){
   } else {
     hasil=database.filter(k=>k.endsWith(input))
     hasil.sort((a,b)=>a.localeCompare(b))
-    legend.style.display='none'
     renderGrid()
   }
 }
@@ -317,23 +294,18 @@ function showInfo(count){
 
 function renderGrid3(){
   const resultDiv=document.getElementById('result')
-  const legend=document.getElementById('legendBar')
   showInfo(hasil.length)
   if(!hasil.length){
     resultDiv.innerHTML='<div class="empty"><div class="empty-icon">∅</div>tidak ditemukan</div>'
-    legend.style.display='none'
     return
   }
-  const hasRare=hasil.some(k=>isRareWord(k))
-  legend.style.display=hasRare?'flex':'none'
   let html='<div class="word-grid-awal">'
   for(let i=0;i<hasil.length;i++){
     const k=hasil[i]
-    const rare=isRareWord(k)
     const hk=getHardKey(k)
     const prefix=k.slice(0,lastInput.length)
     const rest=k.slice(lastInput.length)
-    html+=`<div class="awal-card ${hk}${rare?' rare':''}" onclick="navigator.clipboard.writeText('${k}')"><div class="card-word"><span class="chip-prefix">${prefix}</span>${rest}</div></div>`
+    html+=`<div class="awal-card ${hk}" onclick="navigator.clipboard.writeText('${k}')"><div class="card-word"><span class="chip-prefix">${prefix}</span>${rest}</div></div>`
   }
   html+='</div>'
   resultDiv.innerHTML=html
@@ -344,7 +316,8 @@ function renderGrid(){
   showInfo(hasil.length)
   if(!hasil.length){
     resultDiv.innerHTML='<div class="empty"><div class="empty-icon">∅</div>tidak ditemukan</div>'
-    buildJumpBar({});return
+    buildJumpBar({})
+    return
   }
   const groups={}
   for(const w of hasil){
