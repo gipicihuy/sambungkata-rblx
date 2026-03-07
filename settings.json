@@ -7,8 +7,9 @@
     {"q": "ex", "hot": false}
   ],
   "trending_akhir": [
-    {"q": "if", "hot": true},
+    {"q": "ly", "hot": true},
+    {"q": "ks", "hot": true},
+    {"q": "if", "hot": false}
     {"q": "x", "hot": false},
-    {"q": "ks", "hot": true}
   ]
 }
