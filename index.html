@@ -34,33 +34,28 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 .result{flex:1;overflow-y:auto;padding:6px 0 80px;display:flex;flex-direction:column;}
 .result::-webkit-scrollbar{width:3px;}
 .result::-webkit-scrollbar-thumb{background:var(--muted);border-radius:10px;}
-
-/* loading bar */
 .loading-bar-wrap{height:2px;background:transparent;flex-shrink:0;overflow:hidden;}
 .loading-bar{height:2px;width:0%;background:var(--green);transition:width 0.4s ease;box-shadow:0 0 8px rgba(0,230,118,0.6);}
 .loading-bar.indeterminate{width:40%;animation:indeterminate 1.2s ease-in-out infinite;}
 @keyframes indeterminate{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
-
-/* AWALAN table */
-table{width:100%;border-collapse:collapse;}
-tr{cursor:pointer;transition:background 0.1s;}
-tr:hover{background:rgba(255,255,255,0.03);}
-td.num{width:52px;padding:11px 8px 11px 16px;font-size:12px;color:#7a8fa6;text-align:right;font-family:monospace;font-weight:700;}
-td.word{padding:11px 10px;font-size:15px;font-weight:600;color:#fff;}
-td.badge{padding:11px 16px 11px 4px;text-align:right;}
-.badge-pill{display:inline-flex;align-items:center;justify-content:center;width:28px;height:24px;border-radius:5px;font-size:12px;font-weight:700;}
-.h1 .badge-pill{background:rgba(255,61,87,0.15);color:var(--red);}
-.h2 .badge-pill{background:rgba(255,140,0,0.15);color:var(--orange);}
-.h3 .badge-pill{background:rgba(255,214,0,0.12);color:var(--yellow);}
-.hn .badge-pill{background:rgba(255,255,255,0.04);color:var(--muted);}
-tr.divider td{border-top:1px solid var(--border);}
-
-/* AKHIRAN grouped grid */
+.word-grid-awal{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:10px 12px;}
+.awal-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 10px;cursor:pointer;transition:background 0.1s,border-color 0.1s,transform 0.1s;display:flex;flex-direction:column;gap:4px;user-select:none;}
+.awal-card:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);}
+.awal-card:active{transform:scale(0.95);}
+.awal-card .card-word{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;}
+.awal-card .card-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:20px;border-radius:4px;font-size:11px;font-weight:800;line-height:1;}
+.awal-card.h1{border-left:2px solid rgba(255,61,87,0.4);}
+.awal-card.h2{border-left:2px solid rgba(255,140,0,0.4);}
+.awal-card.h3{border-left:2px solid rgba(255,214,0,0.3);}
+.awal-card.hn{border-left:2px solid rgba(255,255,255,0.07);}
+.awal-card.h1 .card-badge{background:rgba(255,61,87,0.15);color:var(--red);}
+.awal-card.h2 .card-badge{background:rgba(255,140,0,0.15);color:var(--orange);}
+.awal-card.h3 .card-badge{background:rgba(255,214,0,0.12);color:var(--yellow);}
+.awal-card.hn .card-badge{background:rgba(255,255,255,0.05);color:var(--muted);}
 .alpha-section{padding:0 0 4px;}
 .alpha-header{display:flex;align-items:center;gap:10px;padding:10px 14px 9px;background:rgba(0,230,118,0.05);border-top:2px solid rgba(0,230,118,0.25);border-bottom:1px solid rgba(0,230,118,0.1);}
 .alpha-letter{font-size:15px;font-weight:800;color:#000;background:var(--green);border-radius:7px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:-0.5px;box-shadow:0 0 10px rgba(0,230,118,0.3);}
 .alpha-count{font-size:11px;color:var(--green);font-weight:700;margin-left:auto;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.2);border-radius:5px;padding:2px 8px;}
-
 .alpha-jump{display:none;flex-wrap:wrap;gap:6px;background:var(--surface);flex-shrink:0;}
 .alpha-jump.visible{display:flex;}
 .alpha-jump.visible:not(:empty){padding:10px 14px;border-bottom:1px solid var(--border);}
@@ -73,11 +68,8 @@ tr.divider td{border-top:1px solid var(--border);}
 .word-chip:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);}
 .word-chip:active{transform:scale(0.95);}
 .chip-suffix{color:var(--green);font-weight:800;}
-
 .empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#94a3b8;font-size:14px;font-weight:600;gap:6px;}
 .empty-icon{font-size:28px;opacity:0.3;}
-
-/* toast */
 .toast-container{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9999;pointer-events:none;width:auto;max-width:90vw;}
 .toast-roblox{pointer-events:auto;background:#2d1b1b;border:1px solid #5c2e2e;border-left:3px solid #d9534f;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.4);color:#f0d9d9;font-family:'Plus Jakarta Sans',sans-serif;min-width:260px;max-width:340px;padding:0;}
 .toast-roblox .toast-header{background:transparent;border-bottom:1px solid #3d2222;padding:9px 12px 8px;color:#f0d9d9;font-size:12px;font-weight:700;}
@@ -86,56 +78,17 @@ tr.divider td{border-top:1px solid var(--border);}
 .toast-roblox .btn-close{filter:invert(1);opacity:0.5;width:10px;height:10px;}
 .toast-roblox .toast-body{padding:9px 12px 11px;font-size:12px;color:#c9a8a8;font-weight:500;line-height:1.55;}
 .toast-roblox .toast-body strong{color:#f0d9d9;font-weight:700;}
-
-/* ── TRENDING ── */
-.trending-wrap{
-  flex-shrink:0;
-  background:var(--surface);
-  border-bottom:1px solid var(--border);
-  overflow:hidden;
-  max-height:0;
-  opacity:0;
-  transition:max-height 0.35s ease, opacity 0.25s ease;
-}
+.trending-wrap{flex-shrink:0;background:var(--surface);border-bottom:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.35s ease,opacity 0.25s ease;}
 .trending-wrap.visible{max-height:200px;opacity:1;}
 .trending-inner{padding:8px 14px 10px;}
-.trending-label{
-  display:flex;align-items:center;gap:5px;
-  font-size:10px;font-weight:800;letter-spacing:0.8px;
-  color:var(--subtext);text-transform:uppercase;
-  margin-bottom:7px;
-}
+.trending-label{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:800;letter-spacing:0.8px;color:var(--subtext);text-transform:uppercase;margin-bottom:7px;}
 .trending-label svg{opacity:0.7;}
 .trending-chips{display:flex;flex-wrap:wrap;gap:5px;}
-.trend-chip{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:5px 10px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.09);
-  border-radius:6px;
-  font-size:12px;font-weight:800;
-  color:#cbd5e1;letter-spacing:0.5px;text-transform:uppercase;
-  cursor:pointer;
-  transition:background 0.12s, border-color 0.12s, color 0.12s, transform 0.1s;
-  user-select:none;
-}
-.trend-chip:hover{
-  background:rgba(0,230,118,0.09);
-  border-color:rgba(0,230,118,0.3);
-  color:var(--green);
-}
+.trend-chip{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:6px;font-size:12px;font-weight:800;color:#cbd5e1;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;transition:background 0.12s,border-color 0.12s,color 0.12s,transform 0.1s;user-select:none;}
+.trend-chip:hover{background:rgba(0,230,118,0.09);border-color:rgba(0,230,118,0.3);color:var(--green);}
 .trend-chip:active{transform:scale(0.92);}
-.trend-chip.hot{
-  background:rgba(255,61,87,0.07);
-  border-color:rgba(255,61,87,0.2);
-  color:#ff8fa3;
-}
-.trend-chip.hot:hover{
-  background:rgba(255,61,87,0.14);
-  border-color:rgba(255,61,87,0.4);
-  color:var(--red);
-}
-.trend-fire{font-size:10px;}
+.trend-chip.hot{background:rgba(255,61,87,0.07);border-color:rgba(255,61,87,0.2);color:#ff8fa3;}
+.trend-chip.hot:hover{background:rgba(255,61,87,0.14);border-color:rgba(255,61,87,0.4);color:var(--red);}
 </style>
 </head>
 <body>
@@ -175,7 +128,6 @@ tr.divider td{border-top:1px solid var(--border);}
   <div class="loading-bar indeterminate" id="loadingBar"></div>
 </div>
 
-<!-- TRENDING SECTION -->
 <div class="trending-wrap" id="trendingWrap">
   <div class="trending-inner">
     <div class="trending-label" id="trendingLabel">
@@ -200,53 +152,43 @@ let mode='awal'
 let hasil=[]
 let lastInput=''
 let dbReady=false
-
-// ── TRENDING — load dari settings.json ──
-let TREND_AWAL = []
-let TREND_AKHIR = []
+let TREND_AWAL=[]
+let TREND_AKHIR=[]
 
 fetch('settings.json')
-  .then(r => r.json())
-  .then(cfg => {
-    TREND_AWAL  = cfg.trending_awal  || []
-    TREND_AKHIR = cfg.trending_akhir || []
+  .then(r=>r.json())
+  .then(cfg=>{
+    TREND_AWAL=cfg.trending_awal||[]
+    TREND_AKHIR=cfg.trending_akhir||[]
     renderTrending()
   })
-  .catch(() => {
-    // fallback kalau settings.json ga ada
-    TREND_AWAL  = ['ks','x','ax','ox','ex','ty','cy','ly','gy']
-    TREND_AKHIR = ['ks','x','ax','ox','ex','ty','cy','ly','gy']
+  .catch(()=>{
+    TREND_AWAL=['ks','x','ax','ox','ex','ty','cy','ly','gy']
+    TREND_AKHIR=['ks','x','ax','ox','ex','ty','cy','ly','gy']
     renderTrending()
   })
 
 function renderTrending(){
-  const wrap = document.getElementById('trendingWrap')
-  const chips = document.getElementById('trendingChips')
-  const label = document.getElementById('trendingLabel')
-  const inp = document.getElementById('huruf').value.trim()
-
-  if(inp){ wrap.classList.remove('visible'); return }
-
-  const list = mode === 'awal' ? TREND_AWAL : TREND_AKHIR
-
-  label.innerHTML = 'Populer'
-
-  chips.innerHTML = list.map((q,i) => {
-    const hot = i < 3
+  const wrap=document.getElementById('trendingWrap')
+  const chips=document.getElementById('trendingChips')
+  const label=document.getElementById('trendingLabel')
+  const inp=document.getElementById('huruf').value.trim()
+  if(inp){wrap.classList.remove('visible');return}
+  const list=mode==='awal'?TREND_AWAL:TREND_AKHIR
+  label.innerHTML='Populer'
+  chips.innerHTML=list.map((q,i)=>{
+    const hot=i<3
     return `<div class="trend-chip${hot?' hot':''}" onclick="applyTrend('${q}')">${q.toUpperCase()} 🔥</div>`
   }).join('')
-
   wrap.classList.add('visible')
 }
 
 function applyTrend(q){
-  const inp = document.getElementById('huruf')
-  inp.value = q
+  const inp=document.getElementById('huruf')
+  inp.value=q
   inp.focus()
   cari()
 }
-
-// ────────────────
 
 const hardnessRank={
   'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,
@@ -294,23 +236,17 @@ fetch('kbbi.json')
       dbReady=true
       worker.terminate()
       URL.revokeObjectURL(workerUrl)
-
       const bar=document.getElementById('loadingBar')
       bar.classList.remove('indeterminate')
       bar.style.width='100%'
-      setTimeout(()=>{ document.getElementById('loadingWrap').style.display='none' },400)
-
+      setTimeout(()=>{document.getElementById('loadingWrap').style.display='none'},400)
       const inp=document.getElementById('huruf')
       inp.disabled=false
       inp.placeholder='ketik 1–3 huruf'
-
       document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
       document.getElementById('infoTotal').textContent='total '+database.length.toLocaleString()+' kata'
       document.getElementById('result').innerHTML='<div class="empty"><div class="empty-icon">⌨</div>mulai ketik huruf</div>'
-
       new bootstrap.Toast(document.getElementById('toastRoblox'),{delay:6000}).show()
-
-      // tampilkan trending langsung
       renderTrending()
       cari()
     }
@@ -322,13 +258,12 @@ function setMode(m){
   document.getElementById('modeAwal').classList.toggle('active',m==='awal')
   document.getElementById('modeAkhir').classList.toggle('active',m==='akhir')
   const aj=document.getElementById('alphaJump')
-  if(m==='akhir') aj.classList.add('visible')
-  else { aj.classList.remove('visible'); aj.innerHTML='' }
+  if(m==='akhir')aj.classList.add('visible')
+  else{aj.classList.remove('visible');aj.innerHTML=''}
   renderTrending()
   cari()
 }
 
-// debounce record — catat setelah user berhenti 600ms
 let recordTimeout=null
 function cari(){
   if(!dbReady)return
@@ -336,10 +271,7 @@ function cari(){
   lastInput=input
   const resultDiv=document.getElementById('result')
   const t=document.getElementById('infoTotal')
-
-  // update trending visibility setiap ketikan
   renderTrending()
-
   if(!input){
     resultDiv.innerHTML='<div class="empty"><div class="empty-icon">⌨</div>mulai ketik huruf</div>'
     document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
@@ -347,13 +279,12 @@ function cari(){
     setTimeout(()=>{t.textContent=''},350)
     return
   }
-
   if(mode==='awal'){
     const start=lowerBound(database,input)
     const end=lowerBound(database,input+'zzz')
     hasil=database.slice(start,end)
     hasil.sort((a,b)=>getHardness(a)-getHardness(b))
-    renderTable()
+    renderGrid3()
   } else {
     hasil=database.filter(k=>k.endsWith(input))
     hasil.sort((a,b)=>a.localeCompare(b))
@@ -368,26 +299,21 @@ function showInfo(count){
   requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('visible')))
 }
 
-function renderTable(){
+function renderGrid3(){
   const resultDiv=document.getElementById('result')
   showInfo(hasil.length)
   if(!hasil.length){
     resultDiv.innerHTML='<div class="empty"><div class="empty-icon">∅</div>tidak ditemukan</div>'
     return
   }
-  let html='<table>'
+  let html='<div class="word-grid-awal">'
   for(let i=0;i<hasil.length;i++){
     const k=hasil[i]
     const hk=getHardKey(k)
     const last=k[k.length-1].toUpperCase()
-    const div=i>0&&i%5===0?'divider':''
-    html+=`<tr class="${div} ${hk}" onclick="navigator.clipboard.writeText('${k}')">
-      <td class="num">${i+1}</td>
-      <td class="word">${k}</td>
-      <td class="badge ${hk}"><span class="badge-pill">${last}</span></td>
-    </tr>`
+    html+=`<div class="awal-card ${hk}" onclick="navigator.clipboard.writeText('${k}')"><div class="card-word">${k}</div><span class="card-badge">${last}</span></div>`
   }
-  html+='</table>'
+  html+='</div>'
   resultDiv.innerHTML=html
 }
 
@@ -399,14 +325,12 @@ function renderGrid(){
     buildJumpBar({})
     return
   }
-
   const groups={}
   for(const w of hasil){
     const first=w[0].toLowerCase()
     if(!groups[first])groups[first]=[]
     groups[first].push(w)
   }
-
   const letters=Object.keys(groups).sort()
   let html=''
   for(let li=0;li<letters.length;li++){
@@ -418,17 +342,9 @@ function renderGrid(){
       const tail=w.slice(-lastInput.length)
       return `<div class="word-chip ${hk}" onclick="navigator.clipboard.writeText('${w}')">${base}<span class="chip-suffix">${tail}</span></div>`
     }).join('')
-
-    if(li>0) html+='<div class="alpha-divider"></div>'
-    html+=`<div class="alpha-section" id="sec-${l}">
-      <div class="alpha-header">
-        <div class="alpha-letter">${l.toUpperCase()}</div>
-        <div class="alpha-count">${words.length} kata</div>
-      </div>
-      <div class="word-grid">${chips}</div>
-    </div>`
+    if(li>0)html+='<div class="alpha-divider"></div>'
+    html+=`<div class="alpha-section" id="sec-${l}"><div class="alpha-header"><div class="alpha-letter">${l.toUpperCase()}</div><div class="alpha-count">${words.length} kata</div></div><div class="word-grid">${chips}</div></div>`
   }
-
   resultDiv.innerHTML=html
   buildJumpBar(groups)
 }
@@ -443,14 +359,11 @@ function buildJumpBar(groups){
 
 function jumpTo(l){
   const el=document.getElementById('sec-'+l)
-  if(!el) return
+  if(!el)return
   const resultDiv=document.getElementById('result')
   const firstSection=resultDiv.querySelector('.alpha-section')
-  if(firstSection&&firstSection.id==='sec-'+l){
-    resultDiv.scrollTo({top:0,behavior:'smooth'})
-    return
-  }
-  const offset=el.getBoundingClientRect().top - resultDiv.getBoundingClientRect().top + resultDiv.scrollTop
+  if(firstSection&&firstSection.id==='sec-'+l){resultDiv.scrollTo({top:0,behavior:'smooth'});return}
+  const offset=el.getBoundingClientRect().top-resultDiv.getBoundingClientRect().top+resultDiv.scrollTop
   resultDiv.scrollTo({top:offset,behavior:'smooth'})
 }
 
