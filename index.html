@@ -265,6 +265,7 @@ function setMode(m){
 }
 
 let searchTimer=null
+const trackedQueries=new Set()
 function cari(){
   if(!dbReady)return
   const input=document.getElementById('huruf').value.toLowerCase().trim()
@@ -280,6 +281,9 @@ function cari(){
   }
   clearTimeout(searchTimer)
   searchTimer=setTimeout(()=>{
+    const key=mode+':'+input
+    if(trackedQueries.has(key))return
+    trackedQueries.add(key)
     fetch('/api/store',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
