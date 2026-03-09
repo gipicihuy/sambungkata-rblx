@@ -296,9 +296,6 @@ function cari(){
     document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
     t.classList.remove('visible')
     setTimeout(()=>{t.textContent=''},350)
-    const aj=document.getElementById('alphaJump')
-    aj.innerHTML=''
-    aj.classList.remove('visible')
     return
   }
   if(mode==='awal'){
@@ -325,7 +322,7 @@ function renderGrid3(){
   const resultDiv=document.getElementById('result')
   showInfo(hasil.length)
   if(!hasil.length){
-    resultDiv.innerHTML='<div class="empty"><div class="empty-icon">🚫</div>tidak ditemukan</div>'
+    resultDiv.innerHTML='<div class="empty"><div class="empty-icon">∅</div>tidak ditemukan</div>'
     return
   }
   let html='<div class="word-grid-awal">'
@@ -344,7 +341,7 @@ function renderGrid(){
   const resultDiv=document.getElementById('result')
   showInfo(hasil.length)
   if(!hasil.length){
-    resultDiv.innerHTML='<div class="empty"><div class="empty-icon">🚫</div>tidak ditemukan</div>'
+    resultDiv.innerHTML='<div class="empty"><div class="empty-icon">∅</div>tidak ditemukan</div>'
     buildJumpBar({})
     return
   }
