@@ -198,8 +198,8 @@ const PAGE_SIZE=100
 async function loadTrending(){
   try{
     const [a,b]=await Promise.all([
-      fetch('/api/store?mode=awal&min=10&top=5')
-      fetch('/api/store?mode=akhir&min=10&top=5')
+      fetch('/api/store?mode=awal&min=10&top=5').then(r=>r.json()),
+      fetch('/api/store?mode=akhir&min=10&top=5').then(r=>r.json())
     ])
     TREND_AWAL=a.result||[]
     TREND_AKHIR=b.result||[]
