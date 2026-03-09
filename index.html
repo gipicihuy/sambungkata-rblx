@@ -336,7 +336,24 @@ function changePage(d){
 
 function slice(){const s=(currentPage-1)*PAGE_SIZE;return hasil.slice(s,s+PAGE_SIZE)}
 
-// Bangun jump bar: tiap huruf A-Z → halaman berapa huruf itu pertama muncul
+function jumpToLetter(l,pg){
+  currentPage=pg
+  renderAkhir()
+  document.getElementById('result').scrollTop=0
+  // cari baris pertama yang huruf depannya l, lalu scroll ke sana
+  requestAnimationFrame(()=>{
+    const rows=document.getElementById('result').querySelectorAll('.word-row')
+    for(const row of rows){
+      const txt=row.querySelector('.word-text')
+      if(txt&&txt.textContent[0].toLowerCase()===l){
+        row.scrollIntoView({block:'start',behavior:'smooth'})
+        break
+      }
+    }
+  })
+}
+
+function renderAwal(){
 function buildAlphaJump(){
   const aj=document.getElementById('alphaJump')
   if(mode!=='akhir'||!hasil.length){aj.classList.remove('visible');aj.innerHTML='';return}
@@ -349,7 +366,7 @@ function buildAlphaJump(){
   const all='abcdefghijklmnopqrstuvwxyz'.split('')
   aj.innerHTML=all.map(l=>{
     const pg=letterPage[l]
-    if(pg) return `<button class="jump-btn" onclick="goPage(${pg})" title="${l.toUpperCase()} → hal ${pg}">${l.toUpperCase()}</button>`
+    if(pg) return `<button class="jump-btn" onclick="jumpToLetter('${l}',${pg})" title="${l.toUpperCase()} → hal ${pg}">${l.toUpperCase()}</button>`
     return ''
   }).join('')
   aj.classList.add('visible')
