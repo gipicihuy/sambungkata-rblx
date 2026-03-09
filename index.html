@@ -383,6 +383,20 @@ function renderAkhir(){
 }
 
 document.getElementById('huruf').addEventListener('input',cari)
+
+// visitor tracking
+;(function(){
+  try{
+    fetch('/api/ping',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        page:location.pathname,
+        ref:document.referrer||'-'
+      })
+    }).catch(()=>{})
+  }catch(e){}
+})()
 </script>
 </body>
 </html>
