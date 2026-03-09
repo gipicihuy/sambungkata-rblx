@@ -15,43 +15,43 @@ export default async function handler(req, res) {
     'Content-Type': 'application/json'
   }
 
-  async function cmd(...args) {
-    const r = await fetch(`${base}/pipeline`, {
-      method: 'POST', headers,
-      body: JSON.stringify([args])
-    })
-    const d = await r.json()
-    return d[0]?.result ?? null
-  }
-
   if (req.method === 'POST') {
     const { mode, query } = req.body || {}
     if (!mode || !query) return res.status(400).json({ ok: false })
-    const q = query.toLowerCase().trim()
-    await cmd('ZINCRBY', `sk:${mode}`, 1, q)
+
+    const key = `s:${mode}:${query.toLowerCase().trim()}`
+    await fetch(`${base}/incr/${key}`, { method: 'POST', headers })
     return res.status(200).json({ ok: true })
   }
 
   if (req.method === 'GET') {
     const mode = req.query.mode || 'awal'
-    const min  = parseInt(req.query.min) || 10
+    const min  = parseInt(req.query.min) || 3
     const top  = parseInt(req.query.top) || 5
 
-    const r = await fetch(`${base}/pipeline`, {
-      method: 'POST', headers,
-      body: JSON.stringify([['ZREVRANGE', `sk:${mode}`, 0, 49, 'WITHSCORES']])
-    })
-    const d = await r.json()
-    const raw = d[0]?.result || []
+    const keysRes  = await fetch(`${base}/keys/s:${mode}:*`, { headers })
+    const keysData = await keysRes.json()
+    const keys     = keysData.result || []
 
-    const result = []
-    for (let i = 0; i < raw.length; i += 2) {
-      const q     = raw[i]
-      const count = parseInt(raw[i + 1])
-      if (count < min) continue
-      result.push({ q, hot: count >= min * 3 })
-      if (result.length >= top) break
-    }
+    if (!keys.length) return res.status(200).json({ result: [] })
+
+    const pipeline = keys.map(k => ['GET', k])
+    const valsRes  = await fetch(`${base}/pipeline`, {
+      method: 'POST', headers,
+      body: JSON.stringify(pipeline)
+    })
+    const valsData = await valsRes.json()
+
+    const pairs = keys.map((k, i) => ({
+      q:     k.replace(`s:${mode}:`, ''),
+      count: parseInt(valsData[i]?.result || 0)
+    }))
+
+    const result = pairs
+      .filter(p => p.count >= min)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, top)
+      .map(p => ({ q: p.q, hot: p.count >= min * 3 }))
 
     return res.status(200).json({ result })
   }
