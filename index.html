@@ -353,21 +353,17 @@ function jumpToLetter(l,pg){
   })
 }
 
-function renderAwal(){
 function buildAlphaJump(){
   const aj=document.getElementById('alphaJump')
   if(mode!=='akhir'||!hasil.length){aj.classList.remove('visible');aj.innerHTML='';return}
-  // map huruf → nomor halaman pertama kemunculan
   const letterPage={}
   for(let i=0;i<hasil.length;i++){
     const l=hasil[i][0].toLowerCase()
     if(!(l in letterPage)) letterPage[l]=Math.ceil((i+1)/PAGE_SIZE)
   }
-  const all='abcdefghijklmnopqrstuvwxyz'.split('')
-  aj.innerHTML=all.map(l=>{
+  aj.innerHTML='abcdefghijklmnopqrstuvwxyz'.split('').map(l=>{
     const pg=letterPage[l]
-    if(pg) return `<button class="jump-btn" onclick="jumpToLetter('${l}',${pg})" title="${l.toUpperCase()} → hal ${pg}">${l.toUpperCase()}</button>`
-    return ''
+    return pg?`<button class="jump-btn" onclick="jumpToLetter('${l}',${pg})">${l.toUpperCase()}</button>`:''
   }).join('')
   aj.classList.add('visible')
 }
@@ -381,9 +377,7 @@ function renderAwal(){
   let html=''
   for(let i=0;i<page.length;i++){
     const k=page[i]
-    const prefix=k.slice(0,lastInput.length)
-    const rest=k.slice(lastInput.length)
-    html+=`<div class="word-row" onclick="navigator.clipboard.writeText('${k}')"><span class="word-num">${offset+i+1}</span><span class="word-text"><span class="chip-prefix">${prefix}</span>${rest}</span></div>`
+    html+=`<div class="word-row" onclick="navigator.clipboard.writeText('${k}')"><span class="word-num">${offset+i+1}</span><span class="word-text"><span class="chip-prefix">${k.slice(0,lastInput.length)}</span>${k.slice(lastInput.length)}</span></div>`
   }
   resultDiv.innerHTML=html
 }
