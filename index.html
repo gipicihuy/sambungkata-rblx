@@ -106,8 +106,7 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 .hide-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:var(--subtext);font-size:16px;font-weight:700;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s;line-height:1;margin-left:auto;}
 .hide-btn:hover{background:rgba(255,61,87,0.1);color:var(--red);}
 .hide-btn.hidden-active{color:var(--red);}
-.word-row.is-hidden{opacity:0.3;}
-.word-row.is-hidden .word-text{text-decoration:line-through;}
+
 .fab-hidden{position:fixed;bottom:18px;right:18px;display:flex;align-items:center;gap:0;background:rgba(30,32,38,0.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.08);border-radius:50px;padding:5px 5px;box-shadow:0 4px 24px rgba(0,0,0,0.3);z-index:99;cursor:pointer;transition:opacity 0.2s,border-color 0.2s;user-select:none;}
 .fab-hidden:hover{border-color:rgba(255,255,255,0.18);}
 .fab-hidden:active{transform:scale(0.93);}
@@ -423,10 +422,12 @@ function renderAwal(){
   const page=slice()
   const offset=(currentPage-1)*PAGE_SIZE
   let html=''
+  let num=offset+1
   for(let i=0;i<page.length;i++){
     const k=page[i]
-    const hid=hiddenWords.has(k)
-    html+=`<div class="word-row${hid?' is-hidden':''}" onclick="if(event.target.classList.contains('hide-btn'))return;navigator.clipboard.writeText('${k}')"><span class="word-num">${offset+i+1}</span><span class="word-text"><span class="chip-prefix">${k.slice(0,lastInput.length)}</span>${k.slice(lastInput.length)}</span><button class="hide-btn${hid?' hidden-active':''}" onclick="toggleHide('${k}')" title="Sembunyikan">−</button></div>`
+    if(hiddenWords.has(k))continue
+    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn'))return;navigator.clipboard.writeText('${k}')"><span class="word-num">${num}</span><span class="word-text"><span class="chip-prefix">${k.slice(0,lastInput.length)}</span>${k.slice(lastInput.length)}</span><button class="hide-btn" onclick="toggleHide('${k}')" title="Sembunyikan">−</button></div>`
+    num++
   }
   resultDiv.innerHTML=html
 }
@@ -446,8 +447,8 @@ function renderAkhir(){
       html+=`<div class="alpha-header-row"><span class="alpha-badge">${letter}</span></div>`
       lastLetter=letter
     }
-    const hid=hiddenWords.has(w)
-    html+=`<div class="word-row${hid?' is-hidden':''}" onclick="if(event.target.classList.contains('hide-btn'))return;navigator.clipboard.writeText('${w}')"><span class="word-num">${offset+i+1}</span><span class="word-text">${base}<span class="chip-suffix">${tail}</span></span><button class="hide-btn${hid?' hidden-active':''}" onclick="toggleHide('${w}')" title="Sembunyikan">−</button></div>`
+    if(hiddenWords.has(w))continue
+    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn'))return;navigator.clipboard.writeText('${w}')"><span class="word-num">${offset+i+1}</span><span class="word-text">${base}<span class="chip-suffix">${tail}</span></span><button class="hide-btn" onclick="toggleHide('${w}')" title="Sembunyikan">−</button></div>`
   }
   resultDiv.innerHTML=html
 }
