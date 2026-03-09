@@ -195,10 +195,18 @@ let database=[],mode='awal',hasil=[],lastInput='',dbReady=false
 let TREND_AWAL=[],TREND_AKHIR=[],currentPage=1
 const PAGE_SIZE=100
 
-fetch('settings.json')
-  .then(r=>r.json())
-  .then(cfg=>{TREND_AWAL=cfg.trending_awal||[];TREND_AKHIR=cfg.trending_akhir||[];renderTrending()})
-  .catch(()=>{TREND_AWAL=TREND_AKHIR=['ks','x','ax','ox','ex','ty','cy','ly','gy'];renderTrending()})
+async function loadTrending(){
+  try{
+    const [a,b]=await Promise.all([
+      fetch('/api/store?mode=awal&min=3&top=5').then(r=>r.json()),
+      fetch('/api/store?mode=akhir&min=3&top=5').then(r=>r.json())
+    ])
+    TREND_AWAL=a.result||[]
+    TREND_AKHIR=b.result||[]
+  }catch(e){TREND_AWAL=[];TREND_AKHIR=[]}
+  renderTrending()
+}
+loadTrending()
 
 function showWAToast(){
   const el=document.getElementById('toastWA')
@@ -209,6 +217,7 @@ function renderTrending(){
   const wrap=document.getElementById('trendingWrap')
   if(document.getElementById('huruf').value.trim()){wrap.classList.remove('visible');return}
   const list=mode==='awal'?TREND_AWAL:TREND_AKHIR
+  if(!list.length){wrap.classList.remove('visible');return}
   document.getElementById('trendingChips').innerHTML=list.map(item=>{
     const q=typeof item==='object'?item.q:item
     const hot=typeof item==='object'?!!item.hot:false
@@ -221,7 +230,6 @@ function applyTrend(q){const inp=document.getElementById('huruf');inp.value=q;in
 
 const HR={'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,'g':7,'h':8,'j':9,'k':10,'b':11,'c':12,'d':13,'p':14,'t':15,'l':16,'m':17,'n':18,'r':19,'s':20,'u':21,'i':22,'e':23,'o':24,'a':25}
 function getHardness(w){if(!w)return 99;const c=w[w.length-1].toLowerCase();return HR[c]!==undefined?HR[c]:99}
-
 function lowerBound(arr,t){let l=0,r=arr.length;while(l<r){let m=(l+r)>>1;if(arr[m]<t)l=m+1;else r=m}return l}
 
 function initDB(){
@@ -256,6 +264,7 @@ function setMode(m){
   renderTrending();cari()
 }
 
+let searchTimer=null
 function cari(){
   if(!dbReady)return
   const input=document.getElementById('huruf').value.toLowerCase().trim()
@@ -269,6 +278,14 @@ function cari(){
     document.getElementById('alphaJump').classList.remove('visible')
     return
   }
+  clearTimeout(searchTimer)
+  searchTimer=setTimeout(()=>{
+    fetch('/api/store',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({mode,query:input})
+    }).catch(()=>{})
+  },800)
   if(mode==='awal'){
     hasil=database.slice(lowerBound(database,input),lowerBound(database,input+'zzz'))
     hasil.sort((a,b)=>getHardness(a)-getHardness(b))
@@ -305,9 +322,7 @@ function goPage(n){
   document.getElementById('result').scrollTop=0
 }
 
-function goPageLast(){
-  goPage(Math.ceil(hasil.length/PAGE_SIZE))
-}
+function goPageLast(){goPage(Math.ceil(hasil.length/PAGE_SIZE))}
 
 function changePage(d){
   const total=Math.ceil(hasil.length/PAGE_SIZE)
@@ -384,16 +399,12 @@ function renderAkhir(){
 
 document.getElementById('huruf').addEventListener('input',cari)
 
-// visitor tracking
 ;(function(){
   try{
     fetch('/api/ping',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        page:location.pathname,
-        ref:document.referrer||'-'
-      })
+      body:JSON.stringify({page:location.pathname,ref:document.referrer||'-'})
     }).catch(()=>{})
   }catch(e){}
 })()
