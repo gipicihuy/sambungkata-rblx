@@ -239,8 +239,10 @@ function initDB(){
     const inp=document.getElementById('huruf');inp.disabled=false;inp.placeholder='ketik 1–3 huruf'
     document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
     document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">keyboard</span>mulai ketik huruf</div>'
-    new bootstrap.Toast(document.getElementById('toastRoblox'),{delay:6000}).show()
-    setTimeout(()=>showWAToast(),3000)
+    const robloxToast=document.getElementById('toastRoblox')
+    const bsRoblox=new bootstrap.Toast(robloxToast,{delay:6000})
+    bsRoblox.show()
+    robloxToast.addEventListener('hidden.bs.toast',()=>showWAToast(),{once:true})
     renderTrending();cari()
   }
 }
