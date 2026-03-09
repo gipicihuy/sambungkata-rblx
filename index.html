@@ -444,7 +444,7 @@ function renderAkhir(){
   for(let i=0;i<page.length;i++){
     const w=page[i],base=w.slice(0,-lastInput.length),tail=w.slice(-lastInput.length)
     const letter=w[0].toUpperCase()
-    if(hiddenWords.has(w)){if(letter!==lastLetter)lastLetter=letter;continue}
+    if(hiddenWords.has(w))continue
     if(letter!==lastLetter){
       html+=`<div class="alpha-header-row"><span class="alpha-badge">${letter}</span></div>`
       lastLetter=letter
