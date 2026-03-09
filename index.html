@@ -63,7 +63,16 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 .jump-btn{padding:7px 11px;font-size:13px;font-weight:800;border:1px solid rgba(255,255,255,0.12);border-radius:7px;background:rgba(10,10,11,0.6);color:#cbd5e1;cursor:pointer;transition:all 0.12s;line-height:1;}
 .jump-btn:hover{background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.35);color:var(--green);}
 
-/* RESULT */
+/* ALPHA JUMP */
+.alpha-jump{display:none;flex-wrap:wrap;gap:5px;background:#1c1e21;flex-shrink:0;}
+.alpha-jump.visible{display:flex;}
+.alpha-jump.visible:not(:empty){padding:8px 14px;border-bottom:1px solid var(--border);}
+.jump-btn{padding:6px 10px;font-size:12px;font-weight:800;border:1px solid rgba(255,255,255,0.1);border-radius:6px;background:rgba(10,10,11,0.6);color:#cbd5e1;cursor:pointer;transition:all 0.12s;line-height:1;}
+.jump-btn:hover{background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.35);color:var(--green);}
+.jump-btn:active{transform:scale(0.93);}
+.jump-btn.na{opacity:0.2;pointer-events:none;}
+
+
 .result{flex:1;overflow-y:auto;min-height:0;padding-bottom:80px;}
 .result::-webkit-scrollbar{width:3px;}
 .result::-webkit-scrollbar-thumb{background:var(--muted);border-radius:10px;}
@@ -186,6 +195,7 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
   </div>
 </div>
 
+
 <div class="alpha-jump" id="alphaJump"></div>
 
 <div class="result" id="result">
@@ -261,8 +271,6 @@ function setMode(m){
   mode=m
   document.getElementById('modeAwal').classList.toggle('active',m==='awal')
   document.getElementById('modeAkhir').classList.toggle('active',m==='akhir')
-  const aj=document.getElementById('alphaJump')
-  if(m==='akhir')aj.classList.add('visible');else{aj.classList.remove('visible');aj.innerHTML=''}
   renderTrending();cari()
 }
 
@@ -276,11 +284,13 @@ function cari(){
     document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
     const t=document.getElementById('infoTotal');t.classList.remove('visible');setTimeout(()=>{t.textContent=''},350)
     document.getElementById('pgBar').classList.remove('on')
+    document.getElementById('alphaJump').classList.remove('visible')
     return
   }
   if(mode==='awal'){
     hasil=database.slice(lowerBound(database,input),lowerBound(database,input+'zzz'))
     hasil.sort((a,b)=>getHardness(a)-getHardness(b))
+    document.getElementById('alphaJump').classList.remove('visible')
     renderAwal()
   } else {
     hasil=database.filter(k=>k.endsWith(input))
@@ -326,6 +336,25 @@ function changePage(d){
 
 function slice(){const s=(currentPage-1)*PAGE_SIZE;return hasil.slice(s,s+PAGE_SIZE)}
 
+// Bangun jump bar: tiap huruf A-Z → halaman berapa huruf itu pertama muncul
+function buildAlphaJump(){
+  const aj=document.getElementById('alphaJump')
+  if(mode!=='akhir'||!hasil.length){aj.classList.remove('visible');aj.innerHTML='';return}
+  // map huruf → nomor halaman pertama kemunculan
+  const letterPage={}
+  for(let i=0;i<hasil.length;i++){
+    const l=hasil[i][0].toLowerCase()
+    if(!(l in letterPage)) letterPage[l]=Math.ceil((i+1)/PAGE_SIZE)
+  }
+  const all='abcdefghijklmnopqrstuvwxyz'.split('')
+  aj.innerHTML=all.map(l=>{
+    const pg=letterPage[l]
+    if(pg) return `<button class="jump-btn" onclick="goPage(${pg})" title="${l.toUpperCase()} → hal ${pg}">${l.toUpperCase()}</button>`
+    return ''
+  }).join('')
+  aj.classList.add('visible')
+}
+
 function renderAwal(){
   showInfo(hasil.length);updatePg()
   const resultDiv=document.getElementById('result')
@@ -343,9 +372,9 @@ function renderAwal(){
 }
 
 function renderAkhir(){
-  showInfo(hasil.length);updatePg()
+  showInfo(hasil.length);updatePg();buildAlphaJump()
   const resultDiv=document.getElementById('result')
-  if(!hasil.length){resultDiv.innerHTML='<div class="empty"><span class="material-icons-round">search_off</span>tidak ditemukan</div>';buildJumpBar([]);return}
+  if(!hasil.length){resultDiv.innerHTML='<div class="empty"><span class="material-icons-round">search_off</span>tidak ditemukan</div>';return}
   const page=slice()
   const offset=(currentPage-1)*PAGE_SIZE
   let html=''
@@ -354,21 +383,9 @@ function renderAkhir(){
     html+=`<div class="word-row" onclick="navigator.clipboard.writeText('${w}')"><span class="word-num">${offset+i+1}</span><span class="word-text">${base}<span class="chip-suffix">${tail}</span></span></div>`
   }
   resultDiv.innerHTML=html
-  buildJumpBar(page)
 }
 
-function buildJumpBar(page){
-  const aj=document.getElementById('alphaJump')
-  const letters=[...new Set(page.map(w=>w[0].toLowerCase()))].sort()
-  aj.innerHTML=letters.map(l=>`<button class="jump-btn" onclick="jumpTo('${l}')">${l.toUpperCase()}</button>`).join('')
-}
 
-function jumpTo(l){
-  const rows=document.getElementById('result').querySelectorAll('.word-row')
-  for(const row of rows){
-    if(row.querySelector('.word-text').textContent[0].toLowerCase()===l){row.scrollIntoView({block:'start',behavior:'smooth'});break}
-  }
-}
 
 document.getElementById('huruf').addEventListener('input',cari)
 </script>
