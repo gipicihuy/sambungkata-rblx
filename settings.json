@@ -1,15 +1,16 @@
 {
   "trending_awal": [
-    {"q": "x", "hot": true},
+    {"q": "x", "hot": false},
     {"q": "ax", "hot": false},
     {"q": "ox", "hot": true},
     {"q": "ix", "hot": false},
-    {"q": "ex", "hot": false}
+    {"q": "ex", "hot": true}
   ],
   "trending_akhir": [
-    {"q": "ly", "hot": true},
-    {"q": "ks", "hot": true},
-    {"q": "if", "hot": false},
+    {"q": "cy", "hot": true},
+    {"q": "ks", "hot": false},
+    {"q": "if", "hot": true},
+    {"q": "gy", "hot": false},
     {"q": "x", "hot": false}
   ]
 }
