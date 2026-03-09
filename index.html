@@ -440,15 +440,17 @@ function renderAkhir(){
   const offset=(currentPage-1)*PAGE_SIZE
   let html=''
   let lastLetter=''
+  let num=offset+1
   for(let i=0;i<page.length;i++){
     const w=page[i],base=w.slice(0,-lastInput.length),tail=w.slice(-lastInput.length)
     const letter=w[0].toUpperCase()
+    if(hiddenWords.has(w)){if(letter!==lastLetter)lastLetter=letter;continue}
     if(letter!==lastLetter){
       html+=`<div class="alpha-header-row"><span class="alpha-badge">${letter}</span></div>`
       lastLetter=letter
     }
-    if(hiddenWords.has(w))continue
-    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn'))return;navigator.clipboard.writeText('${w}')"><span class="word-num">${offset+i+1}</span><span class="word-text">${base}<span class="chip-suffix">${tail}</span></span><button class="hide-btn" onclick="toggleHide('${w}')" title="Sembunyikan">−</button></div>`
+    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn'))return;navigator.clipboard.writeText('${w}')"><span class="word-num">${num}</span><span class="word-text">${base}<span class="chip-suffix">${tail}</span></span><button class="hide-btn" onclick="toggleHide('${w}')" title="Sembunyikan">−</button></div>`
+    num++
   }
   resultDiv.innerHTML=html
 }
