@@ -12,7 +12,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#111318;--surface:#161719;--border:rgba(255,255,255,0.07);
-  --green:#da7756;--red:#ff3d57;--orange:#ff8c00;--yellow:#ffd600;
+  --green:#f97316;--red:#ff3d57;--orange:#ff8c00;--yellow:#ffd600;
   --muted:#3a4a5c;--text:#e2eaf4;--subtext:#556070;
 }
 body{
@@ -49,7 +49,7 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 .result::-webkit-scrollbar{width:3px;}
 .result::-webkit-scrollbar-thumb{background:var(--muted);border-radius:10px;}
 .loading-bar-wrap{height:2px;background:transparent;flex-shrink:0;overflow:hidden;}
-.loading-bar{height:2px;width:0%;background:var(--green);transition:width 0.4s ease;box-shadow:0 0 8px rgba(218,119,86,0.6);}
+.loading-bar{height:2px;width:0%;background:var(--green);transition:width 0.4s ease;box-shadow:0 0 8px rgba(249,115,22,0.6);}
 .loading-bar.indeterminate{width:40%;animation:indeterminate 1.2s ease-in-out infinite;}
 @keyframes indeterminate{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
 .word-grid-awal{display:flex;flex-wrap:wrap;gap:5px;padding:9px 12px 12px;}
@@ -59,14 +59,14 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 .awal-card .card-word{font-size:15px;font-weight:600;color:#e2eaf4;white-space:nowrap;line-height:1;}
 .awal-card .card-word .chip-prefix{color:var(--green);font-weight:800;}
 .alpha-section{padding:0 0 4px;}
-.alpha-header{display:flex;align-items:center;gap:10px;padding:10px 14px 9px;background:rgba(218,119,86,0.05);border-top:2px solid rgba(218,119,86,0.25);border-bottom:1px solid rgba(218,119,86,0.1);}
-.alpha-letter{font-size:15px;font-weight:800;color:#fff;background:var(--green);border-radius:7px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:-0.5px;box-shadow:0 0 10px rgba(218,119,86,0.3);}
-.alpha-count{font-size:11px;color:var(--green);font-weight:700;margin-left:auto;background:rgba(218,119,86,0.1);border:1px solid rgba(218,119,86,0.2);border-radius:5px;padding:2px 8px;}
+.alpha-header{display:flex;align-items:center;gap:10px;padding:10px 14px 9px;background:rgba(249,115,22,0.05);border-top:2px solid rgba(249,115,22,0.25);border-bottom:1px solid rgba(249,115,22,0.1);}
+.alpha-letter{font-size:15px;font-weight:800;color:#fff;background:var(--green);border-radius:7px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:-0.5px;box-shadow:0 0 10px rgba(249,115,22,0.3);}
+.alpha-count{font-size:11px;color:var(--green);font-weight:700;margin-left:auto;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.2);border-radius:5px;padding:2px 8px;}
 .alpha-jump{display:none;flex-wrap:wrap;gap:6px;background:#1c1e21;flex-shrink:0;}
 .alpha-jump.visible{display:flex;}
 .alpha-jump.visible:not(:empty){padding:10px 14px;border-bottom:1px solid var(--border);}
 .jump-btn{padding:7px 11px;font-size:13px;font-weight:800;border:1px solid rgba(255,255,255,0.12);border-radius:7px;background:rgba(10,10,11,0.6);color:#cbd5e1;cursor:pointer;transition:all 0.12s;line-height:1;}
-.jump-btn:hover{background:rgba(218,119,86,0.12);border-color:rgba(218,119,86,0.35);color:var(--green);}
+.jump-btn:hover{background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.35);color:var(--green);}
 .jump-btn:active{transform:scale(0.93);}
 .alpha-divider{height:1px;background:var(--border);}
 .word-grid{display:flex;flex-wrap:wrap;gap:5px;padding:9px 12px 12px;}
@@ -75,7 +75,7 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 .word-chip:active{transform:scale(0.95);}
 .chip-suffix{color:var(--green);font-weight:800;}
 .empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#94a3b8;font-size:14px;font-weight:600;gap:6px;}
-.empty-icon{font-size:28px;opacity:0.3;}
+.empty-icon{font-size:52px;opacity:0.45;}
 .toast-container{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9999;pointer-events:none;width:auto;max-width:90vw;}
 .toast-roblox{pointer-events:auto;background:#2d1b1b;border:1px solid #5c2e2e;border-left:3px solid #d9534f;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.4);color:#f0d9d9;font-family:'Plus Jakarta Sans',sans-serif;min-width:260px;max-width:340px;padding:0;}
 .toast-roblox .toast-header{background:transparent;border-bottom:1px solid #3d2222;padding:9px 12px 8px;color:#f0d9d9;font-size:12px;font-weight:700;}
@@ -91,7 +91,7 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 .trending-label svg{opacity:0.7;}
 .trending-chips{display:flex;flex-wrap:wrap;gap:5px;}
 .trend-chip{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:6px;font-size:12px;font-weight:800;color:#cbd5e1;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;transition:background 0.12s,border-color 0.12s,color 0.12s,transform 0.1s;user-select:none;}
-.trend-chip:hover{background:rgba(218,119,86,0.09);border-color:rgba(218,119,86,0.3);color:var(--green);}
+.trend-chip:hover{background:rgba(249,115,22,0.09);border-color:rgba(249,115,22,0.3);color:var(--green);}
 .trend-chip:active{transform:scale(0.92);}
 .trend-chip.hot{background:rgba(255,61,87,0.07);border-color:rgba(255,61,87,0.2);color:#ff8fa3;}
 .trend-chip.hot:hover{background:rgba(255,61,87,0.14);border-color:rgba(255,61,87,0.4);color:var(--red);}
@@ -141,7 +141,7 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
   <div class="trending-inner">
     <div class="trending-label" id="trendingLabel">
       <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-        <path d="M1 8L4 4.5L6.5 6.5L9 2" stroke="#da7756" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M1 8L4 4.5L6.5 6.5L9 2" stroke="#f97316" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       populer dicari
     </div>
