@@ -237,23 +237,14 @@ let database=[],mode='awal',hasil=[],lastInput='',dbReady=false
 let TREND_AWAL=[],TREND_AKHIR=[],currentPage=1
 const PAGE_SIZE=100
 
-const TREND_TTL=15*60*1000
 async function loadTrending(){
   try{
-    const c=sessionStorage.getItem('tc')
-    if(c){
-      const p=JSON.parse(c)
-      if(Date.now()-p.ts<TREND_TTL){TREND_AWAL=p.a;TREND_AKHIR=p.b;renderTrending();return}
-    }
-  }catch(e){}
-  try{
     const [a,b]=await Promise.all([
-      fetch('/api/store?mode=awal&min=10&top=5').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}),
-      fetch('/api/store?mode=akhir&min=10&top=5').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()})
+      fetch('/api/store?mode=awal&min=10&top=5').then(r=>r.json()),
+      fetch('/api/store?mode=akhir&min=10&top=5').then(r=>r.json())
     ])
     TREND_AWAL=a.result||[]
     TREND_AKHIR=b.result||[]
-    try{sessionStorage.setItem('tc',JSON.stringify({ts:Date.now(),a:TREND_AWAL,b:TREND_AKHIR}))}catch(e){}
   }catch(e){
     try{
       const cfg=await fetch('settings.json').then(r=>r.json())
