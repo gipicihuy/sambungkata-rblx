@@ -484,8 +484,35 @@ function openSheet(){
 
 function closeSheet(){
   document.getElementById('sheetOverlay').classList.remove('on')
-  document.getElementById('sheet').classList.remove('on')
+  const s=document.getElementById('sheet')
+  s.classList.remove('on')
+  s.style.transform=''
 }
+
+;(function(){
+  const sheet=document.getElementById('sheet')
+  let startY=0,curY=0,dragging=false
+  sheet.addEventListener('touchstart',e=>{
+    if(e.target.closest('.sheet-body')&&sheet.querySelector('.sheet-body').scrollTop>0)return
+    startY=e.touches[0].clientY
+    dragging=true
+    sheet.style.transition='none'
+  },{passive:true})
+  sheet.addEventListener('touchmove',e=>{
+    if(!dragging)return
+    curY=e.touches[0].clientY
+    const dy=Math.max(0,curY-startY)
+    sheet.style.transform=`translateY(${dy}px)`
+  },{passive:true})
+  sheet.addEventListener('touchend',()=>{
+    if(!dragging)return
+    dragging=false
+    sheet.style.transition=''
+    const dy=curY-startY
+    if(dy>80)closeSheet()
+    else sheet.style.transform=''
+  })
+})()
 
 function renderSheet(){
   const body=document.getElementById('sheetBody')
