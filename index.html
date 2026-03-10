@@ -106,7 +106,6 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 .hide-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:var(--subtext);font-size:16px;font-weight:700;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s;line-height:1;margin-left:auto;}
 .hide-btn:hover{background:rgba(255,61,87,0.1);color:var(--red);}
 .hide-btn.hidden-active{color:var(--red);}
-
 .fab-hidden{position:fixed;bottom:72px;right:18px;display:flex;align-items:center;gap:0;background:rgba(30,32,38,0.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.08);border-radius:50px;padding:5px 5px;box-shadow:0 4px 24px rgba(0,0,0,0.3);z-index:99;cursor:pointer;transition:opacity 0.2s,border-color 0.2s;user-select:none;}
 .fab-hidden:hover{border-color:rgba(255,255,255,0.18);}
 .fab-hidden:active{transform:scale(0.93);}
@@ -336,6 +335,8 @@ function cari(){
   }
 }
 
+function getVisible(){return hasil.filter(k=>!hiddenWords.has(k))}
+
 function showInfo(n){
   document.getElementById('info').textContent=n.toLocaleString()+' kata'
   const t=document.getElementById('infoTotal');t.textContent='total '+database.length.toLocaleString()+' kata'
@@ -343,7 +344,7 @@ function showInfo(n){
 }
 
 function updatePg(){
-  const total=Math.ceil(hasil.length/PAGE_SIZE)
+  const total=Math.ceil(getVisible().length/PAGE_SIZE)
   const bar=document.getElementById('pgBar')
   if(total<=1){bar.classList.remove('on');return}
   bar.classList.add('on')
@@ -360,16 +361,16 @@ function goPage(n){
   document.getElementById('result').scrollTop=0
 }
 
-function goPageLast(){goPage(Math.ceil(hasil.length/PAGE_SIZE))}
+function goPageLast(){goPage(Math.ceil(getVisible().length/PAGE_SIZE))}
 
 function changePage(d){
-  const total=Math.ceil(hasil.length/PAGE_SIZE)
+  const total=Math.ceil(getVisible().length/PAGE_SIZE)
   currentPage=Math.max(1,Math.min(total,currentPage+d))
   if(mode==='awal')renderAwal();else renderAkhir()
   document.getElementById('result').scrollTop=0
 }
 
-function slice(){const s=(currentPage-1)*PAGE_SIZE;return hasil.slice(s,s+PAGE_SIZE)}
+function slice(){const v=getVisible();const s=(currentPage-1)*PAGE_SIZE;return v.slice(s,s+PAGE_SIZE)}
 
 function jumpToLetter(l,pg){
   currentPage=pg
@@ -388,10 +389,11 @@ function jumpToLetter(l,pg){
 
 function buildAlphaJump(){
   const aj=document.getElementById('alphaJump')
-  if(mode!=='akhir'||!hasil.length){aj.classList.remove('visible');aj.innerHTML='';return}
+  const vis=getVisible()
+  if(mode!=='akhir'||!vis.length){aj.classList.remove('visible');aj.innerHTML='';return}
   const letterPage={}
-  for(let i=0;i<hasil.length;i++){
-    const l=hasil[i][0].toLowerCase()
+  for(let i=0;i<vis.length;i++){
+    const l=vis[i][0].toLowerCase()
     if(!(l in letterPage)) letterPage[l]=Math.ceil((i+1)/PAGE_SIZE)
   }
   aj.innerHTML='abcdefghijklmnopqrstuvwxyz'.split('').map(l=>{
@@ -402,41 +404,39 @@ function buildAlphaJump(){
 }
 
 function renderAwal(){
-  showInfo(hasil.length);updatePg()
+  const vis=getVisible()
+  showInfo(vis.length);updatePg()
   const resultDiv=document.getElementById('result')
-  if(!hasil.length){resultDiv.innerHTML='<div class="empty"><span class="material-icons-round">search_off</span>tidak ditemukan</div>';return}
+  if(!vis.length){resultDiv.innerHTML='<div class="empty"><span class="material-icons-round">search_off</span>tidak ditemukan</div>';return}
   const page=slice()
   const offset=(currentPage-1)*PAGE_SIZE
   let html=''
-  let num=offset+1
   for(let i=0;i<page.length;i++){
     const k=page[i]
-    if(hiddenWords.has(k))continue
+    const num=offset+i+1
     html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn'))return;navigator.clipboard.writeText('${k}')"><span class="word-num">${num}</span><span class="word-text"><span class="chip-prefix">${k.slice(0,lastInput.length)}</span>${k.slice(lastInput.length)}</span><button class="hide-btn" onclick="toggleHide('${k}')" title="Sembunyikan">−</button></div>`
-    num++
   }
   resultDiv.innerHTML=html
 }
 
 function renderAkhir(){
-  showInfo(hasil.length);updatePg();buildAlphaJump()
+  const vis=getVisible()
+  showInfo(vis.length);updatePg();buildAlphaJump()
   const resultDiv=document.getElementById('result')
-  if(!hasil.length){resultDiv.innerHTML='<div class="empty"><span class="material-icons-round">search_off</span>tidak ditemukan</div>';return}
+  if(!vis.length){resultDiv.innerHTML='<div class="empty"><span class="material-icons-round">search_off</span>tidak ditemukan</div>';return}
   const page=slice()
   const offset=(currentPage-1)*PAGE_SIZE
   let html=''
   let lastLetter=''
-  let num=offset+1
   for(let i=0;i<page.length;i++){
     const w=page[i],base=w.slice(0,-lastInput.length),tail=w.slice(-lastInput.length)
     const letter=w[0].toUpperCase()
-    if(hiddenWords.has(w))continue
+    const num=offset+i+1
     if(letter!==lastLetter){
       html+=`<div class="alpha-header-row"><span class="alpha-badge">${letter}</span></div>`
       lastLetter=letter
     }
     html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn'))return;navigator.clipboard.writeText('${w}')"><span class="word-num">${num}</span><span class="word-text">${base}<span class="chip-suffix">${tail}</span></span><button class="hide-btn" onclick="toggleHide('${w}')" title="Sembunyikan">−</button></div>`
-    num++
   }
   resultDiv.innerHTML=html
 }
