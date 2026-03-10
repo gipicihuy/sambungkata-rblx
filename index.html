@@ -243,7 +243,7 @@ fetch('settings.json')
   .then(cfg=>{TREND_AWAL=cfg.trending_awal||[];TREND_AKHIR=cfg.trending_akhir||[];renderTrending()})
   .catch(()=>{TREND_AWAL=[];TREND_AKHIR=[];renderTrending()})
 
-document.getElementById('waBanner').addEventListener('click',function(){
+document.getElementById('waBanner').addEventListener('pointerdown',function(){
   const old=this.querySelector('.wa-sheen')
   if(old)old.remove()
   const sheen=document.createElement('span')
