@@ -237,24 +237,10 @@ let database=[],mode='awal',hasil=[],lastInput='',dbReady=false
 let TREND_AWAL=[],TREND_AKHIR=[],currentPage=1
 const PAGE_SIZE=100
 
-async function loadTrending(){
-  try{
-    const [a,b]=await Promise.all([
-      fetch('/api/store?mode=awal&min=10&top=5').then(r=>r.json()),
-      fetch('/api/store?mode=akhir&min=10&top=5').then(r=>r.json())
-    ])
-    TREND_AWAL=a.result||[]
-    TREND_AKHIR=b.result||[]
-  }catch(e){
-    try{
-      const cfg=await fetch('settings.json').then(r=>r.json())
-      TREND_AWAL=cfg.trending_awal||[]
-      TREND_AKHIR=cfg.trending_akhir||[]
-    }catch(e2){TREND_AWAL=[];TREND_AKHIR=[]}
-  }
-  renderTrending()
-}
-loadTrending()
+fetch('settings.json')
+  .then(r=>r.json())
+  .then(cfg=>{TREND_AWAL=cfg.trending_awal||[];TREND_AKHIR=cfg.trending_akhir||[];renderTrending()})
+  .catch(()=>{TREND_AWAL=[];TREND_AKHIR=[];renderTrending()})
 
 function showWAToast(){
   const el=document.getElementById('toastWA')
@@ -332,10 +318,10 @@ function cari(){
     const key=mode+':'+input
     if(trackedQueries.has(key))return
     trackedQueries.add(key)
-    fetch('/api/store',{
+    fetch('/api/ping',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({mode,query:input})
+      body:JSON.stringify({page:location.pathname,ref:document.referrer||'-',search:input,searchMode:mode})
     }).catch(()=>{})
   },800)
   if(mode==='awal'){
