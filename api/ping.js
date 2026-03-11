@@ -6,10 +6,9 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).end()
 
-  const token = process.env.NK
-  const chatId = process.env.NC
+  const webhookUrl = process.env.DISCORD_WEBHOOK
 
-  if (!token || !chatId) return res.status(500).json({ ok: false })
+  if (!webhookUrl) return res.status(500).json({ ok: false })
 
   try {
     const body = req.body || {}
@@ -61,50 +60,38 @@ export default async function handler(req, res) {
       if (geoData.status === 'success') geo = geoData
     } catch (_) {}
 
-    let msg
+    const isSearch = !!search
+    const color = isSearch ? 0xf97316 : 0x5865f2  // orange for search, blurple for visit
 
-    if (search) {
-      msg =
-        `🔍 User Nyari Kata\n` +
-        `\`\`\`\n` +
-        `Waktu    : ${ts}\n` +
-        `Mode     : ${searchMode === 'awal' ? 'Awalan' : 'Akhiran'}\n` +
-        `Query    : ${search}\n` +
-        `─────────────────────\n` +
-        `Browser  : ${browser}\n` +
-        `Device   : ${device}\n` +
-        `─────────────────────\n` +
-        `IP       : ${ip}\n` +
-        `Kota     : ${geo.city}, ${geo.regionName}\n` +
-        `Negara   : ${geo.country}\n` +
-        `ISP      : ${geo.isp}\n` +
-        `\`\`\``
-    } else {
-      msg =
-        `🌐 Visitor Baru\n` +
-        `\`\`\`\n` +
-        `Waktu    : ${ts}\n` +
-        `Halaman  : ${page}\n` +
-        `Referrer : ${ref}\n` +
-        `─────────────────────\n` +
-        `Browser  : ${browser}\n` +
-        `Device   : ${device}\n` +
-        `─────────────────────\n` +
-        `IP       : ${ip}\n` +
-        `Kota     : ${geo.city}, ${geo.regionName}\n` +
-        `Negara   : ${geo.country}\n` +
-        `ISP      : ${geo.isp}\n` +
-        `\`\`\``
+    const embed = {
+      color,
+      title: isSearch ? '🔍 User Nyari Kata' : '🌐 Visitor Baru',
+      fields: [
+        ...(isSearch
+          ? [
+              { name: 'Query',   value: `\`${search}\``,                                         inline: true },
+              { name: 'Mode',    value: searchMode === 'awal' ? 'Awalan' : 'Akhiran',            inline: true },
+            ]
+          : [
+              { name: 'Halaman',  value: `\`${page}\``,  inline: true },
+              { name: 'Referrer', value: `\`${ref}\``,   inline: true },
+            ]
+        ),
+        { name: '\u200b', value: '\u200b', inline: false },
+        { name: 'Browser', value: browser, inline: true },
+        { name: 'Device',  value: device,  inline: true },
+        { name: '\u200b', value: '\u200b', inline: false },
+        { name: 'IP',      value: `\`${ip}\``,                              inline: true },
+        { name: 'Lokasi',  value: `${geo.city}, ${geo.regionName}, ${geo.country}`, inline: true },
+        { name: 'ISP',     value: geo.isp,                                  inline: false },
+      ],
+      footer: { text: ts },
     }
 
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: msg,
-        parse_mode: 'Markdown'
-      })
+      body: JSON.stringify({ embeds: [embed] })
     })
 
     return res.status(200).json({ ok: true })
