@@ -61,7 +61,7 @@ export default async function handler(req, res) {
     } catch (_) {}
 
     const isSearch = !!search
-    const color = isSearch ? 0xf97316 : 0x5865f2  // orange for search, blurple for visit
+    const color = isSearch ? 0xf97316 : 0x5865f2
 
     const embed = {
       color,
@@ -69,21 +69,19 @@ export default async function handler(req, res) {
       fields: [
         ...(isSearch
           ? [
-              { name: 'Query',   value: `\`${search}\``,                                         inline: true },
-              { name: 'Mode',    value: searchMode === 'awal' ? 'Awalan' : 'Akhiran',            inline: true },
+              { name: 'Query',    value: `\`${search}\``,                              inline: true },
+              { name: 'Mode',     value: searchMode === 'awal' ? 'Awalan' : 'Akhiran', inline: true },
             ]
           : [
-              { name: 'Halaman',  value: `\`${page}\``,  inline: true },
-              { name: 'Referrer', value: `\`${ref}\``,   inline: true },
+              { name: 'Halaman',  value: `\`${page}\``,                                inline: true },
+              { name: 'Referrer', value: `\`${ref}\``,                                 inline: true },
             ]
         ),
-        { name: '\u200b', value: '\u200b', inline: false },
-        { name: 'Browser', value: browser, inline: true },
-        { name: 'Device',  value: device,  inline: true },
-        { name: '\u200b', value: '\u200b', inline: false },
-        { name: 'IP',      value: `\`${ip}\``,                              inline: true },
-        { name: 'Lokasi',  value: `${geo.city}, ${geo.regionName}, ${geo.country}`, inline: true },
-        { name: 'ISP',     value: geo.isp,                                  inline: false },
+        { name: 'Browser', value: browser,                                             inline: true },
+        { name: 'Device',  value: device,                                              inline: true },
+        { name: 'IP',      value: `\`${ip}\``,                                         inline: true },
+        { name: 'Lokasi',  value: `${geo.city}, ${geo.regionName}, ${geo.country}`,    inline: true },
+        { name: 'ISP',     value: geo.isp,                                             inline: true },
       ],
       footer: { text: ts },
     }
