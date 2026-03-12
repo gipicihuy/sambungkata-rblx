@@ -28,9 +28,13 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .mode{display:flex;background:rgba(10,10,11,0.6);border-radius:8px;padding:3px;margin-bottom:10px;gap:3px;}
 .mode button{flex:1;padding:7px;font-size:13px;font-weight:700;border:none;background:transparent;color:#94a3b8;border-radius:6px;cursor:pointer;transition:all 0.15s;}
 .mode button.active{background:var(--green);color:#fff;}
-input{width:100%;padding:9px 12px;font-size:16px;font-weight:700;border-radius:8px;border:1px solid var(--border);background:rgba(10,10,11,0.6);color:#fff;outline:none;}
-input:focus{border-color:var(--green);}
-input:disabled{opacity:0.45;cursor:not-allowed;}
+.input-wrap{position:relative;display:flex;align-items:center;}
+.input-wrap input{width:100%;padding:9px 36px 9px 12px;font-size:16px;font-weight:700;border-radius:8px;border:1px solid var(--border);background:rgba(10,10,11,0.6);color:#fff;outline:none;}
+.input-wrap input:focus{border-color:var(--green);}
+.input-wrap input:disabled{opacity:0.45;cursor:not-allowed;}
+.input-clear{position:absolute;right:8px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border:none;background:rgba(255,255,255,0.08);border-radius:5px;color:#94a3b8;font-size:13px;cursor:pointer;transition:background 0.12s,color 0.12s,opacity 0.15s;opacity:0;pointer-events:none;line-height:1;}
+.input-clear.visible{opacity:1;pointer-events:auto;}
+.input-clear:hover{background:rgba(255,61,87,0.15);color:var(--red);}
 .wa-banner{display:flex;align-items:center;gap:10px;margin-top:8px;padding:8px 12px;background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.2);border-radius:10px;text-decoration:none;transition:background 0.15s,border-color 0.15s;position:relative;overflow:hidden;}
 .wa-banner:hover{background:rgba(37,211,102,0.12);border-color:rgba(37,211,102,0.35);}
 .wa-banner:active{transform:scale(0.985);}
@@ -61,6 +65,13 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 .jump-btn:hover{background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.35);color:var(--green);}
 .jump-btn:active{transform:scale(0.93);}
 .jump-btn.na{opacity:0.2;pointer-events:none;}
+.result-toolbar{display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:rgba(17,19,24,0.6);border-bottom:1px solid var(--border);flex-shrink:0;gap:8px;overflow:hidden;max-height:0;opacity:0;transition:max-height 0.25s ease,opacity 0.2s ease;}
+.result-toolbar.visible{max-height:44px;opacity:1;}
+.toolbar-count{font-size:12px;font-weight:700;color:#556070;}
+.toolbar-copy{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;font-size:12px;font-weight:800;border:1px solid rgba(249,115,22,0.3);border-radius:6px;background:rgba(249,115,22,0.08);color:var(--green);cursor:pointer;transition:background 0.12s,border-color 0.12s,transform 0.1s;user-select:none;white-space:nowrap;}
+.toolbar-copy:hover{background:rgba(249,115,22,0.16);border-color:rgba(249,115,22,0.5);}
+.toolbar-copy:active{transform:scale(0.94);}
+.toolbar-copy.copied{background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.35);color:#4ade80;}
 .result{flex:1;overflow-y:auto;min-height:0;padding-bottom:90px;}
 .result::-webkit-scrollbar{width:3px;}
 .result::-webkit-scrollbar-thumb{background:var(--muted);border-radius:10px;}
@@ -176,7 +187,10 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
     <button id="modeAwal" class="active" onclick="setMode('awal')">Awalan</button>
     <button id="modeAkhir" onclick="setMode('akhir')">Akhiran</button>
   </div>
-  <input type="text" id="huruf" maxlength="3" placeholder="memuat kata..." autocomplete="off" disabled>
+  <div class="input-wrap">
+    <input type="text" id="huruf" maxlength="3" placeholder="memuat kata..." autocomplete="off" disabled>
+    <button class="input-clear" id="inputClear" onclick="clearInput()" title="Hapus">✕</button>
+  </div>
   <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener" class="wa-banner" id="waBanner">
     <div class="wa-banner-icon"><i class="fa-brands fa-whatsapp"></i></div>
     <div class="wa-banner-text">
@@ -199,6 +213,14 @@ input:disabled{opacity:0.45;cursor:not-allowed;}
 </div>
 
 <div class="alpha-jump" id="alphaJump"></div>
+
+<div class="result-toolbar" id="resultToolbar">
+  <span class="toolbar-count" id="toolbarCount"></span>
+  <button class="toolbar-copy" id="toolbarCopyBtn" onclick="salinSemua()">
+    <span class="material-icons-round" style="font-size:14px;">content_copy</span>
+    Salin Semua
+  </button>
+</div>
 
 <div class="result" id="result">
   <div class="empty">
@@ -313,6 +335,45 @@ function setMode(m){
   renderTrending();cari()
 }
 
+function clearInput(){
+  const inp=document.getElementById('huruf')
+  inp.value=''
+  inp.focus()
+  cari()
+}
+
+function updateClearBtn(){
+  const inp=document.getElementById('huruf')
+  const btn=document.getElementById('inputClear')
+  btn.classList.toggle('visible',inp.value.length>0)
+}
+
+function updateToolbar(){
+  const toolbar=document.getElementById('resultToolbar')
+  const countEl=document.getElementById('toolbarCount')
+  const vis=getVisible()
+  if(!lastInput||!vis.length){
+    toolbar.classList.remove('visible')
+    return
+  }
+  toolbar.classList.add('visible')
+  countEl.textContent=vis.length.toLocaleString()+' kata ditemukan'
+}
+
+function salinSemua(){
+  const vis=getVisible()
+  if(!vis.length)return
+  const btn=document.getElementById('toolbarCopyBtn')
+  navigator.clipboard.writeText(vis.join('\n')).then(()=>{
+    btn.classList.add('copied')
+    btn.innerHTML='<span class="material-icons-round" style="font-size:14px;">check</span> Tersalin!'
+    setTimeout(()=>{
+      btn.classList.remove('copied')
+      btn.innerHTML='<span class="material-icons-round" style="font-size:14px;">content_copy</span> Salin Semua'
+    },2000)
+  }).catch(()=>{})
+}
+
 let searchTimer=null
 const trackedQueries=new Set()
 function cari(){
@@ -322,6 +383,7 @@ function cari(){
   const input=raw.slice(0,3)
   if(raw!==input)inp.value=input
   lastInput=input;currentPage=1
+  updateClearBtn()
   renderTrending()
   if(!input){
     document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">keyboard</span>mulai ketik huruf</div>'
@@ -329,6 +391,7 @@ function cari(){
     const t=document.getElementById('infoTotal');t.classList.remove('visible');setTimeout(()=>{t.textContent=''},350)
     document.getElementById('pgBar').classList.remove('on')
     document.getElementById('alphaJump').classList.remove('visible')
+    document.getElementById('resultToolbar').classList.remove('visible')
     return
   }
   clearTimeout(searchTimer)
@@ -424,7 +487,7 @@ function buildAlphaJump(){
 
 function renderAwal(){
   const vis=getVisible()
-  showInfo(vis.length);updatePg()
+  showInfo(vis.length);updatePg();updateToolbar()
   const resultDiv=document.getElementById('result')
   if(!vis.length){resultDiv.innerHTML='<div class="empty"><span class="material-icons-round">search_off</span>tidak ditemukan</div>';return}
   const page=slice()
@@ -440,7 +503,7 @@ function renderAwal(){
 
 function renderAkhir(){
   const vis=getVisible()
-  showInfo(vis.length);updatePg();buildAlphaJump()
+  showInfo(vis.length);updatePg();buildAlphaJump();updateToolbar()
   const resultDiv=document.getElementById('result')
   if(!vis.length){resultDiv.innerHTML='<div class="empty"><span class="material-icons-round">search_off</span>tidak ditemukan</div>';return}
   const page=slice()
