@@ -44,7 +44,7 @@ export default async function handler(req, res) {
             m.embeds[0].description?.includes(`\`${word.toUpperCase()}\``)
           ) {
             existingMsg = m
-            const match = m.embeds[0].description.match(/\*\*(\d+)x\*\* dilaporkan/)
+            const match = m.embeds[0].description.match(/Dilaporkan \*\*(\d+)x\*\*/)
             existingCount = match ? parseInt(match[1]) + 1 : 2
             found = true
             break
