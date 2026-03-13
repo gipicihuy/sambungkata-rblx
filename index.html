@@ -89,8 +89,14 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .word-row:hover{background:rgba(255,255,255,0.03);}
 .word-row:active{background:rgba(249,115,22,0.07);}
 .word-num{font-size:11px;font-weight:700;color:var(--subtext);min-width:30px;text-align:right;flex-shrink:0;}
-.word-text{font-size:14px;font-weight:600;color:#e2eaf4;}
+.word-text{font-size:14px;font-weight:600;color:#e2eaf4;flex:1;}
 .chip-suffix{color:var(--green);font-weight:800;}
+.report-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:#556070;font-size:14px;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s;line-height:1;}
+.report-btn:hover{background:rgba(255,61,87,0.1);color:#ff3d57;}
+.report-btn.reported{color:#ff3d57;opacity:0.4;pointer-events:none;}
+.hide-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:var(--subtext);font-size:16px;font-weight:700;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s;line-height:1;}
+.hide-btn:hover{background:rgba(255,61,87,0.1);color:var(--red);}
+.hide-btn.hidden-active{color:var(--red);}
 .pg-bar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;background:rgba(17,19,24,0.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:5px;box-shadow:0 2px 16px rgba(0,0,0,0.4);opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;z-index:100;}
 .pg-bar.on{opacity:1;pointer-events:auto;}
 .pg-btn{width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:none;border-radius:10px;background:transparent;color:#e2eaf4;font-size:20px;font-weight:900;cursor:pointer;transition:background 0.12s,color 0.12s,transform 0.1s;user-select:none;line-height:1;}
@@ -116,9 +122,13 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .toast-wa .toast-body{padding:9px 12px 11px;font-size:12px;color:#7ecfa0;font-weight:500;line-height:1.55;}
 .toast-wa .toast-body a{color:#4ade80;font-weight:700;text-decoration:none;}
 .toast-wa .toast-body a:hover{text-decoration:underline;}
-.hide-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:var(--subtext);font-size:16px;font-weight:700;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s;line-height:1;margin-left:auto;}
-.hide-btn:hover{background:rgba(255,61,87,0.1);color:var(--red);}
-.hide-btn.hidden-active{color:var(--red);}
+.toast-report{pointer-events:auto;background:#1a1215;border:1px solid rgba(255,61,87,0.3);border-left:3px solid #ff3d57;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.4);font-family:'Plus Jakarta Sans',sans-serif;min-width:220px;max-width:300px;padding:0;}
+.toast-report .toast-header{background:transparent;border-bottom:1px solid rgba(255,61,87,0.15);padding:9px 12px 8px;color:#ffb3be;font-size:12px;font-weight:700;}
+.toast-report .toast-header .icon-report{width:16px;height:16px;border-radius:4px;background:#ff3d57;display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:#fff;margin-right:7px;flex-shrink:0;}
+.toast-report .toast-header .me-auto{color:#ffb3be;}
+.toast-report .btn-close{filter:invert(1);opacity:0.4;width:10px;height:10px;}
+.toast-report .toast-body{padding:9px 12px 11px;font-size:12px;color:#c97f8a;font-weight:500;line-height:1.55;}
+.toast-report .toast-body strong{color:#ffb3be;font-weight:700;}
 .fab-hidden{position:fixed;bottom:72px;right:18px;display:flex;align-items:center;gap:4px;background:rgba(30,32,38,0.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.08);border-radius:50px;padding:6px 12px 6px 6px;box-shadow:0 4px 24px rgba(0,0,0,0.3);z-index:99;cursor:pointer;transition:opacity 0.2s,border-color 0.2s;user-select:none;}
 .fab-hidden:hover{border-color:rgba(255,255,255,0.18);}
 .fab-hidden:active{transform:scale(0.93);}
@@ -165,6 +175,16 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
     </div>
     <div class="toast-body">
       Follow saluran WhatsApp untuk mendapatkan info terbaru! <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener">Klik di sini 🔔</a>
+    </div>
+  </div>
+  <div id="toastReport" class="toast toast-report align-items-center" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+    <div class="toast-header">
+      <span class="icon-report">⚑</span>
+      <span class="me-auto">Report Terkirim</span>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Kata <strong id="toastReportWord"></strong> berhasil dilaporkan. Terima kasih!
     </div>
   </div>
 </div>
@@ -496,7 +516,8 @@ function renderAwal(){
   for(let i=0;i<page.length;i++){
     const k=page[i]
     const num=offset+i+1
-    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn'))return;navigator.clipboard.writeText('${k}')"><span class="word-num">${num}</span><span class="word-text"><span class="chip-prefix">${k.slice(0,lastInput.length)}</span>${k.slice(lastInput.length)}</span><button class="hide-btn" onclick="toggleHide('${k}')" title="Sembunyikan">−</button></div>`
+    const isRep=reportedWords.has(k)
+    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn')||event.target.classList.contains('report-btn'))return;navigator.clipboard.writeText('${k}')"><span class="word-num">${num}</span><span class="word-text"><span class="chip-prefix">${k.slice(0,lastInput.length)}</span>${k.slice(lastInput.length)}</span><button class="report-btn${isRep?' reported':''}" onclick="reportWord('${k}',this)" title="${isRep?'Sudah dilaporkan':'Laporkan kata ini'}">⚑</button><button class="hide-btn" onclick="toggleHide('${k}')" title="Sembunyikan">−</button></div>`
   }
   resultDiv.innerHTML=html
 }
@@ -514,11 +535,12 @@ function renderAkhir(){
     const w=page[i],base=w.slice(0,-lastInput.length),tail=w.slice(-lastInput.length)
     const letter=w[0].toUpperCase()
     const num=offset+i+1
+    const isRep=reportedWords.has(w)
     if(letter!==lastLetter){
       html+=`<div class="alpha-header-row"><span class="alpha-badge">${letter}</span></div>`
       lastLetter=letter
     }
-    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn'))return;navigator.clipboard.writeText('${w}')"><span class="word-num">${num}</span><span class="word-text">${base}<span class="chip-suffix">${tail}</span></span><button class="hide-btn" onclick="toggleHide('${w}')" title="Sembunyikan">−</button></div>`
+    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn')||event.target.classList.contains('report-btn'))return;navigator.clipboard.writeText('${w}')"><span class="word-num">${num}</span><span class="word-text">${base}<span class="chip-suffix">${tail}</span></span><button class="report-btn${isRep?' reported':''}" onclick="reportWord('${w}',this)" title="${isRep?'Sudah dilaporkan':'Laporkan kata ini'}">⚑</button><button class="hide-btn" onclick="toggleHide('${w}')" title="Sembunyikan">−</button></div>`
   }
   resultDiv.innerHTML=html
 }
@@ -533,8 +555,25 @@ document.getElementById('huruf').addEventListener('paste',function(e){
 })
 
 let hiddenWords=new Set(JSON.parse(localStorage.getItem('sk_hidden')||'[]'))
+let reportedWords=new Set(JSON.parse(localStorage.getItem('sk_reported')||'[]'))
 
 function saveHidden(){localStorage.setItem('sk_hidden',JSON.stringify([...hiddenWords]))}
+function saveReported(){localStorage.setItem('sk_reported',JSON.stringify([...reportedWords]))}
+
+function reportWord(w,btn){
+  if(reportedWords.has(w))return
+  reportedWords.add(w)
+  saveReported()
+  btn.classList.add('reported')
+  btn.title='Sudah dilaporkan'
+  fetch('/api/report',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({word:w,mode:mode})
+  }).catch(()=>{})
+  document.getElementById('toastReportWord').textContent=w.toUpperCase()
+  new bootstrap.Toast(document.getElementById('toastReport'),{delay:3000}).show()
+}
 
 function updateFab(){
   const n=hiddenWords.size
