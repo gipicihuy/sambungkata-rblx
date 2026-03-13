@@ -152,6 +152,24 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .sheet-word{font-size:14px;font-weight:600;color:#e2eaf4;flex:1;}
 .sheet-restore{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:rgba(249,115,22,0.08);color:var(--green);font-size:14px;cursor:pointer;transition:background 0.12s;flex-shrink:0;}
 .sheet-restore:hover{background:rgba(249,115,22,0.18);}
+
+/* ===== Report Confirm Modal ===== */
+.rmodal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:500;opacity:0;pointer-events:none;transition:opacity 0.22s;display:flex;align-items:flex-end;justify-content:center;}
+.rmodal-overlay.on{opacity:1;pointer-events:auto;}
+.rmodal{background:#1a1d24;border-radius:20px 20px 0 0;border-top:1px solid rgba(255,255,255,0.08);width:100%;max-width:500px;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);overflow:hidden;}
+.rmodal-overlay.on .rmodal{transform:translateY(0);}
+.rmodal-handle{width:36px;height:4px;background:rgba(255,255,255,0.12);border-radius:2px;margin:10px auto 0;}
+.rmodal-icon{font-size:36px;text-align:center;padding:18px 0 6px;}
+.rmodal-title{font-size:16px;font-weight:800;color:#fff;text-align:center;padding:0 20px 4px;}
+.rmodal-word{font-size:26px;font-weight:800;color:#ff3d57;text-align:center;letter-spacing:2px;padding:8px 20px 14px;}
+.rmodal-desc{font-size:12px;color:#8ba3be;font-weight:500;line-height:1.65;text-align:center;padding:0 24px 20px;}
+.rmodal-desc b{color:#cbd5e1;}
+.rmodal-actions{display:flex;gap:0;border-top:1px solid rgba(255,255,255,0.06);}
+.rmodal-cancel{flex:1;padding:15px;font-size:14px;font-weight:700;border:none;border-right:1px solid rgba(255,255,255,0.06);background:transparent;color:#8ba3be;cursor:pointer;transition:background 0.12s;}
+.rmodal-cancel:hover{background:rgba(255,255,255,0.04);}
+.rmodal-confirm{flex:1;padding:15px;font-size:14px;font-weight:800;border:none;background:transparent;color:#ff3d57;cursor:pointer;transition:background 0.12s;}
+.rmodal-confirm:hover{background:rgba(255,61,87,0.08);}
+.rmodal-confirm:active{background:rgba(255,61,87,0.15);}
 </style>
 </head>
 <body>
@@ -185,6 +203,24 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
     </div>
     <div class="toast-body">
       Kata <strong id="toastReportWord"></strong> berhasil dilaporkan. Terima kasih!
+    </div>
+  </div>
+</div>
+
+<!-- Report Confirm Modal -->
+<div class="rmodal-overlay" id="rmodalOverlay">
+  <div class="rmodal" id="rmodal">
+    <div class="rmodal-handle"></div>
+    <div class="rmodal-icon">🚩</div>
+    <div class="rmodal-title">Laporkan Kata Tidak Valid?</div>
+    <div class="rmodal-word" id="rmodalWord"></div>
+    <div class="rmodal-desc">
+      Yakin kata ini <b>tidak bisa dipakai</b> di map Sambung Kata?<br>
+      Reportmu membantu kami membersihkan database. 🙏
+    </div>
+    <div class="rmodal-actions">
+      <button class="rmodal-cancel" onclick="closeRModal()">Batal</button>
+      <button class="rmodal-confirm" onclick="confirmReport()">Ya, Laporkan ⚑</button>
     </div>
   </div>
 </div>
@@ -279,6 +315,31 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 let database=[],mode='awal',hasil=[],lastInput='',dbReady=false
 let TREND_AWAL=[],TREND_AKHIR=[],currentPage=1
 const PAGE_SIZE=100
+
+// ===== Report Modal =====
+let _rWord=null,_rBtn=null
+
+function openRModal(w,btn){
+  _rWord=w;_rBtn=btn
+  document.getElementById('rmodalWord').textContent=w.toUpperCase()
+  document.getElementById('rmodalOverlay').classList.add('on')
+}
+function closeRModal(){
+  document.getElementById('rmodalOverlay').classList.remove('on')
+  _rWord=null;_rBtn=null
+}
+function confirmReport(){
+  if(!_rWord)return
+  const w=_rWord,btn=_rBtn
+  closeRModal()
+  reportedWords.add(w);saveReported()
+  if(btn){btn.classList.add('reported');btn.title='Sudah dilaporkan'}
+  fetch('/api/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({word:w,mode:mode})}).catch(()=>{})
+  document.getElementById('toastReportWord').textContent=w.toUpperCase()
+  new bootstrap.Toast(document.getElementById('toastReport'),{delay:3000}).show()
+}
+document.getElementById('rmodalOverlay').addEventListener('click',function(e){if(e.target===this)closeRModal()})
+// ========================
 
 fetch('settings.json')
   .then(r=>r.json())
@@ -562,17 +623,7 @@ function saveReported(){localStorage.setItem('sk_reported',JSON.stringify([...re
 
 function reportWord(w,btn){
   if(reportedWords.has(w))return
-  reportedWords.add(w)
-  saveReported()
-  btn.classList.add('reported')
-  btn.title='Sudah dilaporkan'
-  fetch('/api/report',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({word:w,mode:mode})
-  }).catch(()=>{})
-  document.getElementById('toastReportWord').textContent=w.toUpperCase()
-  new bootstrap.Toast(document.getElementById('toastReport'),{delay:3000}).show()
+  openRModal(w,btn)
 }
 
 function updateFab(){
