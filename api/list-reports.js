@@ -43,7 +43,7 @@ export default async function handler(req, res) {
       const wordMatch = desc.match(/`([A-Z]+)`/)
       if (!wordMatch) continue
       const word = wordMatch[1].toLowerCase()
-      const countMatch = desc.match(/\*\*(\d+)x\*\* dilaporkan/)
+      const countMatch = desc.match(/Dilaporkan \*\*(\d+)x\*\*/)
       const count = countMatch ? parseInt(countMatch[1]) : 1
       reports.push({ word, count })
     }
