@@ -446,12 +446,16 @@ function isFav(w){return favWords.some(f=>f.word===w&&f.query===lastInput&&f.mod
 function toggleFav(w,btn){
   const idx=favWords.findIndex(f=>f.word===w&&f.query===lastInput&&f.mode===mode)
   if(idx>=0){
-    // sudah difav: tidak bisa unfav dari sini, arahkan ke modal favorit
     openFavModal()
     return
   }
   favWords.push({word:w,query:lastInput,mode:mode})
-  if(btn){btn.classList.add('active');btn.style.transform='scale(1.4)';setTimeout(()=>{btn.style.transform=''},180)}
+  if(btn){
+    btn.classList.add('active')
+    const icon=btn.querySelector('i')
+    if(icon){icon.className='fa-solid fa-heart'}
+    btn.style.transform='scale(1.4)';setTimeout(()=>{btn.style.transform=''},180)
+  }
   new bootstrap.Toast(document.getElementById('toastFavInfo'),{delay:4000}).show()
   saveFav();updateFavHeaderBtn()
   if(document.getElementById('favModal').classList.contains('on'))renderFavModal()
