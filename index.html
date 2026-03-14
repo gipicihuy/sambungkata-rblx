@@ -139,8 +139,7 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .fab-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#94a3b8;flex-shrink:0;line-height:1;}
 .fab-count{font-size:13px;font-weight:800;color:#fff;line-height:1;display:none;}
 .fab-count.on{display:block;}
-
-/* ===== HIDDEN SHEET (bottom sheet tetap) ===== */
+/* ===== HIDDEN SHEET ===== */
 .sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;opacity:0;pointer-events:none;transition:opacity 0.25s;}
 .sheet-overlay.on{opacity:1;pointer-events:auto;}
 .sheet{position:fixed;bottom:0;left:0;right:0;max-height:75vh;background:#1a1d24;border-radius:18px 18px 0 0;border-top:1px solid var(--border);z-index:201;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);display:flex;flex-direction:column;}
@@ -158,11 +157,9 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .sheet-word{font-size:14px;font-weight:600;color:#e2eaf4;flex:1;}
 .sheet-restore{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:rgba(249,115,22,0.08);color:var(--green);font-size:14px;cursor:pointer;transition:background 0.12s;flex-shrink:0;}
 .sheet-restore:hover{background:rgba(249,115,22,0.18);}
-
-/* ===== FAVORIT MODAL (full screen, bukan bottom sheet) ===== */
+/* ===== FAVORIT MODAL ===== */
 .fav-modal{position:fixed;inset:0;z-index:300;background:#111318;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);}
 .fav-modal.on{transform:translateX(0);}
-/* Topbar modal */
 .fav-modal-topbar{display:flex;align-items:center;gap:10px;padding:14px 14px 10px;background:#1c1e21;border-bottom:1px solid var(--border);flex-shrink:0;}
 .fav-modal-back{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:none;border-radius:8px;background:rgba(255,255,255,0.06);color:#e2eaf4;font-size:15px;cursor:pointer;flex-shrink:0;transition:background 0.12s,color 0.12s;line-height:1;}
 .fav-modal-back:hover{background:rgba(249,115,22,0.12);color:var(--green);}
@@ -170,8 +167,8 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .fav-modal-title{font-size:15px;font-weight:800;color:#fff;flex:1;}
 .fav-modal-clear{font-size:11px;font-weight:700;color:var(--red);background:rgba(255,61,87,0.08);border:1px solid rgba(255,61,87,0.2);border-radius:6px;padding:5px 11px;cursor:pointer;transition:background 0.12s;white-space:nowrap;}
 .fav-modal-clear:hover{background:rgba(255,61,87,0.15);}
-/* Tab bar */
-.fav-tab-bar{display:flex;gap:0;padding:10px 14px;background:#1c1e21;border-bottom:1px solid var(--border);flex-shrink:0;}
+/* Tab bar awalan/akhiran */
+.fav-tab-bar{display:flex;gap:0;padding:10px 14px 0;background:#1c1e21;flex-shrink:0;}
 .fav-tab{flex:1;padding:8px;font-size:13px;font-weight:700;border:none;background:rgba(255,255,255,0.04);color:#94a3b8;cursor:pointer;transition:all 0.15s;}
 .fav-tab:first-child{border-radius:8px 0 0 8px;border:1px solid rgba(255,255,255,0.08);}
 .fav-tab:last-child{border-radius:0 8px 8px 0;border:1px solid rgba(255,255,255,0.08);border-left:none;}
@@ -179,6 +176,7 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .fav-tab:last-child.active{border-left:none;}
 .fav-tab-count{display:inline-block;font-size:10px;font-weight:800;background:rgba(249,115,22,0.2);color:var(--green);border-radius:4px;padding:1px 5px;margin-left:5px;line-height:1.4;}
 .fav-tab.active .fav-tab-count{background:var(--green);color:#fff;}
+
 /* Jump bar */
 .fav-jump-bar{display:flex;flex-wrap:wrap;gap:5px;padding:8px 14px;background:#1c1e21;border-bottom:1px solid var(--border);flex-shrink:0;}
 .fav-jump-bar:empty{display:none;padding:0;border:none;}
@@ -191,28 +189,27 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .fav-modal-body::-webkit-scrollbar-thumb{background:var(--muted);border-radius:10px;}
 /* Group header */
 .fav-group-header{display:flex;align-items:center;gap:8px;padding:7px 16px 6px;background:rgba(249,115,22,0.05);border-top:2px solid rgba(249,115,22,0.2);border-bottom:1px solid rgba(249,115,22,0.08);transition:background 0.25s,border-color 0.25s;}
-.fav-group-header.flash-group{background:rgba(249,115,22,0.22);border-top-color:rgba(249,115,22,0.7);}
 .fav-group-badge{display:inline-flex;align-items:center;padding:3px 10px;background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.25);border-radius:6px;font-size:13px;font-weight:800;color:var(--green);letter-spacing:0.8px;text-transform:uppercase;transition:background 0.25s,border-color 0.25s,color 0.25s;}
+.fav-group-header.flash-group{background:rgba(249,115,22,0.22);border-top-color:rgba(249,115,22,0.7);}
 .fav-group-header.flash-group .fav-group-badge{background:rgba(249,115,22,0.3);border-color:rgba(249,115,22,0.6);}
 .fav-group-count{font-size:10px;font-weight:700;color:#556070;margin-left:auto;}
 /* Row */
-.fav-row{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer;transition:background 0.1s;user-select:none;}
+.fav-row{display:flex;align-items:center;gap:8px;padding:9px 16px;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer;transition:background 0.1s;user-select:none;}
 .fav-row:hover{background:rgba(255,255,255,0.03);}
 .fav-row:active{background:rgba(249,115,22,0.07);}
 .fav-row-word{font-size:14px;font-weight:600;color:#e2eaf4;flex:1;}
 .fav-row-word .fav-hl{color:var(--green);font-weight:800;}
+/* badge keyword kecil tampil di view by-huruf */
+.fav-row-qbadge{font-size:10px;font-weight:800;background:rgba(249,115,22,0.09);border:1px solid rgba(249,115,22,0.2);color:var(--green);border-radius:4px;padding:2px 6px;flex-shrink:0;letter-spacing:0.3px;text-transform:uppercase;line-height:1.4;}
 .fav-row-remove{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:#556070;font-size:15px;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s;}
 .fav-row-remove:hover{background:rgba(255,61,87,0.1);color:#ff3d57;}
 /* Empty state */
 .fav-modal-empty{padding:60px 16px;text-align:center;color:#556070;font-size:13px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:10px;}
 .fav-modal-empty .fav-empty-icon{font-size:44px;opacity:0.25;}
-/* copy flash */
 @keyframes copyFlash{0%{background:rgba(249,115,22,0.18)}100%{background:transparent}}
 .fav-row.flash{animation:copyFlash 0.4s ease-out;}
-/* group flash keyframe */
 @keyframes groupFlash{0%{background:rgba(249,115,22,0.22)}60%{background:rgba(249,115,22,0.22)}100%{background:rgba(249,115,22,0.05)}}
 .fav-group-header.flash-group{animation:groupFlash 0.7s ease-out forwards;}
-
 /* ===== Toast Favorit Info ===== */
 .toast-fav-info{pointer-events:auto;background:#1a1422;border:1px solid rgba(249,115,22,0.3);border-left:3px solid var(--green);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.4);font-family:'Plus Jakarta Sans',sans-serif;min-width:240px;max-width:320px;padding:0;}
 .toast-fav-info .toast-header{background:transparent;border-bottom:1px solid rgba(249,115,22,0.15);padding:9px 12px 8px;color:#ffd0a8;font-size:12px;font-weight:700;}
@@ -221,7 +218,6 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .toast-fav-info .btn-close{filter:invert(1);opacity:0.4;width:10px;height:10px;}
 .toast-fav-info .toast-body{padding:9px 12px 11px;font-size:12px;color:#c4a07a;font-weight:500;line-height:1.55;}
 .toast-fav-info .toast-body strong{color:#ffd0a8;font-weight:700;}
-
 /* ===== Report Confirm Modal ===== */
 .rmodal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:500;opacity:0;pointer-events:none;transition:opacity 0.22s;display:flex;align-items:flex-end;justify-content:center;}
 .rmodal-overlay.on{opacity:1;pointer-events:auto;}
@@ -304,13 +300,14 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
   </div>
 </div>
 
-<!-- FAVORIT MODAL (full screen slide dari kanan) -->
+<!-- FAVORIT MODAL -->
 <div class="fav-modal" id="favModal">
   <div class="fav-modal-topbar">
     <button class="fav-modal-back" onclick="closeFavModal()"><i class="fa-solid fa-chevron-left"></i></button>
     <span class="fav-modal-title">♥ Kata Favorit</span>
     <button class="fav-modal-clear" id="favModalClear" onclick="clearAllFav()">Hapus Semua</button>
   </div>
+  <!-- Tab Awalan / Akhiran -->
   <div class="fav-tab-bar">
     <button class="fav-tab active" id="favTabAwal" onclick="switchFavTab('awal')">
       Awalan <span class="fav-tab-count" id="favTabCountAwal">0</span>
@@ -319,6 +316,8 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
       Akhiran <span class="fav-tab-count" id="favTabCountAkhir">0</span>
     </button>
   </div>
+
+  <!-- Jump bar (dinamis) -->
   <div class="fav-jump-bar" id="favJumpBar"></div>
   <div class="fav-modal-body" id="favModalBody"></div>
 </div>
@@ -393,7 +392,6 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
   <div class="fab-count" id="fabCount">0</div>
 </div>
 
-<!-- Hidden words sheet (tetap bottom sheet) -->
 <div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
 <div class="sheet" id="sheet">
   <div class="sheet-handle"></div>
@@ -420,6 +418,7 @@ let database=[],mode='awal',hasil=[],lastInput='',dbReady=false
 let TREND_AWAL=[],TREND_AKHIR=[],currentPage=1
 const PAGE_SIZE=100
 
+/* ===== REPORT ===== */
 let _rWord=null,_rBtn=null
 function openRModal(w,btn){_rWord=w;_rBtn=btn;document.getElementById('rmodalWord').textContent=w.toUpperCase();document.getElementById('rmodalOverlay').classList.add('on')}
 function closeRModal(){document.getElementById('rmodalOverlay').classList.remove('on');_rWord=null;_rBtn=null}
@@ -435,24 +434,25 @@ function confirmReport(){
 }
 document.getElementById('rmodalOverlay').addEventListener('click',function(e){if(e.target===this)closeRModal()})
 
+/* ===== FAVORIT DATA ===== */
 let favWords=[]
 try{favWords=JSON.parse(localStorage.getItem('sk_favs')||'[]')}catch(e){favWords=[]}
 let favActiveTab='awal'
 
-function saveFav(){localStorage.setItem('sk_favs',JSON.stringify(favWords))}
 
+function saveFav(){localStorage.setItem('sk_favs',JSON.stringify(favWords))}
 function isFav(w){return favWords.some(f=>f.word===w&&f.query===lastInput&&f.mode===mode)}
 
 function toggleFav(w,btn){
   const idx=favWords.findIndex(f=>f.word===w&&f.query===lastInput&&f.mode===mode)
   if(idx>=0){
-    favWords.splice(idx,1)
-    if(btn)btn.classList.remove('active')
-  } else {
-    favWords.push({word:w,query:lastInput,mode:mode})
-    if(btn){btn.classList.add('active');btn.style.transform='scale(1.4)';setTimeout(()=>{btn.style.transform=''},180)}
-    new bootstrap.Toast(document.getElementById('toastFavInfo'),{delay:4000}).show()
+    // sudah difav: tidak bisa unfav dari sini, arahkan ke modal favorit
+    openFavModal()
+    return
   }
+  favWords.push({word:w,query:lastInput,mode:mode})
+  if(btn){btn.classList.add('active');btn.style.transform='scale(1.4)';setTimeout(()=>{btn.style.transform=''},180)}
+  new bootstrap.Toast(document.getElementById('toastFavInfo'),{delay:4000}).show()
   saveFav();updateFavHeaderBtn()
   if(document.getElementById('favModal').classList.contains('on'))renderFavModal()
 }
@@ -468,15 +468,10 @@ function openFavModal(){
   renderFavModal()
   document.getElementById('favModal').classList.add('on')
 }
+function closeFavModal(){document.getElementById('favModal').classList.remove('on')}
+function switchFavTab(tab){favActiveTab=tab;renderFavModal()}
 
-function closeFavModal(){
-  document.getElementById('favModal').classList.remove('on')
-}
 
-function switchFavTab(tab){
-  favActiveTab=tab
-  renderFavModal()
-}
 
 function highlightWord(word,query,m){
   if(!query)return word
@@ -487,6 +482,7 @@ function highlightWord(word,query,m){
   return word
 }
 
+/* ===== RENDER FAV MODAL ===== */
 function renderFavModal(){
   const body=document.getElementById('favModalBody')
   const clearBtn=document.getElementById('favModalClear')
@@ -509,24 +505,37 @@ function renderFavModal(){
     return
   }
 
-  const groups={}
-  for(const f of filtered){
-    if(!groups[f.query])groups[f.query]=[]
-    groups[f.query].push(f.word)
-  }
-  const sortedQueries=Object.keys(groups).sort()
+  renderFavByHuruf(filtered,body,jumpBar)
+}
 
-  jumpBar.innerHTML=sortedQueries.map(q=>
-    `<button class="fav-jump-chip" onclick="favJumpTo('fav-grp-${favActiveTab}-${q}')">${q.toUpperCase()}</button>`
+
+
+/* VIEW: group by huruf awal kata (baru) */
+function renderFavByHuruf(filtered,body,jumpBar){
+  // urutkan semua kata a-z
+  const sorted=[...filtered].sort((a,b)=>a.word.localeCompare(b.word))
+
+  const groups={}
+  for(const f of sorted){
+    const letter=f.word[0].toUpperCase()
+    if(!groups[letter])groups[letter]=[]
+    groups[letter].push(f)
+  }
+  const sortedLetters=Object.keys(groups).sort()
+
+  jumpBar.innerHTML=sortedLetters.map(l=>
+    `<button class="fav-jump-chip" onclick="favJumpTo('fav-grp-h-${favActiveTab}-${l}')">${l}</button>`
   ).join('')
 
   let html=''
-  for(const q of sortedQueries){
-    const words=[...groups[q]].sort()
-    html+=`<div class="fav-group-header" id="fav-grp-${favActiveTab}-${q}"><span class="fav-group-badge">${q.toUpperCase()}</span><span class="fav-group-count">${words.length} kata</span></div>`
-    for(const w of words){
-      const hl=highlightWord(w,q,favActiveTab)
-      html+=`<div class="fav-row" onclick="favCopyWord('${w}',this)"><span class="fav-row-word">${hl}</span><button class="fav-row-remove" onclick="event.stopPropagation();removeFav('${q}','${favActiveTab}','${w}')" title="Hapus dari favorit">♥</button></div>`
+  for(const l of sortedLetters){
+    const items=groups[l]
+    html+=`<div class="fav-group-header" id="fav-grp-h-${favActiveTab}-${l}"><span class="fav-group-badge">${l}</span><span class="fav-group-count">${items.length} kata</span></div>`
+    for(const f of items){
+      const sw=f.word.replace(/\\/g,'\\\\').replace(/'/g,"\\'")
+      const sq=f.query.replace(/\\/g,'\\\\').replace(/'/g,"\\'")
+      // tampilkan badge keyword kecil di kanan agar user tahu konteks kata ini
+      html+=`<div class="fav-row" onclick="favCopyWord('${sw}',this)"><span class="fav-row-word">${f.word}</span><button class="fav-row-remove" onclick="event.stopPropagation();removeFav('${sq}','${favActiveTab}','${sw}')" title="Hapus dari favorit"><i class="fa-solid fa-trash-can"></i></button></div>`
     }
   }
   body.innerHTML=html
@@ -536,11 +545,7 @@ function favJumpTo(id){
   const el=document.getElementById(id)
   if(!el)return
   el.scrollIntoView({block:'start',behavior:'smooth'})
-  setTimeout(()=>{
-    el.classList.remove('flash-group')
-    void el.offsetWidth
-    el.classList.add('flash-group')
-  },320)
+  setTimeout(()=>{el.classList.remove('flash-group');void el.offsetWidth;el.classList.add('flash-group')},320)
 }
 
 function favCopyWord(w,row){
@@ -563,6 +568,7 @@ function clearAllFav(){
   if(mode==='awal')renderAwal();else renderAkhir()
 }
 
+/* ===== SETTINGS / TRENDING ===== */
 fetch('settings.json')
   .then(r=>r.json())
   .then(cfg=>{TREND_AWAL=cfg.trending_awal||[];TREND_AKHIR=cfg.trending_akhir||[];renderTrending()})
@@ -593,6 +599,7 @@ function applyTrend(q){
   const inp=document.getElementById('huruf');inp.value=q.slice(0,3);inp.focus();cari()
 }
 
+/* ===== DATABASE ===== */
 const HR={'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,'g':7,'h':8,'j':9,'k':10,'b':11,'c':12,'d':13,'p':14,'t':15,'l':16,'m':17,'n':18,'r':19,'s':20,'u':21,'i':22,'e':23,'o':24,'a':25}
 function getHardness(w){if(!w)return 99;const c=w[w.length-1].toLowerCase();return HR[c]!==undefined?HR[c]:99}
 function lowerBound(arr,t){let l=0,r=arr.length;while(l<r){let m=(l+r)>>1;if(arr[m]<t)l=m+1;else r=m}return l}
@@ -620,6 +627,7 @@ function initDB(){
 }
 initDB()
 
+/* ===== SEARCH ===== */
 function setMode(m){
   if(!dbReady)return
   mode=m
@@ -782,11 +790,11 @@ document.getElementById('huruf').addEventListener('paste',function(e){
   this.value=pasted;cari()
 })
 
+/* ===== HIDDEN / REPORTED ===== */
 let hiddenWords=new Set(JSON.parse(localStorage.getItem('sk_hidden')||'[]'))
 let reportedWords=new Set(JSON.parse(localStorage.getItem('sk_reported')||'[]'))
 function saveHidden(){localStorage.setItem('sk_hidden',JSON.stringify([...hiddenWords]))}
 function saveReported(){localStorage.setItem('sk_reported',JSON.stringify([...reportedWords]))}
-
 function reportWord(w,btn){if(reportedWords.has(w))return;openRModal(w,btn)}
 
 function updateFab(){
