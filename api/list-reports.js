@@ -45,21 +45,14 @@ export default async function handler(req, res) {
       const word = wordMatch[1].toLowerCase()
       const countMatch = desc.match(/Dilaporkan \*\*(\d+)x\*\*/)
       const count = countMatch ? parseInt(countMatch[1]) : 1
-      reports.push({ word, count })
+      reports.push({ word, count, message_id: m.id }) // ← tambah message_id
     }
 
     reports.sort((a, b) => b.count - a.count)
 
-    const listLines = reports.map(r => `${r.word.toUpperCase()} : ${r.count}`).join('\n')
-    const codeBlock = reports.map(r => r.word).join(', ')
-
-    const text = reports.length
-      ? `${listLines}\n\n${codeBlock}`
-      : 'belum ada report.'
-
-    res.setHeader('Content-Type', 'text/plain; charset=utf-8')
-    return res.status(200).send(text)
+    res.setHeader('Content-Type', 'application/json')
+    return res.status(200).json({ ok: true, reports })
   } catch (e) {
-    return res.status(500).send('error')
+    return res.status(500).json({ ok: false })
   }
 }
