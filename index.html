@@ -167,15 +167,7 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .fav-modal-title{font-size:15px;font-weight:800;color:#fff;flex:1;}
 .fav-modal-clear{font-size:11px;font-weight:700;color:var(--red);background:rgba(255,61,87,0.08);border:1px solid rgba(255,61,87,0.2);border-radius:6px;padding:5px 11px;cursor:pointer;transition:background 0.12s;white-space:nowrap;}
 .fav-modal-clear:hover{background:rgba(255,61,87,0.15);}
-/* Tab bar awalan/akhiran */
-.fav-tab-bar{display:flex;gap:0;padding:10px 14px 0;background:#1c1e21;flex-shrink:0;}
-.fav-tab{flex:1;padding:8px;font-size:13px;font-weight:700;border:none;background:rgba(255,255,255,0.04);color:#94a3b8;cursor:pointer;transition:all 0.15s;}
-.fav-tab:first-child{border-radius:8px 0 0 8px;border:1px solid rgba(255,255,255,0.08);}
-.fav-tab:last-child{border-radius:0 8px 8px 0;border:1px solid rgba(255,255,255,0.08);border-left:none;}
-.fav-tab.active{background:rgba(249,115,22,0.12);color:var(--green);border-color:rgba(249,115,22,0.3);}
-.fav-tab:last-child.active{border-left:none;}
-.fav-tab-count{display:inline-block;font-size:10px;font-weight:800;background:rgba(249,115,22,0.2);color:var(--green);border-radius:4px;padding:1px 5px;margin-left:5px;line-height:1.4;}
-.fav-tab.active .fav-tab-count{background:var(--green);color:#fff;}
+
 
 /* Jump bar */
 .fav-jump-bar{display:flex;flex-wrap:wrap;gap:5px;padding:8px 14px;background:#1c1e21;border-bottom:1px solid var(--border);flex-shrink:0;}
@@ -198,7 +190,7 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .fav-row:hover{background:rgba(255,255,255,0.03);}
 .fav-row:active{background:rgba(249,115,22,0.07);}
 .fav-row-word{font-size:14px;font-weight:600;color:#e2eaf4;flex:1;}
-.fav-row-word .fav-hl{color:var(--green);font-weight:800;}
+
 /* badge keyword kecil tampil di view by-huruf */
 .fav-row-qbadge{font-size:10px;font-weight:800;background:rgba(249,115,22,0.09);border:1px solid rgba(249,115,22,0.2);color:var(--green);border-radius:4px;padding:2px 6px;flex-shrink:0;letter-spacing:0.3px;text-transform:uppercase;line-height:1.4;}
 .fav-row-remove{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:#556070;font-size:15px;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s;}
@@ -307,16 +299,6 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
     <span class="fav-modal-title"><i class="fa-solid fa-heart" style="color:var(--green)"></i> Kata Favorit</span>
     <button class="fav-modal-clear" id="favModalClear" onclick="clearAllFav()">Hapus Semua</button>
   </div>
-  <!-- Tab Awalan / Akhiran -->
-  <div class="fav-tab-bar">
-    <button class="fav-tab active" id="favTabAwal" onclick="switchFavTab('awal')">
-      Awalan <span class="fav-tab-count" id="favTabCountAwal">0</span>
-    </button>
-    <button class="fav-tab" id="favTabAkhir" onclick="switchFavTab('akhir')">
-      Akhiran <span class="fav-tab-count" id="favTabCountAkhir">0</span>
-    </button>
-  </div>
-
   <!-- Jump bar (dinamis) -->
   <div class="fav-jump-bar" id="favJumpBar"></div>
   <div class="fav-modal-body" id="favModalBody"></div>
@@ -437,14 +419,12 @@ document.getElementById('rmodalOverlay').addEventListener('click',function(e){if
 /* ===== FAVORIT DATA ===== */
 let favWords=[]
 try{favWords=JSON.parse(localStorage.getItem('sk_favs')||'[]')}catch(e){favWords=[]}
-let favActiveTab='awal'
-
 
 function saveFav(){localStorage.setItem('sk_favs',JSON.stringify(favWords))}
-function isFav(w){return favWords.some(f=>f.word===w&&f.query===lastInput&&f.mode===mode)}
+function isFav(w){return favWords.some(f=>f.word===w)}
 
 function toggleFav(w,btn){
-  const idx=favWords.findIndex(f=>f.word===w&&f.query===lastInput&&f.mode===mode)
+  const idx=favWords.findIndex(f=>f.word===w)
   if(idx>=0){
     openFavModal()
     return
@@ -468,23 +448,10 @@ function updateFavHeaderBtn(){
 }
 
 function openFavModal(){
-  favActiveTab=mode
   renderFavModal()
   document.getElementById('favModal').classList.add('on')
 }
 function closeFavModal(){document.getElementById('favModal').classList.remove('on')}
-function switchFavTab(tab){favActiveTab=tab;renderFavModal()}
-
-
-
-function highlightWord(word,query,m){
-  if(!query)return word
-  if(m==='awal'&&word.startsWith(query))
-    return `<span class="fav-hl">${word.slice(0,query.length)}</span>${word.slice(query.length)}`
-  if(m==='akhir'&&word.endsWith(query))
-    return `${word.slice(0,-query.length)}<span class="fav-hl">${word.slice(-query.length)}</span>`
-  return word
-}
 
 /* ===== RENDER FAV MODAL ===== */
 function renderFavModal(){
@@ -492,33 +459,16 @@ function renderFavModal(){
   const clearBtn=document.getElementById('favModalClear')
   const jumpBar=document.getElementById('favJumpBar')
 
-  const countAwal=favWords.filter(f=>f.mode==='awal').length
-  const countAkhir=favWords.filter(f=>f.mode==='akhir').length
-
-  document.getElementById('favTabAwal').classList.toggle('active',favActiveTab==='awal')
-  document.getElementById('favTabAkhir').classList.toggle('active',favActiveTab==='akhir')
-  document.getElementById('favTabCountAwal').textContent=countAwal
-  document.getElementById('favTabCountAkhir').textContent=countAkhir
   clearBtn.style.display=favWords.length?'':'none'
 
-  const filtered=favWords.filter(f=>f.mode===favActiveTab)
-
-  if(!filtered.length){
+  if(!favWords.length){
     jumpBar.innerHTML=''
-    body.innerHTML=`<div class="fav-modal-empty"><span class="fav-empty-icon">♡</span>Belum ada favorit ${favActiveTab==='awal'?'Awalan':'Akhiran'}.<br>Tap ♥ di samping kata untuk menyimpannya.</div>`
+    body.innerHTML=`<div class="fav-modal-empty"><span class="fav-empty-icon">♡</span>Belum ada kata favorit.<br>Tap <i class="fa-regular fa-heart"></i> di samping kata untuk menyimpannya.</div>`
     return
   }
 
-  renderFavByHuruf(filtered,body,jumpBar)
-}
-
-
-
-/* VIEW: group by huruf awal kata (baru) */
-function renderFavByHuruf(filtered,body,jumpBar){
-  // urutkan semua kata a-z
-  const sorted=[...filtered].sort((a,b)=>a.word.localeCompare(b.word))
-
+  // urutkan semua kata a-z, group by huruf awal
+  const sorted=[...favWords].sort((a,b)=>a.word.localeCompare(b.word))
   const groups={}
   for(const f of sorted){
     const letter=f.word[0].toUpperCase()
@@ -528,18 +478,19 @@ function renderFavByHuruf(filtered,body,jumpBar){
   const sortedLetters=Object.keys(groups).sort()
 
   jumpBar.innerHTML=sortedLetters.map(l=>
-    `<button class="fav-jump-chip" onclick="favJumpTo('fav-grp-h-${favActiveTab}-${l}')">${l}</button>`
+    `<button class="fav-jump-chip" onclick="favJumpTo('fav-grp-${l}')">${l}</button>`
   ).join('')
 
-  let html=''
+  let html='',num=0
   for(const l of sortedLetters){
     const items=groups[l]
-    html+=`<div class="fav-group-header" id="fav-grp-h-${favActiveTab}-${l}"><span class="fav-group-badge">${l}</span><span class="fav-group-count">${items.length} kata</span></div>`
+    html+=`<div class="fav-group-header" id="fav-grp-${l}"><span class="fav-group-badge">${l}</span><span class="fav-group-count">${items.length} kata</span></div>`
     for(const f of items){
+      num++
       const sw=f.word.replace(/\\/g,'\\\\').replace(/'/g,"\\'")
       const sq=f.query.replace(/\\/g,'\\\\').replace(/'/g,"\\'")
-      // tampilkan badge keyword kecil di kanan agar user tahu konteks kata ini
-      html+=`<div class="fav-row" onclick="favCopyWord('${sw}',this)"><span class="fav-row-word">${f.word}</span><button class="fav-row-remove" onclick="event.stopPropagation();removeFav('${sq}','${favActiveTab}','${sw}')" title="Hapus dari favorit"><i class="fa-solid fa-trash-can"></i></button></div>`
+      const sm=f.mode
+      html+=`<div class="fav-row" onclick="favCopyWord('${sw}',this)"><span class="word-num">${num}</span><span class="fav-row-word">${f.word}</span><button class="fav-row-remove" onclick="event.stopPropagation();removeFav('${sq}','${sm}','${sw}')" title="Hapus dari favorit"><i class="fa-solid fa-trash-can"></i></button></div>`
     }
   }
   body.innerHTML=html
@@ -559,10 +510,10 @@ function favCopyWord(w,row){
 }
 
 function removeFav(query,m,word){
-  const idx=favWords.findIndex(f=>f.word===word&&f.query===query&&f.mode===m)
+  const idx=favWords.findIndex(f=>f.word===word)
   if(idx>=0)favWords.splice(idx,1)
   saveFav();updateFavHeaderBtn();renderFavModal()
-  if(mode===m&&lastInput===query){if(mode==='awal')renderAwal();else renderAkhir()}
+  if(mode==='awal')renderAwal();else renderAkhir()
 }
 
 function clearAllFav(){
