@@ -95,7 +95,7 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .report-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:#556070;font-size:14px;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s;line-height:1;}
 .report-btn:hover{background:rgba(255,61,87,0.1);color:#ff3d57;}
 .report-btn.reported{color:#ff3d57;opacity:0.4;pointer-events:none;}
-.fav-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:#556070;font-size:15px;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s,transform 0.1s;line-height:1;}
+.fav-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:#556070;font-size:14px;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s,transform 0.1s;line-height:1;}
 .fav-btn:hover{background:rgba(249,115,22,0.1);color:var(--green);}
 .fav-btn.active{color:var(--green);}
 .fav-btn:active{transform:scale(0.75);}
@@ -304,7 +304,7 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 <div class="fav-modal" id="favModal">
   <div class="fav-modal-topbar">
     <button class="fav-modal-back" onclick="closeFavModal()"><i class="fa-solid fa-chevron-left"></i></button>
-    <span class="fav-modal-title">♥ Kata Favorit</span>
+    <span class="fav-modal-title"><i class="fa-solid fa-heart" style="color:var(--green)"></i> Kata Favorit</span>
     <button class="fav-modal-clear" id="favModalClear" onclick="clearAllFav()">Hapus Semua</button>
   </div>
   <!-- Tab Awalan / Akhiran -->
@@ -336,7 +336,7 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
       <div class="info-total" id="infoTotal"></div>
       <div class="info-actions">
         <button class="fav-header-btn" id="favHeaderBtn" onclick="openFavModal()">
-          ♥ Favorit <span class="fav-hb-count" id="favHbCount">0</span>
+          <i class="fa-solid fa-heart"></i> Favorit <span class="fav-hb-count" id="favHbCount">0</span>
         </button>
       </div>
     </div>
@@ -763,7 +763,7 @@ function renderAwal(){
   let html=''
   for(let i=0;i<page.length;i++){
     const k=page[i],num=offset+i+1,isRep=reportedWords.has(k),isFaved=isFav(k)
-    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn')||event.target.classList.contains('report-btn')||event.target.classList.contains('fav-btn'))return;navigator.clipboard.writeText('${k}')"><span class="word-num">${num}</span><span class="word-text"><span class="chip-prefix">${k.slice(0,lastInput.length)}</span>${k.slice(lastInput.length)}</span><button class="fav-btn${isFaved?' active':''}" onclick="toggleFav('${k}',this)" title="${isFaved?'Hapus dari favorit':'Tambah ke favorit'}">♥</button><button class="report-btn${isRep?' reported':''}" onclick="reportWord('${k}',this)" title="${isRep?'Sudah dilaporkan':'Laporkan kata ini'}">⚑</button><button class="hide-btn" onclick="toggleHide('${k}')" title="Sembunyikan">−</button></div>`
+    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn')||event.target.classList.contains('report-btn')||event.target.closest('.fav-btn'))return;navigator.clipboard.writeText('${k}')"><span class="word-num">${num}</span><span class="word-text"><span class="chip-prefix">${k.slice(0,lastInput.length)}</span>${k.slice(lastInput.length)}</span><button class="fav-btn${isFaved?' active':''}" onclick="toggleFav('${k}',this)" title="${isFaved?'Lihat di favorit':'Tambah ke favorit'}"><i class="${isFaved?'fa-solid':'fa-regular'} fa-heart"></i></button><button class="report-btn${isRep?' reported':''}" onclick="reportWord('${k}',this)" title="${isRep?'Sudah dilaporkan':'Laporkan kata ini'}">⚑</button><button class="hide-btn" onclick="toggleHide('${k}')" title="Sembunyikan">−</button></div>`
   }
   resultDiv.innerHTML=html
 }
@@ -778,7 +778,7 @@ function renderAkhir(){
     const w=page[i],base=w.slice(0,-lastInput.length),tail=w.slice(-lastInput.length)
     const letter=w[0].toUpperCase(),num=offset+i+1,isRep=reportedWords.has(w),isFaved=isFav(w)
     if(letter!==lastLetter){html+=`<div class="alpha-header-row"><span class="alpha-badge">${letter}</span></div>`;lastLetter=letter}
-    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn')||event.target.classList.contains('report-btn')||event.target.classList.contains('fav-btn'))return;navigator.clipboard.writeText('${w}')"><span class="word-num">${num}</span><span class="word-text">${base}<span class="chip-suffix">${tail}</span></span><button class="fav-btn${isFaved?' active':''}" onclick="toggleFav('${w}',this)" title="${isFaved?'Hapus dari favorit':'Tambah ke favorit'}">♥</button><button class="report-btn${isRep?' reported':''}" onclick="reportWord('${w}',this)" title="${isRep?'Sudah dilaporkan':'Laporkan kata ini'}">⚑</button><button class="hide-btn" onclick="toggleHide('${w}')" title="Sembunyikan">−</button></div>`
+    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn')||event.target.classList.contains('report-btn')||event.target.closest('.fav-btn'))return;navigator.clipboard.writeText('${w}')"><span class="word-num">${num}</span><span class="word-text">${base}<span class="chip-suffix">${tail}</span></span><button class="fav-btn${isFaved?' active':''}" onclick="toggleFav('${w}',this)" title="${isFaved?'Lihat di favorit':'Tambah ke favorit'}"><i class="${isFaved?'fa-solid':'fa-regular'} fa-heart"></i></button><button class="report-btn${isRep?' reported':''}" onclick="reportWord('${w}',this)" title="${isRep?'Sudah dilaporkan':'Laporkan kata ini'}">⚑</button><button class="hide-btn" onclick="toggleHide('${w}')" title="Sembunyikan">−</button></div>`
   }
   resultDiv.innerHTML=html
 }
