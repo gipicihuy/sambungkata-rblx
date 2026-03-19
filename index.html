@@ -37,13 +37,20 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .mode{display:flex;background:rgba(10,10,11,0.6);border-radius:8px;padding:3px;margin-bottom:10px;gap:3px;}
 .mode button{flex:1;padding:7px;font-size:13px;font-weight:700;border:none;background:transparent;color:#94a3b8;border-radius:6px;cursor:pointer;transition:all 0.15s;}
 .mode button.active{background:var(--green);color:#fff;}
-.input-wrap{position:relative;display:flex;align-items:center;}
+.input-dual{display:none;align-items:center;gap:8px;}
+.input-dual.on{display:flex;}
+.input-wrap-single{display:flex;}
+.input-wrap-single.hidden-by-dual{display:none;}
+.input-sep{font-size:13px;font-weight:800;color:var(--subtext);flex-shrink:0;padding:0 2px;}
+.input-wrap{position:relative;display:flex;align-items:center;flex:1;}
+.input-dual .input-wrap{flex:1;}
 .input-wrap input{width:100%;padding:9px 36px 9px 12px;font-size:16px;font-weight:700;border-radius:8px;border:1px solid var(--border);background:rgba(10,10,11,0.6);color:#fff;outline:none;}
 .input-wrap input:focus{border-color:var(--green);}
 .input-wrap input:disabled{opacity:0.45;cursor:not-allowed;}
 .input-clear{position:absolute;right:10px;width:18px;height:18px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;color:#556070;font-size:13px;cursor:pointer;transition:color 0.12s,opacity 0.15s;opacity:0;pointer-events:none;line-height:1;}
 .input-clear.visible{opacity:1;pointer-events:auto;}
 .input-clear:hover{color:#e2eaf4;}
+
 .wa-banner{display:flex;align-items:center;gap:10px;margin-top:8px;padding:8px 12px;background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.2);border-radius:10px;text-decoration:none;transition:background 0.15s,border-color 0.15s;position:relative;overflow:hidden;}
 .wa-banner:hover{background:rgba(37,211,102,0.12);border-color:rgba(37,211,102,0.35);}
 .wa-banner:active{transform:scale(0.985);}
@@ -142,7 +149,6 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .fab-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#94a3b8;flex-shrink:0;line-height:1;}
 .fab-count{font-size:13px;font-weight:800;color:#fff;line-height:1;display:none;}
 .fab-count.on{display:block;}
-/* ===== HIDDEN SHEET ===== */
 .sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;opacity:0;pointer-events:none;transition:opacity 0.25s;}
 .sheet-overlay.on{opacity:1;pointer-events:auto;}
 .sheet{position:fixed;bottom:0;left:0;right:0;max-height:75vh;background:#1a1d24;border-radius:18px 18px 0 0;border-top:1px solid var(--border);z-index:201;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);display:flex;flex-direction:column;}
@@ -160,7 +166,6 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .sheet-word{font-size:14px;font-weight:600;color:#e2eaf4;flex:1;}
 .sheet-restore{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:rgba(249,115,22,0.08);color:var(--green);font-size:14px;cursor:pointer;transition:background 0.12s;flex-shrink:0;}
 .sheet-restore:hover{background:rgba(249,115,22,0.18);}
-/* ===== FAVORIT MODAL ===== */
 .fav-modal{position:fixed;inset:0;z-index:300;background:#111318;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);}
 .fav-modal.on{transform:translateX(0);}
 .fav-modal-topbar{display:flex;align-items:center;gap:10px;padding:14px 14px 10px;background:#1c1e21;border-bottom:1px solid var(--border);flex-shrink:0;}
@@ -170,42 +175,31 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .fav-modal-title{font-size:15px;font-weight:800;color:#fff;flex:1;}
 .fav-modal-clear{font-size:11px;font-weight:700;color:var(--red);background:rgba(255,61,87,0.08);border:1px solid rgba(255,61,87,0.2);border-radius:6px;padding:5px 11px;cursor:pointer;transition:background 0.12s;white-space:nowrap;}
 .fav-modal-clear:hover{background:rgba(255,61,87,0.15);}
-
-
-/* Jump bar */
 .fav-jump-bar{display:flex;flex-wrap:wrap;gap:5px;padding:8px 14px;background:#1c1e21;border-bottom:1px solid var(--border);flex-shrink:0;}
 .fav-jump-bar:empty{display:none;padding:0;border:none;}
-.fav-jump-chip{padding:6px 10px;font-size:12px;font-weight:800;border:1px solid rgba(255,255,255,0.1);border-radius:6px;background:rgba(10,10,11,0.6);color:#cbd5e1;cursor:pointer;transition:all 0.12s;letter-spacing:0px;text-transform:uppercase;line-height:1;}
+.fav-jump-chip{padding:6px 10px;font-size:12px;font-weight:800;border:1px solid rgba(255,255,255,0.1);border-radius:6px;background:rgba(10,10,11,0.6);color:#cbd5e1;cursor:pointer;transition:all 0.12s;text-transform:uppercase;line-height:1;}
 .fav-jump-chip:hover{background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.35);color:var(--green);}
 .fav-jump-chip:active{transform:scale(0.93);}
-/* Modal body */
 .fav-modal-body{overflow-y:auto;flex:1;padding-bottom:24px;}
 .fav-modal-body::-webkit-scrollbar{width:3px;}
 .fav-modal-body::-webkit-scrollbar-thumb{background:var(--muted);border-radius:10px;}
-/* Group header */
 .fav-group-header{display:flex;align-items:center;gap:8px;padding:7px 16px 6px;background:rgba(249,115,22,0.05);border-top:2px solid rgba(249,115,22,0.2);border-bottom:1px solid rgba(249,115,22,0.08);transition:background 0.25s,border-color 0.25s;}
 .fav-group-badge{display:inline-flex;align-items:center;padding:3px 10px;background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.25);border-radius:6px;font-size:13px;font-weight:800;color:var(--green);letter-spacing:0.8px;text-transform:uppercase;transition:background 0.25s,border-color 0.25s,color 0.25s;}
 .fav-group-header.flash-group{background:rgba(249,115,22,0.22);border-top-color:rgba(249,115,22,0.7);}
 .fav-group-header.flash-group .fav-group-badge{background:rgba(249,115,22,0.3);border-color:rgba(249,115,22,0.6);}
 .fav-group-count{font-size:10px;font-weight:700;color:#556070;margin-left:auto;}
-/* Row */
 .fav-row{display:flex;align-items:center;gap:8px;padding:9px 16px;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer;transition:background 0.1s;user-select:none;}
 .fav-row:hover{background:rgba(255,255,255,0.03);}
 .fav-row:active{background:rgba(249,115,22,0.07);}
 .fav-row-word{font-size:14px;font-weight:600;color:#e2eaf4;flex:1;}
-
-/* badge keyword kecil tampil di view by-huruf */
-.fav-row-qbadge{font-size:10px;font-weight:800;background:rgba(249,115,22,0.09);border:1px solid rgba(249,115,22,0.2);color:var(--green);border-radius:4px;padding:2px 6px;flex-shrink:0;letter-spacing:0.3px;text-transform:uppercase;line-height:1.4;}
 .fav-row-remove{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:#556070;font-size:15px;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s;}
 .fav-row-remove:hover{background:rgba(255,61,87,0.1);color:#ff3d57;}
-/* Empty state */
 .fav-modal-empty{padding:60px 16px;text-align:center;color:#556070;font-size:13px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:10px;}
 .fav-modal-empty .fav-empty-icon{font-size:44px;opacity:0.25;}
 @keyframes copyFlash{0%{background:rgba(249,115,22,0.18)}100%{background:transparent}}
 .fav-row.flash{animation:copyFlash 0.4s ease-out;}
 @keyframes groupFlash{0%{background:rgba(249,115,22,0.22)}60%{background:rgba(249,115,22,0.22)}100%{background:rgba(249,115,22,0.05)}}
 .fav-group-header.flash-group{animation:groupFlash 0.7s ease-out forwards;}
-/* ===== Toast Favorit Info ===== */
 .toast-fav-info{pointer-events:auto;background:#1a1422;border:1px solid rgba(249,115,22,0.3);border-left:3px solid var(--green);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.4);font-family:'Plus Jakarta Sans',sans-serif;min-width:240px;max-width:320px;padding:0;}
 .toast-fav-info .toast-header{background:transparent;border-bottom:1px solid rgba(249,115,22,0.15);padding:9px 12px 8px;color:#ffd0a8;font-size:12px;font-weight:700;}
 .toast-fav-info .toast-header .icon-fav-info{width:16px;height:16px;border-radius:4px;background:var(--green);display:inline-flex;align-items:center;justify-content:center;font-size:10px;color:#fff;margin-right:7px;flex-shrink:0;line-height:1;}
@@ -213,7 +207,6 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .toast-fav-info .btn-close{filter:invert(1);opacity:0.4;width:10px;height:10px;}
 .toast-fav-info .toast-body{padding:9px 12px 11px;font-size:12px;color:#c4a07a;font-weight:500;line-height:1.55;}
 .toast-fav-info .toast-body strong{color:#ffd0a8;font-weight:700;}
-/* ===== Report Confirm Modal ===== */
 .rmodal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:500;opacity:0;pointer-events:none;transition:opacity 0.22s;display:flex;align-items:flex-end;justify-content:center;}
 .rmodal-overlay.on{opacity:1;pointer-events:auto;}
 .rmodal{background:#1a1d24;border-radius:20px 20px 0 0;border-top:1px solid rgba(255,255,255,0.08);width:100%;max-width:500px;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);overflow:hidden;}
@@ -277,7 +270,6 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
   </div>
 </div>
 
-<!-- Report Confirm Modal -->
 <div class="rmodal-overlay" id="rmodalOverlay">
   <div class="rmodal" id="rmodal">
     <div class="rmodal-handle"></div>
@@ -295,14 +287,12 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
   </div>
 </div>
 
-<!-- FAVORIT MODAL -->
 <div class="fav-modal" id="favModal">
   <div class="fav-modal-topbar">
     <button class="fav-modal-back" onclick="closeFavModal()"><i class="fa-solid fa-chevron-left"></i></button>
     <span class="fav-modal-title"><i class="fa-solid fa-heart" style="color:var(--green)"></i> Kata Favorit</span>
     <button class="fav-modal-clear" id="favModalClear" onclick="clearAllFav()">Hapus Semua</button>
   </div>
-  <!-- Jump bar (dinamis) -->
   <div class="fav-jump-bar" id="favJumpBar"></div>
   <div class="fav-modal-body" id="favModalBody"></div>
 </div>
@@ -329,10 +319,22 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
   <div class="mode">
     <button id="modeAwal" class="active" onclick="setMode('awal')">Awalan</button>
     <button id="modeAkhir" onclick="setMode('akhir')">Akhiran</button>
+    <button id="modeKepit" onclick="setMode('kepit')">Awal+Akhir</button>
   </div>
-  <div class="input-wrap">
+  <div class="input-wrap input-wrap-single" id="inputSingle">
     <input type="text" id="huruf" maxlength="3" placeholder="memuat kata..." autocomplete="off" disabled>
     <button class="input-clear" id="inputClear" onclick="clearInput()" title="Hapus">✕</button>
+  </div>
+  <div class="input-dual" id="inputDual">
+    <div class="input-wrap">
+      <input type="text" id="hurufAwal" maxlength="3" placeholder="Awalan" autocomplete="off" disabled>
+      <button class="input-clear" id="inputClearAwal" onclick="clearInputAwal()" title="Hapus">✕</button>
+    </div>
+    <span class="input-sep">···</span>
+    <div class="input-wrap">
+      <input type="text" id="hurufAkhir" maxlength="3" placeholder="Akhiran" autocomplete="off" disabled>
+      <button class="input-clear" id="inputClearAkhir" onclick="clearInputAkhir()" title="Hapus">✕</button>
+    </div>
   </div>
   <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener" class="wa-banner" id="waBanner">
     <div class="wa-banner-icon"><i class="fa-brands fa-whatsapp"></i></div>
@@ -399,11 +401,10 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-let database=[],mode='awal',hasil=[],lastInput='',dbReady=false
+let database=[],mode='awal',hasil=[],lastInput='',lastInputAwal='',lastInputAkhir='',dbReady=false
 let TREND_AWAL=[],TREND_AKHIR=[],currentPage=1
 const PAGE_SIZE=100
 
-/* ===== REPORT ===== */
 let _rWord=null,_rBtn=null
 function openRModal(w,btn){_rWord=w;_rBtn=btn;document.getElementById('rmodalWord').textContent=w.toUpperCase();document.getElementById('rmodalOverlay').classList.add('on')}
 function closeRModal(){document.getElementById('rmodalOverlay').classList.remove('on');_rWord=null;_rBtn=null}
@@ -419,20 +420,16 @@ function confirmReport(){
 }
 document.getElementById('rmodalOverlay').addEventListener('click',function(e){if(e.target===this)closeRModal()})
 
-/* ===== FAVORIT DATA ===== */
 let favWords=[]
 try{favWords=JSON.parse(localStorage.getItem('sk_favs')||'[]')}catch(e){favWords=[]}
-
 function saveFav(){localStorage.setItem('sk_favs',JSON.stringify(favWords))}
 function isFav(w){return favWords.some(f=>f.word===w)}
 
 function toggleFav(w,btn){
   const idx=favWords.findIndex(f=>f.word===w)
-  if(idx>=0){
-    openFavModal()
-    return
-  }
-  favWords.push({word:w,query:lastInput,mode:mode})
+  if(idx>=0){openFavModal();return}
+  const q=mode==='kepit'?lastInputAwal+'···'+lastInputAkhir:lastInput
+  favWords.push({word:w,query:q,mode:mode})
   if(btn){
     btn.classList.add('active')
     const icon=btn.querySelector('i')
@@ -450,27 +447,19 @@ function updateFavHeaderBtn(){
   cnt.textContent=n;cnt.classList.toggle('on',n>0)
 }
 
-function openFavModal(){
-  renderFavModal()
-  document.getElementById('favModal').classList.add('on')
-}
+function openFavModal(){renderFavModal();document.getElementById('favModal').classList.add('on')}
 function closeFavModal(){document.getElementById('favModal').classList.remove('on')}
 
-/* ===== RENDER FAV MODAL ===== */
 function renderFavModal(){
   const body=document.getElementById('favModalBody')
   const clearBtn=document.getElementById('favModalClear')
   const jumpBar=document.getElementById('favJumpBar')
-
   clearBtn.style.display=favWords.length?'':'none'
-
   if(!favWords.length){
     jumpBar.innerHTML=''
     body.innerHTML=`<div class="fav-modal-empty"><span class="fav-empty-icon">♡</span>Belum ada kata favorit.<br>Tap <i class="fa-regular fa-heart"></i> di samping kata untuk menyimpannya.</div>`
     return
   }
-
-  // urutkan semua kata a-z, group by huruf awal
   const sorted=[...favWords].sort((a,b)=>a.word.localeCompare(b.word))
   const groups={}
   for(const f of sorted){
@@ -479,11 +468,7 @@ function renderFavModal(){
     groups[letter].push(f)
   }
   const sortedLetters=Object.keys(groups).sort()
-
-  jumpBar.innerHTML=sortedLetters.map(l=>
-    `<button class="fav-jump-chip" onclick="favJumpTo('fav-grp-${l}')">${l}</button>`
-  ).join('')
-
+  jumpBar.innerHTML=sortedLetters.map(l=>`<button class="fav-jump-chip" onclick="favJumpTo('fav-grp-${l}')">${l}</button>`).join('')
   let html='',num=0
   for(const l of sortedLetters){
     const items=groups[l]
@@ -491,8 +476,8 @@ function renderFavModal(){
     for(const f of items){
       num++
       const sw=f.word.replace(/\\/g,'\\\\').replace(/'/g,"\\'")
-      const sq=f.query.replace(/\\/g,'\\\\').replace(/'/g,"\\'")
-      const sm=f.mode
+      const sq=(f.query||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")
+      const sm=f.mode||'awal'
       html+=`<div class="fav-row" onclick="favCopyWord('${sw}',this)"><span class="word-num">${num}</span><span class="fav-row-word">${f.word}</span><button class="fav-row-remove" onclick="event.stopPropagation();removeFav('${sq}','${sm}','${sw}')" title="Hapus dari favorit"><i class="fa-solid fa-trash-can"></i></button></div>`
     }
   }
@@ -500,49 +485,36 @@ function renderFavModal(){
 }
 
 function favJumpTo(id){
-  const el=document.getElementById(id)
-  if(!el)return
+  const el=document.getElementById(id);if(!el)return
   el.scrollIntoView({block:'start',behavior:'smooth'})
   setTimeout(()=>{el.classList.remove('flash-group');void el.offsetWidth;el.classList.add('flash-group')},320)
 }
-
 function favCopyWord(w,row){
-  navigator.clipboard.writeText(w).then(()=>{
-    row.classList.remove('flash');void row.offsetWidth;row.classList.add('flash')
-  }).catch(()=>{})
+  navigator.clipboard.writeText(w).then(()=>{row.classList.remove('flash');void row.offsetWidth;row.classList.add('flash')}).catch(()=>{})
 }
-
 function removeFav(query,m,word){
-  const idx=favWords.findIndex(f=>f.word===word)
-  if(idx>=0)favWords.splice(idx,1)
-  saveFav();updateFavHeaderBtn();renderFavModal()
-  if(mode==='awal')renderAwal();else renderAkhir()
+  const idx=favWords.findIndex(f=>f.word===word);if(idx>=0)favWords.splice(idx,1)
+  saveFav();updateFavHeaderBtn();renderFavModal();renderResult()
 }
-
 function clearAllFav(){
   if(!favWords.length)return
   if(!confirm('Hapus semua '+favWords.length+' kata favorit?'))return
-  favWords=[];saveFav();updateFavHeaderBtn();renderFavModal()
-  if(mode==='awal')renderAwal();else renderAkhir()
+  favWords=[];saveFav();updateFavHeaderBtn();renderFavModal();renderResult()
 }
 
-/* ===== SETTINGS / TRENDING ===== */
-fetch('settings.json')
-  .then(r=>r.json())
-  .then(cfg=>{TREND_AWAL=cfg.trending_awal||[];TREND_AKHIR=cfg.trending_akhir||[];renderTrending()})
-  .catch(()=>{TREND_AWAL=[];TREND_AKHIR=[];renderTrending()})
+fetch('settings.json').then(r=>r.json()).then(cfg=>{TREND_AWAL=cfg.trending_awal||[];TREND_AKHIR=cfg.trending_akhir||[];renderTrending()}).catch(()=>{TREND_AWAL=[];TREND_AKHIR=[];renderTrending()})
 
 document.getElementById('waBanner').addEventListener('pointerdown',function(){
   const old=this.querySelector('.wa-sheen');if(old)old.remove()
   const sheen=document.createElement('span');sheen.className='wa-sheen';this.appendChild(sheen)
   sheen.addEventListener('animationend',()=>sheen.remove())
 })
-
 function showWAToast(){new bootstrap.Toast(document.getElementById('toastWA'),{delay:8000}).show()}
 
 function renderTrending(){
   const wrap=document.getElementById('trendingWrap')
-  if(document.getElementById('huruf').value.trim()){wrap.classList.remove('visible');return}
+  const hasInput=mode==='kepit'?(lastInputAwal||lastInputAkhir):(document.getElementById('huruf').value.trim())
+  if(hasInput||mode==='kepit'){wrap.classList.remove('visible');return}
   const list=mode==='awal'?TREND_AWAL:TREND_AKHIR
   if(!list.length){wrap.classList.remove('visible');return}
   document.getElementById('trendingChips').innerHTML=list.map(item=>{
@@ -552,12 +524,8 @@ function renderTrending(){
   }).join('')
   wrap.classList.add('visible')
 }
+function applyTrend(q){const inp=document.getElementById('huruf');inp.value=q.slice(0,3);inp.focus();cari()}
 
-function applyTrend(q){
-  const inp=document.getElementById('huruf');inp.value=q.slice(0,3);inp.focus();cari()
-}
-
-/* ===== DATABASE ===== */
 const HR={'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,'g':7,'h':8,'j':9,'k':10,'b':11,'c':12,'d':13,'p':14,'t':15,'l':16,'m':17,'n':18,'r':19,'s':20,'u':21,'i':22,'e':23,'o':24,'a':25}
 function getHardness(w){if(!w)return 99;const c=w[w.length-1].toLowerCase();return HR[c]!==undefined?HR[c]:99}
 function lowerBound(arr,t){let l=0,r=arr.length;while(l<r){let m=(l+r)>>1;if(arr[m]<t)l=m+1;else r=m}return l}
@@ -574,7 +542,12 @@ function initDB(){
     const bar=document.getElementById('loadingBar')
     bar.classList.remove('indeterminate');bar.style.width='100%'
     setTimeout(()=>{document.getElementById('loadingWrap').style.display='none'},400)
-    const inp=document.getElementById('huruf');inp.disabled=false;inp.placeholder='ketik 1–3 huruf'
+    document.getElementById('huruf').disabled=false
+    document.getElementById('huruf').placeholder='ketik 1–3 huruf'
+    document.getElementById('hurufAwal').disabled=false
+    document.getElementById('hurufAkhir').disabled=false
+    document.getElementById('hurufAwal').placeholder='Awalan'
+    document.getElementById('hurufAkhir').placeholder='Akhiran'
     document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
     document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">keyboard</span>mulai ketik huruf</div>'
     const robloxToast=document.getElementById('toastRoblox')
@@ -585,25 +558,40 @@ function initDB(){
 }
 initDB()
 
-/* ===== SEARCH ===== */
 function setMode(m){
   if(!dbReady)return
   mode=m
   document.getElementById('modeAwal').classList.toggle('active',m==='awal')
   document.getElementById('modeAkhir').classList.toggle('active',m==='akhir')
+  document.getElementById('modeKepit').classList.toggle('active',m==='kepit')
+  const single=document.getElementById('inputSingle')
+  const dual=document.getElementById('inputDual')
+  if(m==='kepit'){
+    single.classList.add('hidden-by-dual')
+    dual.classList.add('on')
+  } else {
+    single.classList.remove('hidden-by-dual')
+    dual.classList.remove('on')
+  }
+  currentPage=1
   renderTrending();cari()
 }
 
 function clearInput(){const inp=document.getElementById('huruf');inp.value='';inp.focus();cari()}
+function clearInputAwal(){const inp=document.getElementById('hurufAwal');inp.value='';inp.focus();cariKepit()}
+function clearInputAkhir(){const inp=document.getElementById('hurufAkhir');inp.value='';inp.focus();cariKepit()}
 
 function updateClearBtn(){
   document.getElementById('inputClear').classList.toggle('visible',document.getElementById('huruf').value.length>0)
+  document.getElementById('inputClearAwal').classList.toggle('visible',document.getElementById('hurufAwal').value.length>0)
+  document.getElementById('inputClearAkhir').classList.toggle('visible',document.getElementById('hurufAkhir').value.length>0)
 }
 
 function updateToolbar(){
   const toolbar=document.getElementById('resultToolbar')
   const vis=getVisible()
-  if(!lastInput||!vis.length){toolbar.classList.remove('visible');return}
+  const hasSearch=mode==='kepit'?(lastInputAwal||lastInputAkhir):lastInput
+  if(!hasSearch||!vis.length){toolbar.classList.remove('visible');return}
   toolbar.classList.add('visible')
   document.getElementById('toolbarCount').textContent=vis.length.toLocaleString()+' kata ditemukan'
 }
@@ -620,8 +608,10 @@ function salinSemua(){
 
 let searchTimer=null
 const trackedQueries=new Set()
+
 function cari(){
   if(!dbReady)return
+  if(mode==='kepit'){cariKepit();return}
   const inp=document.getElementById('huruf')
   const raw=inp.value.toLowerCase().trim()
   const input=raw.slice(0,3)
@@ -656,6 +646,35 @@ function cari(){
   }
 }
 
+function cariKepit(){
+  if(!dbReady)return
+  const inpA=document.getElementById('hurufAwal')
+  const inpB=document.getElementById('hurufAkhir')
+  const rawA=inpA.value.toLowerCase().trim().slice(0,3)
+  const rawB=inpB.value.toLowerCase().trim().slice(0,3)
+  if(inpA.value!==rawA)inpA.value=rawA
+  if(inpB.value!==rawB)inpB.value=rawB
+  lastInputAwal=rawA;lastInputAkhir=rawB;currentPage=1
+  updateClearBtn()
+  if(!rawA&&!rawB){
+    document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">keyboard</span>ketik awalan, akhiran, atau keduanya</div>'
+    document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
+    const t=document.getElementById('infoTotal');t.classList.remove('visible');setTimeout(()=>{t.textContent=''},350)
+    document.getElementById('pgBar').classList.remove('on')
+    document.getElementById('alphaJump').classList.remove('visible')
+    document.getElementById('resultToolbar').classList.remove('visible')
+    return
+  }
+  hasil=database.filter(k=>{
+    if(rawA&&rawB) return k.startsWith(rawA)&&k.endsWith(rawB)&&k.length>rawA.length+rawB.length
+    if(rawA) return k.startsWith(rawA)
+    return k.endsWith(rawB)
+  })
+  hasil.sort((a,b)=>a.localeCompare(b))
+  document.getElementById('alphaJump').classList.remove('visible')
+  renderKepit()
+}
+
 function getVisible(){return hasil.filter(k=>!hiddenWords.has(k))}
 
 function showInfo(n){
@@ -676,13 +695,19 @@ function updatePg(){
   document.getElementById('pgInfo').innerHTML=`<b>${currentPage}</b> / ${total}`
 }
 
-function goPage(n){currentPage=n;if(mode==='awal')renderAwal();else renderAkhir();document.getElementById('result').scrollTop=0}
+function goPage(n){currentPage=n;renderResult();document.getElementById('result').scrollTop=0}
 function goPageLast(){goPage(Math.ceil(getVisible().length/PAGE_SIZE))}
 function changePage(d){
   const total=Math.ceil(getVisible().length/PAGE_SIZE)
   currentPage=Math.max(1,Math.min(total,currentPage+d))
-  if(mode==='awal')renderAwal();else renderAkhir()
+  renderResult()
   document.getElementById('result').scrollTop=0
+}
+
+function renderResult(){
+  if(mode==='awal')renderAwal()
+  else if(mode==='akhir')renderAkhir()
+  else renderKepit()
 }
 
 function slice(){const v=getVisible();const s=(currentPage-1)*PAGE_SIZE;return v.slice(s,s+PAGE_SIZE)}
@@ -691,9 +716,7 @@ function jumpToLetter(l,pg){
   currentPage=pg;renderAkhir();document.getElementById('result').scrollTop=0
   requestAnimationFrame(()=>{
     const headers=document.getElementById('result').querySelectorAll('.alpha-header-row')
-    for(const h of headers){
-      if(h.querySelector('.alpha-badge').textContent.toLowerCase()===l){h.scrollIntoView({block:'start',behavior:'smooth'});break}
-    }
+    for(const h of headers){if(h.querySelector('.alpha-badge').textContent.toLowerCase()===l){h.scrollIntoView({block:'start',behavior:'smooth'});break}}
   })
 }
 
@@ -702,15 +725,18 @@ function buildAlphaJump(){
   const vis=getVisible()
   if(mode!=='akhir'||!vis.length){aj.classList.remove('visible');aj.innerHTML='';return}
   const letterPage={}
-  for(let i=0;i<vis.length;i++){
-    const l=vis[i][0].toLowerCase()
-    if(!(l in letterPage))letterPage[l]=Math.ceil((i+1)/PAGE_SIZE)
-  }
+  for(let i=0;i<vis.length;i++){const l=vis[i][0].toLowerCase();if(!(l in letterPage))letterPage[l]=Math.ceil((i+1)/PAGE_SIZE)}
   aj.innerHTML='abcdefghijklmnopqrstuvwxyz'.split('').map(l=>{
     const pg=letterPage[l]
     return pg?`<button class="jump-btn" onclick="jumpToLetter('${l}',${pg})">${l.toUpperCase()}</button>`:''
   }).join('')
   aj.classList.add('visible')
+}
+
+function makeWordRow(w,num,wordHtml){
+  const isRep=reportedWords.has(w),isFaved=isFav(w)
+  const ws=w.replace(/\\/g,'\\\\').replace(/'/g,"\\'")
+  return `<div class="word-row" onclick="if(event.target.classList.contains('hide-btn')||event.target.classList.contains('report-btn')||event.target.closest('.fav-btn'))return;navigator.clipboard.writeText('${ws}')"><span class="word-num">${num}</span><span class="word-text">${wordHtml}</span><button class="fav-btn${isFaved?' active':''}" onclick="toggleFav('${ws}',this)" title="${isFaved?'Lihat di favorit':'Tambah ke favorit'}"><i class="${isFaved?'fa-solid':'fa-regular'} fa-heart"></i></button><button class="report-btn${isRep?' reported':''}" onclick="reportWord('${ws}',this)" title="${isRep?'Sudah dilaporkan':'Laporkan kata ini'}">⚑</button><button class="hide-btn" onclick="toggleHide('${ws}')" title="Sembunyikan">−</button></div>`
 }
 
 function renderAwal(){
@@ -720,8 +746,8 @@ function renderAwal(){
   const page=slice();const offset=(currentPage-1)*PAGE_SIZE
   let html=''
   for(let i=0;i<page.length;i++){
-    const k=page[i],num=offset+i+1,isRep=reportedWords.has(k),isFaved=isFav(k)
-    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn')||event.target.classList.contains('report-btn')||event.target.closest('.fav-btn'))return;navigator.clipboard.writeText('${k}')"><span class="word-num">${num}</span><span class="word-text"><span class="chip-prefix">${k.slice(0,lastInput.length)}</span>${k.slice(lastInput.length)}</span><button class="fav-btn${isFaved?' active':''}" onclick="toggleFav('${k}',this)" title="${isFaved?'Lihat di favorit':'Tambah ke favorit'}"><i class="${isFaved?'fa-solid':'fa-regular'} fa-heart"></i></button><button class="report-btn${isRep?' reported':''}" onclick="reportWord('${k}',this)" title="${isRep?'Sudah dilaporkan':'Laporkan kata ini'}">⚑</button><button class="hide-btn" onclick="toggleHide('${k}')" title="Sembunyikan">−</button></div>`
+    const k=page[i],num=offset+i+1
+    html+=makeWordRow(k,num,`<span class="chip-prefix">${k.slice(0,lastInput.length)}</span>${k.slice(lastInput.length)}`)
   }
   resultDiv.innerHTML=html
 }
@@ -733,10 +759,35 @@ function renderAkhir(){
   const page=slice();const offset=(currentPage-1)*PAGE_SIZE
   let html='',lastLetter=''
   for(let i=0;i<page.length;i++){
-    const w=page[i],base=w.slice(0,-lastInput.length),tail=w.slice(-lastInput.length)
-    const letter=w[0].toUpperCase(),num=offset+i+1,isRep=reportedWords.has(w),isFaved=isFav(w)
+    const w=page[i],num=offset+i+1
+    const letter=w[0].toUpperCase()
     if(letter!==lastLetter){html+=`<div class="alpha-header-row"><span class="alpha-badge">${letter}</span></div>`;lastLetter=letter}
-    html+=`<div class="word-row" onclick="if(event.target.classList.contains('hide-btn')||event.target.classList.contains('report-btn')||event.target.closest('.fav-btn'))return;navigator.clipboard.writeText('${w}')"><span class="word-num">${num}</span><span class="word-text">${base}<span class="chip-suffix">${tail}</span></span><button class="fav-btn${isFaved?' active':''}" onclick="toggleFav('${w}',this)" title="${isFaved?'Lihat di favorit':'Tambah ke favorit'}"><i class="${isFaved?'fa-solid':'fa-regular'} fa-heart"></i></button><button class="report-btn${isRep?' reported':''}" onclick="reportWord('${w}',this)" title="${isRep?'Sudah dilaporkan':'Laporkan kata ini'}">⚑</button><button class="hide-btn" onclick="toggleHide('${w}')" title="Sembunyikan">−</button></div>`
+    html+=makeWordRow(w,num,`${w.slice(0,-lastInput.length)}<span class="chip-suffix">${w.slice(-lastInput.length)}</span>`)
+  }
+  resultDiv.innerHTML=html
+}
+
+function renderKepit(){
+  const vis=getVisible();showInfo(vis.length);updatePg();updateToolbar()
+  const resultDiv=document.getElementById('result')
+  if(!vis.length){
+    const msg=lastInputAwal&&lastInputAkhir
+      ?`tidak ada kata yang dimulai <b>${lastInputAwal.toUpperCase()}</b> dan diakhiri <b>${lastInputAkhir.toUpperCase()}</b>`
+      :'tidak ditemukan'
+    resultDiv.innerHTML=`<div class="empty"><span class="material-icons-round">search_off</span><span style="text-align:center;line-height:1.6">${msg}</span></div>`;return
+  }
+  const page=slice();const offset=(currentPage-1)*PAGE_SIZE
+  let html='',lastLetter=''
+  for(let i=0;i<page.length;i++){
+    const w=page[i],num=offset+i+1
+    const letter=w[0].toUpperCase()
+    if(letter!==lastLetter){html+=`<div class="alpha-header-row"><span class="alpha-badge">${letter}</span></div>`;lastLetter=letter}
+    const a=lastInputAwal,b=lastInputAkhir
+    let wordHtml=''
+    if(a&&b) wordHtml=`<span class="chip-prefix">${a}</span>${w.slice(a.length,-b.length)}<span class="chip-suffix">${b}</span>`
+    else if(a) wordHtml=`<span class="chip-prefix">${a}</span>${w.slice(a.length)}`
+    else wordHtml=`${w.slice(0,-b.length)}<span class="chip-suffix">${b}</span>`
+    html+=makeWordRow(w,num,wordHtml)
   }
   resultDiv.innerHTML=html
 }
@@ -747,8 +798,19 @@ document.getElementById('huruf').addEventListener('paste',function(e){
   const pasted=(e.clipboardData||window.clipboardData).getData('text').replace(/\s/g,'').slice(0,3)
   this.value=pasted;cari()
 })
+document.getElementById('hurufAwal').addEventListener('input',cariKepit)
+document.getElementById('hurufAwal').addEventListener('paste',function(e){
+  e.preventDefault()
+  const pasted=(e.clipboardData||window.clipboardData).getData('text').replace(/\s/g,'').slice(0,3)
+  this.value=pasted;cariKepit()
+})
+document.getElementById('hurufAkhir').addEventListener('input',cariKepit)
+document.getElementById('hurufAkhir').addEventListener('paste',function(e){
+  e.preventDefault()
+  const pasted=(e.clipboardData||window.clipboardData).getData('text').replace(/\s/g,'').slice(0,3)
+  this.value=pasted;cariKepit()
+})
 
-/* ===== HIDDEN / REPORTED ===== */
 let hiddenWords=new Set(JSON.parse(localStorage.getItem('sk_hidden')||'[]'))
 let reportedWords=new Set(JSON.parse(localStorage.getItem('sk_reported')||'[]'))
 function saveHidden(){localStorage.setItem('sk_hidden',JSON.stringify([...hiddenWords]))}
@@ -762,8 +824,7 @@ function updateFab(){
 
 function toggleHide(w){
   if(hiddenWords.has(w))hiddenWords.delete(w);else hiddenWords.add(w)
-  saveHidden();updateFab()
-  if(mode==='awal')renderAwal();else renderAkhir()
+  saveHidden();updateFab();renderResult()
   if(document.getElementById('sheet').classList.contains('on'))renderSheet()
 }
 
@@ -804,8 +865,7 @@ function renderSheet(){
 function clearAllHidden(){
   if(!hiddenWords.size)return
   if(!confirm('Tampilkan semua '+hiddenWords.size+' kata tersembunyi?'))return
-  hiddenWords.clear();saveHidden();updateFab();renderSheet()
-  if(mode==='awal')renderAwal();else renderAkhir()
+  hiddenWords.clear();saveHidden();updateFab();renderSheet();renderResult()
 }
 
 updateFab();updateFavHeaderBtn()
