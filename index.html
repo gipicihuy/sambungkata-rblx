@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<meta name="google-site-verification" content="GpJKwtQWeM8MS1agRhQpJFSKYe3UVw9FkNQbVciTSww" />
+<meta property="og:title" content="Sambung Kata">
+<meta property="og:site_name" content="Sambung Kata">
+<title>Sambung Kata - Givyx</title>
+<link rel="icon" href="icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="kbbi.json"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#111318;--border:rgba(255,255,255,0.07);--green:#f97316;--red:#ff3d57;--muted:#3a4a5c;--text:#e2eaf4;--subtext:#556070;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);background-image:linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);background-size:60px 60px;color:var(--text);display:flex;flex-direction:column;}
+.top{padding:14px 14px 10px;background:#1c1e21;border-bottom:1px solid var(--border);flex-shrink:0;}
+.header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1;margin-bottom:5px;}
+.dev-tag{font-size:10px;font-weight:700;margin-top:1px;letter-spacing:0.3px;color:var(--subtext);display:block;line-height:1;}
+.dev-link{color:var(--green);text-decoration:none;font-weight:700;}
+.dev-link:hover{text-decoration:underline;}
+.info-block{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+.info{font-size:12px;color:#cbd5e1;font-weight:600;}
+.info-total{font-size:10px;color:#8ba3be;font-weight:600;overflow:hidden;max-height:0;opacity:0;transform:translateY(-6px);transition:max-height 0.35s ease,opacity 0.3s ease 0.1s,transform 0.3s ease 0.1s;}
+.info-total.visible{max-height:20px;opacity:1;transform:translateY(0);}
+.info-actions{display:flex;align-items:center;gap:6px;margin-top:4px;}
+.fav-header-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 9px;font-size:11px;font-weight:800;border:1px solid rgba(249,115,22,0.3);border-radius:6px;background:rgba(249,115,22,0.07);color:var(--green);cursor:pointer;transition:background 0.12s,border-color 0.12s,transform 0.1s;user-select:none;white-space:nowrap;line-height:1;}
+.fav-header-btn:hover{background:rgba(249,115,22,0.14);border-color:rgba(249,115,22,0.5);}
+.fav-header-btn:active{transform:scale(0.93);}
+.fav-hb-count{display:none;font-size:10px;font-weight:800;background:var(--green);color:#fff;border-radius:4px;padding:1px 5px;line-height:1.4;}
+.fav-hb-count.on{display:inline-block;}
+.mode{display:flex;background:rgba(10,10,11,0.6);border-radius:8px;padding:3px;margin-bottom:10px;gap:3px;}
+.mode button{flex:1;padding:7px;font-size:13px;font-weight:700;border:none;background:transparent;color:#94a3b8;border-radius:6px;cursor:pointer;transition:all 0.15s;}
+.mode button.active{background:var(--green);color:#fff;}
+.input-dual{display:none;align-items:center;gap:8px;}
+.input-dual.on{display:flex;}
+.input-wrap-single{display:flex;}
+.input-wrap-single.hidden-by-dual{display:none;}
+.input-sep{font-size:13px;font-weight:800;color:var(--subtext);flex-shrink:0;padding:0 2px;}
+.input-wrap{position:relative;display:flex;align-items:center;flex:1;}
+.input-dual .input-wrap{flex:1;}
+.input-wrap input{width:100%;padding:9px 36px 9px 12px;font-size:16px;font-weight:700;border-radius:8px;border:1px solid var(--border);background:rgba(10,10,11,0.6);color:#fff;outline:none;}
+.input-wrap input:focus{border-color:var(--green);}
+.input-wrap input:disabled{opacity:0.45;cursor:not-allowed;}
+.input-clear{position:absolute;right:10px;width:18px;height:18px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;color:#556070;font-size:13px;cursor:pointer;transition:color 0.12s,opacity 0.15s;opacity:0;pointer-events:none;line-height:1;}
+.input-clear.visible{opacity:1;pointer-events:auto;}
+.input-clear:hover{color:#e2eaf4;}
+
+.wa-banner{display:flex;align-items:center;gap:10px;margin-top:8px;padding:8px 12px;background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.2);border-radius:10px;text-decoration:none;transition:background 0.15s,border-color 0.15s;position:relative;overflow:hidden;}
+.wa-banner:hover{background:rgba(37,211,102,0.12);border-color:rgba(37,211,102,0.35);}
+.wa-banner:active{transform:scale(0.985);}
+.wa-sheen{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,0.55) 48%,rgba(255,255,255,0.75) 50%,rgba(255,255,255,0.55) 52%,transparent 80%);pointer-events:none;animation:sheenSlide 0.45s ease-out forwards;}
+@keyframes sheenSlide{0%{transform:translateX(-100%) skewX(-12deg)}100%{transform:translateX(100%) skewX(-12deg)}}
+.wa-banner-icon{width:32px;height:32px;background:#25D366;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;color:#fff;box-shadow:0 0 8px rgba(37,211,102,0.3);}
+.wa-banner-text{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0;}
+.wa-banner-title{font-size:12px;font-weight:800;color:#e2eaf4;line-height:1.3;}
+.wa-banner-sub{font-size:10px;font-weight:600;color:#6adb8f;line-height:1.3;}
+.wa-banner-arrow{flex-shrink:0;opacity:0.6;}
+.loading-bar-wrap{height:2px;background:transparent;flex-shrink:0;overflow:hidden;}
+.loading-bar{height:2px;width:0%;background:var(--green);transition:width 0.4s ease;}
+.loading-bar.indeterminate{width:40%;animation:swing 1.2s ease-in-out infinite;}
+@keyframes swing{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+.trending-wrap{flex-shrink:0;background:#1c1e21;border-bottom:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.35s ease,opacity 0.25s ease;}
+.trending-wrap.visible{max-height:200px;opacity:1;}
+.trending-inner{padding:8px 14px 10px;}
+.trending-label{font-size:10px;font-weight:800;letter-spacing:0.8px;color:var(--subtext);text-transform:uppercase;margin-bottom:7px;}
+.trending-chips{display:flex;flex-wrap:wrap;gap:5px;}
+.trend-chip{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:6px;font-size:12px;font-weight:800;color:#cbd5e1;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;transition:all 0.12s;user-select:none;}
+.trend-chip:hover{background:rgba(249,115,22,0.09);border-color:rgba(249,115,22,0.3);color:var(--green);}
+.trend-chip:active{transform:scale(0.92);}
+.trend-chip.hot{background:rgba(255,61,87,0.07);border-color:rgba(255,61,87,0.2);color:#ff8fa3;}
+.alpha-jump{display:none;flex-wrap:wrap;gap:5px;background:#1c1e21;flex-shrink:0;}
+.alpha-jump.visible{display:flex;}
+.alpha-jump.visible:not(:empty){padding:8px 14px;border-bottom:1px solid var(--border);}
+.jump-btn{padding:6px 10px;font-size:12px;font-weight:800;border:1px solid rgba(255,255,255,0.1);border-radius:6px;background:rgba(10,10,11,0.6);color:#cbd5e1;cursor:pointer;transition:all 0.12s;line-height:1;}
+.jump-btn:hover{background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.35);color:var(--green);}
+.jump-btn:active{transform:scale(0.93);}
+.jump-btn.na{opacity:0.2;pointer-events:none;}
+.result-toolbar{display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:rgba(17,19,24,0.6);border-bottom:1px solid var(--border);flex-shrink:0;gap:8px;overflow:hidden;max-height:0;opacity:0;transition:max-height 0.25s ease,opacity 0.2s ease;}
+.result-toolbar.visible{max-height:44px;opacity:1;}
+.toolbar-count{font-size:12px;font-weight:700;color:#556070;}
+.toolbar-copy{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;font-size:12px;font-weight:800;border:1px solid rgba(249,115,22,0.3);border-radius:6px;background:rgba(249,115,22,0.08);color:var(--green);cursor:pointer;transition:background 0.12s,border-color 0.12s,transform 0.1s;user-select:none;white-space:nowrap;}
+.toolbar-copy:hover{background:rgba(249,115,22,0.16);border-color:rgba(249,115,22,0.5);}
+.toolbar-copy:active{transform:scale(0.94);}
+.toolbar-copy.copied{background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.35);color:#4ade80;}
+.result{flex:1;overflow-y:auto;min-height:0;padding-bottom:90px;}
+.result::-webkit-scrollbar{width:3px;}
+.result::-webkit-scrollbar-thumb{background:var(--muted);border-radius:10px;}
+.empty{height:100%;min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#94a3b8;font-size:14px;font-weight:600;gap:6px;}
+.empty .material-icons-round{font-size:52px;opacity:0.45;}
+.alpha-header-row{display:flex;align-items:center;gap:10px;padding:8px 14px 7px;background:rgba(249,115,22,0.05);border-top:2px solid rgba(249,115,22,0.25);border-bottom:1px solid rgba(249,115,22,0.1);}
+.alpha-badge{width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:var(--green);border-radius:6px;font-size:13px;font-weight:800;color:#fff;box-shadow:0 0 8px rgba(249,115,22,0.3);flex-shrink:0;}
+.word-row{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;transition:background 0.1s;user-select:none;}
+.word-row:hover{background:rgba(255,255,255,0.03);}
+.word-row:active{background:rgba(249,115,22,0.07);}
+.word-num{font-size:11px;font-weight:700;color:var(--subtext);min-width:30px;text-align:right;flex-shrink:0;}
+.word-text{font-size:14px;font-weight:600;color:#e2eaf4;flex:1;}
+.chip-prefix{color:var(--green);font-weight:800;}
+.chip-suffix{color:var(--green);font-weight:800;}
+.report-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:#556070;font-size:14px;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s;line-height:1;}
+.report-btn:hover{background:rgba(255,61,87,0.1);color:#ff3d57;}
+.report-btn.reported{color:#ff3d57;opacity:0.4;pointer-events:none;}
+.fav-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:#556070;font-size:14px;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s,transform 0.1s;line-height:1;}
+.fav-btn:hover{background:rgba(249,115,22,0.1);color:var(--green);}
+.fav-btn.active{color:var(--green);}
+.fav-btn:active{transform:scale(0.75);}
+.hide-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:var(--subtext);font-size:16px;font-weight:700;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s;line-height:1;}
+.hide-btn:hover{background:rgba(255,61,87,0.1);color:var(--red);}
+.pg-bar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;background:rgba(17,19,24,0.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:5px;box-shadow:0 2px 16px rgba(0,0,0,0.4);opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;z-index:100;}
+.pg-bar.on{opacity:1;pointer-events:auto;}
+.pg-btn{width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:none;border-radius:10px;background:transparent;color:#e2eaf4;font-size:20px;font-weight:900;cursor:pointer;transition:background 0.12s,color 0.12s,transform 0.1s;user-select:none;line-height:1;}
+.pg-btn:hover{background:rgba(249,115,22,0.15);color:var(--green);}
+.pg-btn:active{transform:scale(0.88);}
+.pg-btn.dim{opacity:0.25;pointer-events:none;}
+.pg-divider{width:1px;height:22px;background:rgba(255,255,255,0.1);flex-shrink:0;}
+.pg-info{font-size:13px;font-weight:800;color:#94a3b8;padding:0 10px;white-space:nowrap;}
+.pg-info b{color:#fff;}
+.toast-container{position:fixed;top:16px;right:16px;z-index:9999;pointer-events:none;width:auto;max-width:90vw;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+.toast-roblox{pointer-events:auto;background:#2d1b1b;border:1px solid #5c2e2e;border-left:3px solid #d9534f;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.4);color:#f0d9d9;font-family:'Plus Jakarta Sans',sans-serif;min-width:260px;max-width:340px;padding:0;}
+.toast-roblox .toast-header{background:transparent;border-bottom:1px solid #3d2222;padding:9px 12px 8px;color:#f0d9d9;font-size:12px;font-weight:700;}
+.toast-roblox .toast-header .icon-roblox{width:16px;height:16px;border-radius:3px;background:#d9534f;display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:900;margin-right:7px;flex-shrink:0;}
+.toast-roblox .toast-header .me-auto{color:#f0d9d9;}
+.toast-roblox .btn-close{filter:invert(1);opacity:0.5;width:10px;height:10px;}
+.toast-roblox .toast-body{padding:9px 12px 11px;font-size:12px;color:#c9a8a8;font-weight:500;line-height:1.55;}
+.toast-roblox .toast-body strong{color:#f0d9d9;font-weight:700;}
+.toast-wa{pointer-events:auto;background:#0d2016;border:1px solid rgba(37,211,102,0.3);border-left:3px solid #25D366;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.4);font-family:'Plus Jakarta Sans',sans-serif;min-width:240px;max-width:300px;padding:0;}
+.toast-wa .toast-header{background:transparent;border-bottom:1px solid rgba(37,211,102,0.15);padding:9px 12px 8px;color:#b7f5d0;font-size:12px;font-weight:700;}
+.toast-wa .toast-header .icon-wa{width:16px;height:16px;border-radius:4px;background:#25D366;display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:#fff;margin-right:7px;flex-shrink:0;}
+.toast-wa .toast-header .me-auto{color:#b7f5d0;}
+.toast-wa .btn-close{filter:invert(1);opacity:0.4;width:10px;height:10px;}
+.toast-wa .toast-body{padding:9px 12px 11px;font-size:12px;color:#7ecfa0;font-weight:500;line-height:1.55;}
+.toast-wa .toast-body a{color:#4ade80;font-weight:700;text-decoration:none;}
+.toast-wa .toast-body a:hover{text-decoration:underline;}
+.toast-report{pointer-events:auto;background:#1a1215;border:1px solid rgba(255,61,87,0.3);border-left:3px solid #ff3d57;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.4);font-family:'Plus Jakarta Sans',sans-serif;min-width:220px;max-width:300px;padding:0;}
+.toast-report .toast-header{background:transparent;border-bottom:1px solid rgba(255,61,87,0.15);padding:9px 12px 8px;color:#ffb3be;font-size:12px;font-weight:700;}
+.toast-report .toast-header .icon-report{width:16px;height:16px;border-radius:4px;background:#ff3d57;display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:#fff;margin-right:7px;flex-shrink:0;}
+.toast-report .toast-header .me-auto{color:#ffb3be;}
+.toast-report .btn-close{filter:invert(1);opacity:0.4;width:10px;height:10px;}
+.toast-report .toast-body{padding:9px 12px 11px;font-size:12px;color:#c97f8a;font-weight:500;line-height:1.55;}
+.toast-report .toast-body strong{color:#ffb3be;font-weight:700;}
+.fab-hidden{position:fixed;bottom:72px;right:18px;display:flex;align-items:center;gap:4px;background:rgba(30,32,38,0.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.08);border-radius:50px;padding:6px 12px 6px 6px;box-shadow:0 4px 24px rgba(0,0,0,0.3);z-index:99;cursor:pointer;transition:opacity 0.2s,border-color 0.2s;user-select:none;}
+.fab-hidden:hover{border-color:rgba(255,255,255,0.18);}
+.fab-hidden:active{transform:scale(0.93);}
+.fab-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#94a3b8;flex-shrink:0;line-height:1;}
+.fab-count{font-size:13px;font-weight:800;color:#fff;line-height:1;display:none;}
+.fab-count.on{display:block;}
+.sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;opacity:0;pointer-events:none;transition:opacity 0.25s;}
+.sheet-overlay.on{opacity:1;pointer-events:auto;}
+.sheet{position:fixed;bottom:0;left:0;right:0;max-height:75vh;background:#1a1d24;border-radius:18px 18px 0 0;border-top:1px solid var(--border);z-index:201;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);display:flex;flex-direction:column;}
+.sheet.on{transform:translateY(0);}
+.sheet-handle{width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:10px auto 0;}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 8px;}
+.sheet-title{font-size:14px;font-weight:800;color:#fff;}
+.sheet-clear{font-size:11px;font-weight:700;color:var(--red);background:rgba(255,61,87,0.08);border:1px solid rgba(255,61,87,0.2);border-radius:6px;padding:4px 10px;cursor:pointer;transition:background 0.12s;}
+.sheet-clear:hover{background:rgba(255,61,87,0.15);}
+.sheet-body{overflow-y:auto;flex:1;padding:0 0 24px;}
+.sheet-body::-webkit-scrollbar{width:3px;}
+.sheet-body::-webkit-scrollbar-thumb{background:var(--muted);border-radius:10px;}
+.sheet-empty{padding:40px 16px;text-align:center;color:#556070;font-size:13px;font-weight:600;}
+.sheet-row{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.sheet-word{font-size:14px;font-weight:600;color:#e2eaf4;flex:1;}
+.sheet-restore{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:rgba(249,115,22,0.08);color:var(--green);font-size:14px;cursor:pointer;transition:background 0.12s;flex-shrink:0;}
+.sheet-restore:hover{background:rgba(249,115,22,0.18);}
+.fav-modal{position:fixed;inset:0;z-index:300;background:#111318;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);}
+.fav-modal.on{transform:translateX(0);}
+.fav-modal-topbar{display:flex;align-items:center;gap:10px;padding:14px 14px 10px;background:#1c1e21;border-bottom:1px solid var(--border);flex-shrink:0;}
+.fav-modal-back{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:none;border-radius:8px;background:rgba(255,255,255,0.06);color:#e2eaf4;font-size:15px;cursor:pointer;flex-shrink:0;transition:background 0.12s,color 0.12s;line-height:1;}
+.fav-modal-back:hover{background:rgba(249,115,22,0.12);color:var(--green);}
+.fav-modal-back:active{transform:scale(0.9);}
+.fav-modal-title{font-size:15px;font-weight:800;color:#fff;flex:1;}
+.fav-modal-clear{font-size:11px;font-weight:700;color:var(--red);background:rgba(255,61,87,0.08);border:1px solid rgba(255,61,87,0.2);border-radius:6px;padding:5px 11px;cursor:pointer;transition:background 0.12s;white-space:nowrap;}
+.fav-modal-clear:hover{background:rgba(255,61,87,0.15);}
+.fav-jump-bar{display:flex;flex-wrap:wrap;gap:5px;padding:8px 14px;background:#1c1e21;border-bottom:1px solid var(--border);flex-shrink:0;}
+.fav-jump-bar:empty{display:none;padding:0;border:none;}
+.fav-jump-chip{padding:6px 10px;font-size:12px;font-weight:800;border:1px solid rgba(255,255,255,0.1);border-radius:6px;background:rgba(10,10,11,0.6);color:#cbd5e1;cursor:pointer;transition:all 0.12s;text-transform:uppercase;line-height:1;}
+.fav-jump-chip:hover{background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.35);color:var(--green);}
+.fav-jump-chip:active{transform:scale(0.93);}
+.fav-modal-body{overflow-y:auto;flex:1;padding-bottom:24px;}
+.fav-modal-body::-webkit-scrollbar{width:3px;}
+.fav-modal-body::-webkit-scrollbar-thumb{background:var(--muted);border-radius:10px;}
+.fav-group-header{display:flex;align-items:center;gap:8px;padding:7px 16px 6px;background:rgba(249,115,22,0.05);border-top:2px solid rgba(249,115,22,0.2);border-bottom:1px solid rgba(249,115,22,0.08);transition:background 0.25s,border-color 0.25s;}
+.fav-group-badge{display:inline-flex;align-items:center;padding:3px 10px;background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.25);border-radius:6px;font-size:13px;font-weight:800;color:var(--green);letter-spacing:0.8px;text-transform:uppercase;transition:background 0.25s,border-color 0.25s,color 0.25s;}
+.fav-group-header.flash-group{background:rgba(249,115,22,0.22);border-top-color:rgba(249,115,22,0.7);}
+.fav-group-header.flash-group .fav-group-badge{background:rgba(249,115,22,0.3);border-color:rgba(249,115,22,0.6);}
+.fav-group-count{font-size:10px;font-weight:700;color:#556070;margin-left:auto;}
+.fav-row{display:flex;align-items:center;gap:8px;padding:9px 16px;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer;transition:background 0.1s;user-select:none;}
+.fav-row:hover{background:rgba(255,255,255,0.03);}
+.fav-row:active{background:rgba(249,115,22,0.07);}
+.fav-row-word{font-size:14px;font-weight:600;color:#e2eaf4;flex:1;}
+.fav-row-remove{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:#556070;font-size:15px;cursor:pointer;flex-shrink:0;transition:color 0.12s,background 0.12s;}
+.fav-row-remove:hover{background:rgba(255,61,87,0.1);color:#ff3d57;}
+.fav-modal-empty{padding:60px 16px;text-align:center;color:#556070;font-size:13px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.fav-modal-empty .fav-empty-icon{font-size:44px;opacity:0.25;}
+@keyframes copyFlash{0%{background:rgba(249,115,22,0.18)}100%{background:transparent}}
+.fav-row.flash{animation:copyFlash 0.4s ease-out;}
+@keyframes groupFlash{0%{background:rgba(249,115,22,0.22)}60%{background:rgba(249,115,22,0.22)}100%{background:rgba(249,115,22,0.05)}}
+.fav-group-header.flash-group{animation:groupFlash 0.7s ease-out forwards;}
+.toast-fav-info{pointer-events:auto;background:#1a1422;border:1px solid rgba(249,115,22,0.3);border-left:3px solid var(--green);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.4);font-family:'Plus Jakarta Sans',sans-serif;min-width:240px;max-width:320px;padding:0;}
+.toast-fav-info .toast-header{background:transparent;border-bottom:1px solid rgba(249,115,22,0.15);padding:9px 12px 8px;color:#ffd0a8;font-size:12px;font-weight:700;}
+.toast-fav-info .toast-header .icon-fav-info{width:16px;height:16px;border-radius:4px;background:var(--green);display:inline-flex;align-items:center;justify-content:center;font-size:10px;color:#fff;margin-right:7px;flex-shrink:0;line-height:1;}
+.toast-fav-info .toast-header .me-auto{color:#ffd0a8;}
+.toast-fav-info .btn-close{filter:invert(1);opacity:0.4;width:10px;height:10px;}
+.toast-fav-info .toast-body{padding:9px 12px 11px;font-size:12px;color:#c4a07a;font-weight:500;line-height:1.55;}
+.toast-fav-info .toast-body strong{color:#ffd0a8;font-weight:700;}
+.rmodal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:500;opacity:0;pointer-events:none;transition:opacity 0.22s;display:flex;align-items:flex-end;justify-content:center;}
+.rmodal-overlay.on{opacity:1;pointer-events:auto;}
+.rmodal{background:#1a1d24;border-radius:20px 20px 0 0;border-top:1px solid rgba(255,255,255,0.08);width:100%;max-width:500px;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);overflow:hidden;}
+.rmodal-overlay.on .rmodal{transform:translateY(0);}
+.rmodal-handle{width:36px;height:4px;background:rgba(255,255,255,0.12);border-radius:2px;margin:10px auto 0;}
+.rmodal-icon{font-size:36px;text-align:center;padding:18px 0 6px;}
+.rmodal-title{font-size:16px;font-weight:800;color:#fff;text-align:center;padding:0 20px 4px;}
+.rmodal-word{font-size:26px;font-weight:800;color:#ff3d57;text-align:center;letter-spacing:2px;padding:8px 20px 14px;}
+.rmodal-desc{font-size:12px;color:#8ba3be;font-weight:500;line-height:1.65;text-align:center;padding:0 24px 20px;}
+.rmodal-desc b{color:#cbd5e1;}
+.rmodal-actions{display:flex;gap:0;border-top:1px solid rgba(255,255,255,0.06);}
+.rmodal-cancel{flex:1;padding:15px;font-size:14px;font-weight:700;border:none;border-right:1px solid rgba(255,255,255,0.06);background:transparent;color:#8ba3be;cursor:pointer;transition:background 0.12s;}
+.rmodal-cancel:hover{background:rgba(255,255,255,0.04);}
+.rmodal-confirm{flex:1;padding:15px;font-size:14px;font-weight:800;border:none;background:transparent;color:#ff3d57;cursor:pointer;transition:background 0.12s;}
+.rmodal-confirm:hover{background:rgba(255,61,87,0.08);}
+.rmodal-confirm:active{background:rgba(255,61,87,0.15);}
+</style>
+</head>
+<body>
+
+<div class="toast-container">
+  <div id="toastRoblox" class="toast toast-roblox align-items-center" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="6000">
+    <div class="toast-header">
+      <span class="icon-roblox">!</span>
+      <span class="me-auto">Warning</span>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      note: tidak semua kata yang disini bisa dipakai di map roblox <strong>Sambung Kata</strong>
+    </div>
+  </div>
+  <div id="toastWA" class="toast toast-wa align-items-center" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="8000">
+    <div class="toast-header">
+      <span class="icon-wa"><i class="fa-brands fa-whatsapp"></i></span>
+      <span class="me-auto">Saluran WhatsApp</span>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Follow saluran WhatsApp untuk mendapatkan info terbaru! <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener">Klik di sini 🔔</a>
+    </div>
+  </div>
+  <div id="toastFavInfo" class="toast toast-fav-info align-items-center" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="6000">
+    <div class="toast-header">
+      <span class="icon-fav-info">♥</span>
+      <span class="me-auto">Kata Favorit</span>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Kata yang kamu favorit tersimpan di tombol <strong onclick="bootstrap.Toast.getInstance(document.getElementById('toastFavInfo'))?.hide();openFavModal()" style="color:#f97316;cursor:pointer;text-decoration:underline;text-underline-offset:2px;">Favorit</strong>
+    </div>
+  </div>
+  <div id="toastReport" class="toast toast-report align-items-center" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+    <div class="toast-header">
+      <span class="icon-report">⚑</span>
+      <span class="me-auto">Report Terkirim</span>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Kata <strong id="toastReportWord"></strong> berhasil dilaporkan. Terima kasih!
+    </div>
+  </div>
+</div>
+
+<div class="rmodal-overlay" id="rmodalOverlay">
+  <div class="rmodal" id="rmodal">
+    <div class="rmodal-handle"></div>
+    <div class="rmodal-icon">🚩</div>
+    <div class="rmodal-title">Laporkan Kata Tidak Valid?</div>
+    <div class="rmodal-word" id="rmodalWord"></div>
+    <div class="rmodal-desc">
+      Yakin kata ini <b>tidak bisa dipakai</b> di map Sambung Kata?<br>
+      Reportmu membantu kami membersihkan database. 🙏
+    </div>
+    <div class="rmodal-actions">
+      <button class="rmodal-cancel" onclick="closeRModal()">Batal</button>
+      <button class="rmodal-confirm" onclick="confirmReport()">Ya, Laporkan ⚑</button>
+    </div>
+  </div>
+</div>
+
+<div class="fav-modal" id="favModal">
+  <div class="fav-modal-topbar">
+    <button class="fav-modal-back" onclick="closeFavModal()"><i class="fa-solid fa-chevron-left"></i></button>
+    <span class="fav-modal-title"><i class="fa-solid fa-heart" style="color:var(--green)"></i> Kata Favorit</span>
+    <button class="fav-modal-clear" id="favModalClear" onclick="clearAllFav()">Hapus Semua</button>
+  </div>
+  <div class="fav-jump-bar" id="favJumpBar"></div>
+  <div class="fav-modal-body" id="favModalBody"></div>
+</div>
+
+<div class="top">
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <img src="sambungkata.jpg" alt="logo" style="width:38px;height:38px;border-radius:8px;object-fit:cover;flex-shrink:0;">
+      <div>
+        <h1>Sambung Kata</h1>
+        <div class="dev-tag">— by <a class="dev-link" href="https://tiktok.com/@_yudxx">@Givyx</a></div>
+      </div>
+    </div>
+    <div class="info-block">
+      <div class="info" id="info">memuat...</div>
+      <div class="info-total" id="infoTotal"></div>
+      <div class="info-actions">
+        <button class="fav-header-btn" id="favHeaderBtn" onclick="openFavModal()">
+          <i class="fa-solid fa-heart"></i> Favorit <span class="fav-hb-count" id="favHbCount">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mode">
+    <button id="modeAwal" class="active" onclick="setMode('awal')">Awalan</button>
+    <button id="modeAkhir" onclick="setMode('akhir')">Akhiran</button>
+    <button id="modeKepit" onclick="setMode('kepit')">Awal+Akhir</button>
+  </div>
+  <div class="input-wrap input-wrap-single" id="inputSingle">
+    <input type="text" id="huruf" maxlength="3" placeholder="memuat kata..." autocomplete="off" disabled>
+    <button class="input-clear" id="inputClear" onclick="clearInput()" title="Hapus">✕</button>
+  </div>
+  <div class="input-dual" id="inputDual">
+    <div class="input-wrap">
+      <input type="text" id="hurufAwal" maxlength="3" placeholder="Awalan" autocomplete="off" disabled>
+      <button class="input-clear" id="inputClearAwal" onclick="clearInputAwal()" title="Hapus">✕</button>
+    </div>
+    <span class="input-sep">···</span>
+    <div class="input-wrap">
+      <input type="text" id="hurufAkhir" maxlength="3" placeholder="Akhiran" autocomplete="off" disabled>
+      <button class="input-clear" id="inputClearAkhir" onclick="clearInputAkhir()" title="Hapus">✕</button>
+    </div>
+  </div>
+  <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener" class="wa-banner" id="waBanner">
+    <div class="wa-banner-icon"><i class="fa-brands fa-whatsapp"></i></div>
+    <div class="wa-banner-text">
+      <span class="wa-banner-title">Follow saluran WhatsApp</span>
+      <span class="wa-banner-sub">Dapatkan info update website ini 🔔</span>
+    </div>
+    <div class="wa-banner-arrow"><span class="material-icons-round" style="font-size:15px;color:#25D366;">open_in_new</span></div>
+  </a>
+</div>
+
+<div class="loading-bar-wrap" id="loadingWrap">
+  <div class="loading-bar indeterminate" id="loadingBar"></div>
+</div>
+
+<div class="trending-wrap" id="trendingWrap">
+  <div class="trending-inner">
+    <div class="trending-label">🔥 Populer</div>
+    <div class="trending-chips" id="trendingChips"></div>
+  </div>
+</div>
+
+<div class="alpha-jump" id="alphaJump"></div>
+
+<div class="result-toolbar" id="resultToolbar">
+  <span class="toolbar-count" id="toolbarCount"></span>
+  <button class="toolbar-copy" id="toolbarCopyBtn" onclick="salinSemua()">
+    <span class="material-icons-round" style="font-size:14px;">content_copy</span>
+    Salin Semua
+  </button>
+</div>
+
+<div class="result" id="result">
+  <div class="empty">
+    <span class="material-icons-round">hourglass_empty</span>
+    sedang memuat kata...
+  </div>
+</div>
+
+<div class="fab-hidden" id="fabHidden" onclick="openSheet()">
+  <div class="fab-icon">⊘</div>
+  <div class="fab-count" id="fabCount">0</div>
+</div>
+
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <span class="sheet-title">Kata Tersembunyi</span>
+    <button class="sheet-clear" onclick="clearAllHidden()">Tampilkan Semua</button>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</div>
+
+<div class="pg-bar" id="pgBar">
+  <button class="pg-btn dim" id="pgFirst" onclick="goPage(1)" title="Pertama">&#171;</button>
+  <button class="pg-btn dim" id="pgPrev" onclick="changePage(-1)">&#8249;</button>
+  <div class="pg-divider"></div>
+  <div class="pg-info" id="pgInfo"></div>
+  <div class="pg-divider"></div>
+  <button class="pg-btn dim" id="pgNext" onclick="changePage(1)">&#8250;</button>
+  <button class="pg-btn dim" id="pgLast" onclick="goPageLast()" title="Terakhir">&#187;</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let database=[],mode='awal',hasil=[],lastInput='',lastInputAwal='',lastInputAkhir='',dbReady=false
+let TREND_AWAL=[],TREND_AKHIR=[],currentPage=1
+const PAGE_SIZE=100
+
+let _rWord=null,_rBtn=null
+function openRModal(w,btn){_rWord=w;_rBtn=btn;document.getElementById('rmodalWord').textContent=w.toUpperCase();document.getElementById('rmodalOverlay').classList.add('on')}
+function closeRModal(){document.getElementById('rmodalOverlay').classList.remove('on');_rWord=null;_rBtn=null}
+function confirmReport(){
+  if(!_rWord)return
+  const w=_rWord,btn=_rBtn
+  closeRModal()
+  reportedWords.add(w);saveReported()
+  if(btn){btn.classList.add('reported');btn.title='Sudah dilaporkan'}
+  fetch('/api/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({word:w,mode:mode})}).catch(()=>{})
+  document.getElementById('toastReportWord').textContent=w.toUpperCase()
+  new bootstrap.Toast(document.getElementById('toastReport'),{delay:3000}).show()
+}
+document.getElementById('rmodalOverlay').addEventListener('click',function(e){if(e.target===this)closeRModal()})
+
+let favWords=[]
+try{favWords=JSON.parse(localStorage.getItem('sk_favs')||'[]')}catch(e){favWords=[]}
+function saveFav(){localStorage.setItem('sk_favs',JSON.stringify(favWords))}
+function isFav(w){return favWords.some(f=>f.word===w)}
+
+function toggleFav(w,btn){
+  const idx=favWords.findIndex(f=>f.word===w)
+  if(idx>=0){openFavModal();return}
+  const q=mode==='kepit'?lastInputAwal+'···'+lastInputAkhir:lastInput
+  favWords.push({word:w,query:q,mode:mode})
+  if(btn){
+    btn.classList.add('active')
+    const icon=btn.querySelector('i')
+    if(icon){icon.className='fa-solid fa-heart'}
+    btn.style.transform='scale(1.4)';setTimeout(()=>{btn.style.transform=''},180)
+  }
+  new bootstrap.Toast(document.getElementById('toastFavInfo'),{delay:4000}).show()
+  saveFav();updateFavHeaderBtn()
+  if(document.getElementById('favModal').classList.contains('on'))renderFavModal()
+}
+
+function updateFavHeaderBtn(){
+  const n=favWords.length
+  const cnt=document.getElementById('favHbCount')
+  cnt.textContent=n;cnt.classList.toggle('on',n>0)
+}
+
+function openFavModal(){renderFavModal();document.getElementById('favModal').classList.add('on')}
+function closeFavModal(){document.getElementById('favModal').classList.remove('on')}
+
+function renderFavModal(){
+  const body=document.getElementById('favModalBody')
+  const clearBtn=document.getElementById('favModalClear')
+  const jumpBar=document.getElementById('favJumpBar')
+  clearBtn.style.display=favWords.length?'':'none'
+  if(!favWords.length){
+    jumpBar.innerHTML=''
+    body.innerHTML=`<div class="fav-modal-empty"><span class="fav-empty-icon">♡</span>Belum ada kata favorit.<br>Tap <i class="fa-regular fa-heart"></i> di samping kata untuk menyimpannya.</div>`
+    return
+  }
+  const sorted=[...favWords].sort((a,b)=>a.word.localeCompare(b.word))
+  const groups={}
+  for(const f of sorted){
+    const letter=f.word[0].toUpperCase()
+    if(!groups[letter])groups[letter]=[]
+    groups[letter].push(f)
+  }
+  const sortedLetters=Object.keys(groups).sort()
+  jumpBar.innerHTML=sortedLetters.map(l=>`<button class="fav-jump-chip" onclick="favJumpTo('fav-grp-${l}')">${l}</button>`).join('')
+  let html='',num=0
+  for(const l of sortedLetters){
+    const items=groups[l]
+    html+=`<div class="fav-group-header" id="fav-grp-${l}"><span class="fav-group-badge">${l}</span><span class="fav-group-count">${items.length} kata</span></div>`
+    for(const f of items){
+      num++
+      const sw=f.word.replace(/\\/g,'\\\\').replace(/'/g,"\\'")
+      const sq=(f.query||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")
+      const sm=f.mode||'awal'
+      html+=`<div class="fav-row" onclick="favCopyWord('${sw}',this)"><span class="word-num">${num}</span><span class="fav-row-word">${f.word}</span><button class="fav-row-remove" onclick="event.stopPropagation();removeFav('${sq}','${sm}','${sw}')" title="Hapus dari favorit"><i class="fa-solid fa-trash-can"></i></button></div>`
+    }
+  }
+  body.innerHTML=html
+}
+
+function favJumpTo(id){
+  const el=document.getElementById(id);if(!el)return
+  el.scrollIntoView({block:'start',behavior:'smooth'})
+  setTimeout(()=>{el.classList.remove('flash-group');void el.offsetWidth;el.classList.add('flash-group')},320)
+}
+function favCopyWord(w,row){
+  navigator.clipboard.writeText(w).then(()=>{row.classList.remove('flash');void row.offsetWidth;row.classList.add('flash')}).catch(()=>{})
+}
+function removeFav(query,m,word){
+  const idx=favWords.findIndex(f=>f.word===word);if(idx>=0)favWords.splice(idx,1)
+  saveFav();updateFavHeaderBtn();renderFavModal();renderResult()
+}
+function clearAllFav(){
+  if(!favWords.length)return
+  if(!confirm('Hapus semua '+favWords.length+' kata favorit?'))return
+  favWords=[];saveFav();updateFavHeaderBtn();renderFavModal();renderResult()
+}
+
+fetch('settings.json').then(r=>r.json()).then(cfg=>{TREND_AWAL=cfg.trending_awal||[];TREND_AKHIR=cfg.trending_akhir||[];renderTrending()}).catch(()=>{TREND_AWAL=[];TREND_AKHIR=[];renderTrending()})
+
+document.getElementById('waBanner').addEventListener('pointerdown',function(){
+  const old=this.querySelector('.wa-sheen');if(old)old.remove()
+  const sheen=document.createElement('span');sheen.className='wa-sheen';this.appendChild(sheen)
+  sheen.addEventListener('animationend',()=>sheen.remove())
+})
+function showWAToast(){new bootstrap.Toast(document.getElementById('toastWA'),{delay:8000}).show()}
+
+function renderTrending(){
+  const wrap=document.getElementById('trendingWrap')
+  const hasInput=mode==='kepit'?(lastInputAwal||lastInputAkhir):(document.getElementById('huruf').value.trim())
+  if(hasInput||mode==='kepit'){wrap.classList.remove('visible');return}
+  const list=mode==='awal'?TREND_AWAL:TREND_AKHIR
+  if(!list.length){wrap.classList.remove('visible');return}
+  document.getElementById('trendingChips').innerHTML=list.map(item=>{
+    const q=typeof item==='object'?item.q:item
+    const hot=typeof item==='object'?!!item.hot:false
+    return `<div class="trend-chip${hot?' hot':''}" onclick="applyTrend('${q}')">${q.toUpperCase()}${hot?' 🔥':''}</div>`
+  }).join('')
+  wrap.classList.add('visible')
+}
+function applyTrend(q){const inp=document.getElementById('huruf');inp.value=q.slice(0,3);inp.focus();cari()}
+
+const HR={'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,'g':7,'h':8,'j':9,'k':10,'b':11,'c':12,'d':13,'p':14,'t':15,'l':16,'m':17,'n':18,'r':19,'s':20,'u':21,'i':22,'e':23,'o':24,'a':25}
+function getHardness(w){if(!w)return 99;const c=w[w.length-1].toLowerCase();return HR[c]!==undefined?HR[c]:99}
+function lowerBound(arr,t){let l=0,r=arr.length;while(l<r){let m=(l+r)>>1;if(arr[m]<t)l=m+1;else r=m}return l}
+
+function initDB(){
+  const raw=window.__KBBI__
+  if(!raw||!Array.isArray(raw)){document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">skull</span>gagal memuat database</div>';return}
+  const wc=`self.onmessage=function(e){const db=[...new Set(e.data.map(k=>k.trim()).filter(k=>k.length>0))].sort();self.postMessage(db)}`
+  const worker=new Worker(URL.createObjectURL(new Blob([wc],{type:'application/javascript'})))
+  worker.postMessage(raw)
+  worker.onmessage=function(e){
+    database=e.data;dbReady=true;worker.terminate()
+    try{delete window.__KBBI__}catch(err){}
+    const bar=document.getElementById('loadingBar')
+    bar.classList.remove('indeterminate');bar.style.width='100%'
+    setTimeout(()=>{document.getElementById('loadingWrap').style.display='none'},400)
+    document.getElementById('huruf').disabled=false
+    document.getElementById('huruf').placeholder='ketik 1–3 huruf'
+    document.getElementById('hurufAwal').disabled=false
+    document.getElementById('hurufAkhir').disabled=false
+    document.getElementById('hurufAwal').placeholder='Awalan'
+    document.getElementById('hurufAkhir').placeholder='Akhiran'
+    document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
+    document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">keyboard</span>mulai ketik huruf</div>'
+    const robloxToast=document.getElementById('toastRoblox')
+    new bootstrap.Toast(robloxToast,{delay:6000}).show()
+    robloxToast.addEventListener('hidden.bs.toast',()=>showWAToast(),{once:true})
+    updateFavHeaderBtn();renderTrending();cari()
+  }
+}
+initDB()
+
+function setMode(m){
+  if(!dbReady)return
+  mode=m
+  document.getElementById('modeAwal').classList.toggle('active',m==='awal')
+  document.getElementById('modeAkhir').classList.toggle('active',m==='akhir')
+  document.getElementById('modeKepit').classList.toggle('active',m==='kepit')
+  const single=document.getElementById('inputSingle')
+  const dual=document.getElementById('inputDual')
+  if(m==='kepit'){
+    single.classList.add('hidden-by-dual')
+    dual.classList.add('on')
+  } else {
+    single.classList.remove('hidden-by-dual')
+    dual.classList.remove('on')
+  }
+  currentPage=1
+  renderTrending();cari()
+}
+
+function clearInput(){const inp=document.getElementById('huruf');inp.value='';inp.focus();cari()}
+function clearInputAwal(){const inp=document.getElementById('hurufAwal');inp.value='';inp.focus();cariKepit()}
+function clearInputAkhir(){const inp=document.getElementById('hurufAkhir');inp.value='';inp.focus();cariKepit()}
+
+function updateClearBtn(){
+  document.getElementById('inputClear').classList.toggle('visible',document.getElementById('huruf').value.length>0)
+  document.getElementById('inputClearAwal').classList.toggle('visible',document.getElementById('hurufAwal').value.length>0)
+  document.getElementById('inputClearAkhir').classList.toggle('visible',document.getElementById('hurufAkhir').value.length>0)
+}
+
+function updateToolbar(){
+  const toolbar=document.getElementById('resultToolbar')
+  const vis=getVisible()
+  const hasSearch=mode==='kepit'?(lastInputAwal||lastInputAkhir):lastInput
+  if(!hasSearch||!vis.length){toolbar.classList.remove('visible');return}
+  toolbar.classList.add('visible')
+  document.getElementById('toolbarCount').textContent=vis.length.toLocaleString()+' kata ditemukan'
+}
+
+function salinSemua(){
+  const vis=getVisible();if(!vis.length)return
+  const btn=document.getElementById('toolbarCopyBtn')
+  navigator.clipboard.writeText(vis.join('\n')).then(()=>{
+    btn.classList.add('copied')
+    btn.innerHTML='<span class="material-icons-round" style="font-size:14px;">check</span> Tersalin!'
+    setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='<span class="material-icons-round" style="font-size:14px;">content_copy</span> Salin Semua'},2000)
+  }).catch(()=>{})
+}
+
+let searchTimer=null
+const trackedQueries=new Set()
+
+function cari(){
+  if(!dbReady)return
+  if(mode==='kepit'){cariKepit();return}
+  const inp=document.getElementById('huruf')
+  const raw=inp.value.toLowerCase().trim()
+  const input=raw.slice(0,3)
+  if(raw!==input)inp.value=input
+  lastInput=input;currentPage=1
+  updateClearBtn();renderTrending()
+  if(!input){
+    document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">keyboard</span>mulai ketik huruf</div>'
+    document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
+    const t=document.getElementById('infoTotal');t.classList.remove('visible');setTimeout(()=>{t.textContent=''},350)
+    document.getElementById('pgBar').classList.remove('on')
+    document.getElementById('alphaJump').classList.remove('visible')
+    document.getElementById('resultToolbar').classList.remove('visible')
+    return
+  }
+  clearTimeout(searchTimer)
+  searchTimer=setTimeout(()=>{
+    const key=mode+':'+input
+    if(trackedQueries.has(key))return
+    trackedQueries.add(key)
+    fetch('/api/ping',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:location.pathname,ref:document.referrer||'-',search:input,searchMode:mode})}).catch(()=>{})
+  },800)
+  if(mode==='awal'){
+    hasil=database.slice(lowerBound(database,input),lowerBound(database,input+'zzz'))
+    hasil.sort((a,b)=>getHardness(a)-getHardness(b))
+    document.getElementById('alphaJump').classList.remove('visible')
+    renderAwal()
+  } else {
+    hasil=database.filter(k=>k.endsWith(input))
+    hasil.sort((a,b)=>a.localeCompare(b))
+    renderAkhir()
+  }
+}
+
+function cariKepit(){
+  if(!dbReady)return
+  const inpA=document.getElementById('hurufAwal')
+  const inpB=document.getElementById('hurufAkhir')
+  const rawA=inpA.value.toLowerCase().trim().slice(0,3)
+  const rawB=inpB.value.toLowerCase().trim().slice(0,3)
+  if(inpA.value!==rawA)inpA.value=rawA
+  if(inpB.value!==rawB)inpB.value=rawB
+  lastInputAwal=rawA;lastInputAkhir=rawB;currentPage=1
+  updateClearBtn()
+  if(!rawA&&!rawB){
+    document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">keyboard</span>ketik awalan, akhiran, atau keduanya</div>'
+    document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
+    const t=document.getElementById('infoTotal');t.classList.remove('visible');setTimeout(()=>{t.textContent=''},350)
+    document.getElementById('pgBar').classList.remove('on')
+    document.getElementById('alphaJump').classList.remove('visible')
+    document.getElementById('resultToolbar').classList.remove('visible')
+    return
+  }
+  hasil=database.filter(k=>{
+    if(rawA&&rawB) return k.startsWith(rawA)&&k.endsWith(rawB)&&k.length>rawA.length+rawB.length
+    if(rawA) return k.startsWith(rawA)
+    return k.endsWith(rawB)
+  })
+  hasil.sort((a,b)=>a.localeCompare(b))
+  document.getElementById('alphaJump').classList.remove('visible')
+  renderKepit()
+}
+
+function getVisible(){return hasil.filter(k=>!hiddenWords.has(k))}
+
+function showInfo(n){
+  document.getElementById('info').textContent=n.toLocaleString()+' kata'
+  const t=document.getElementById('infoTotal');t.textContent='total '+database.length.toLocaleString()+' kata'
+  requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('visible')))
+}
+
+function updatePg(){
+  const total=Math.ceil(getVisible().length/PAGE_SIZE)
+  const bar=document.getElementById('pgBar')
+  if(total<=1){bar.classList.remove('on');return}
+  bar.classList.add('on')
+  document.getElementById('pgFirst').classList.toggle('dim',currentPage<=1)
+  document.getElementById('pgPrev').classList.toggle('dim',currentPage<=1)
+  document.getElementById('pgNext').classList.toggle('dim',currentPage>=total)
+  document.getElementById('pgLast').classList.toggle('dim',currentPage>=total)
+  document.getElementById('pgInfo').innerHTML=`<b>${currentPage}</b> / ${total}`
+}
+
+function goPage(n){currentPage=n;renderResult();document.getElementById('result').scrollTop=0}
+function goPageLast(){goPage(Math.ceil(getVisible().length/PAGE_SIZE))}
+function changePage(d){
+  const total=Math.ceil(getVisible().length/PAGE_SIZE)
+  currentPage=Math.max(1,Math.min(total,currentPage+d))
+  renderResult()
+  document.getElementById('result').scrollTop=0
+}
+
+function renderResult(){
+  if(mode==='awal')renderAwal()
+  else if(mode==='akhir')renderAkhir()
+  else renderKepit()
+}
+
+function slice(){const v=getVisible();const s=(currentPage-1)*PAGE_SIZE;return v.slice(s,s+PAGE_SIZE)}
+
+function jumpToLetter(l,pg){
+  currentPage=pg;renderAkhir();document.getElementById('result').scrollTop=0
+  requestAnimationFrame(()=>{
+    const headers=document.getElementById('result').querySelectorAll('.alpha-header-row')
+    for(const h of headers){if(h.querySelector('.alpha-badge').textContent.toLowerCase()===l){h.scrollIntoView({block:'start',behavior:'smooth'});break}}
+  })
+}
+
+function buildAlphaJump(){
+  const aj=document.getElementById('alphaJump')
+  const vis=getVisible()
+  if(mode!=='akhir'||!vis.length){aj.classList.remove('visible');aj.innerHTML='';return}
+  const letterPage={}
+  for(let i=0;i<vis.length;i++){const l=vis[i][0].toLowerCase();if(!(l in letterPage))letterPage[l]=Math.ceil((i+1)/PAGE_SIZE)}
+  aj.innerHTML='abcdefghijklmnopqrstuvwxyz'.split('').map(l=>{
+    const pg=letterPage[l]
+    return pg?`<button class="jump-btn" onclick="jumpToLetter('${l}',${pg})">${l.toUpperCase()}</button>`:''
+  }).join('')
+  aj.classList.add('visible')
+}
+
+function makeWordRow(w,num,wordHtml){
+  const isRep=reportedWords.has(w),isFaved=isFav(w)
+  const ws=w.replace(/\\/g,'\\\\').replace(/'/g,"\\'")
+  return `<div class="word-row" onclick="if(event.target.classList.contains('hide-btn')||event.target.classList.contains('report-btn')||event.target.closest('.fav-btn'))return;navigator.clipboard.writeText('${ws}')"><span class="word-num">${num}</span><span class="word-text">${wordHtml}</span><button class="fav-btn${isFaved?' active':''}" onclick="toggleFav('${ws}',this)" title="${isFaved?'Lihat di favorit':'Tambah ke favorit'}"><i class="${isFaved?'fa-solid':'fa-regular'} fa-heart"></i></button><button class="report-btn${isRep?' reported':''}" onclick="reportWord('${ws}',this)" title="${isRep?'Sudah dilaporkan':'Laporkan kata ini'}">⚑</button><button class="hide-btn" onclick="toggleHide('${ws}')" title="Sembunyikan">−</button></div>`
+}
+
+function renderAwal(){
+  const vis=getVisible();showInfo(vis.length);updatePg();updateToolbar()
+  const resultDiv=document.getElementById('result')
+  if(!vis.length){resultDiv.innerHTML='<div class="empty"><span class="material-icons-round">search_off</span>tidak ditemukan</div>';return}
+  const page=slice();const offset=(currentPage-1)*PAGE_SIZE
+  let html=''
+  for(let i=0;i<page.length;i++){
+    const k=page[i],num=offset+i+1
+    html+=makeWordRow(k,num,`<span class="chip-prefix">${k.slice(0,lastInput.length)}</span>${k.slice(lastInput.length)}`)
+  }
+  resultDiv.innerHTML=html
+}
+
+function renderAkhir(){
+  const vis=getVisible();showInfo(vis.length);updatePg();buildAlphaJump();updateToolbar()
+  const resultDiv=document.getElementById('result')
+  if(!vis.length){resultDiv.innerHTML='<div class="empty"><span class="material-icons-round">search_off</span>tidak ditemukan</div>';return}
+  const page=slice();const offset=(currentPage-1)*PAGE_SIZE
+  let html='',lastLetter=''
+  for(let i=0;i<page.length;i++){
+    const w=page[i],num=offset+i+1
+    const letter=w[0].toUpperCase()
+    if(letter!==lastLetter){html+=`<div class="alpha-header-row"><span class="alpha-badge">${letter}</span></div>`;lastLetter=letter}
+    html+=makeWordRow(w,num,`${w.slice(0,-lastInput.length)}<span class="chip-suffix">${w.slice(-lastInput.length)}</span>`)
+  }
+  resultDiv.innerHTML=html
+}
+
+function renderKepit(){
+  const vis=getVisible();showInfo(vis.length);updatePg();updateToolbar()
+  const resultDiv=document.getElementById('result')
+  if(!vis.length){
+    const msg=lastInputAwal&&lastInputAkhir
+      ?`tidak ada kata yang dimulai <b>${lastInputAwal.toUpperCase()}</b> dan diakhiri <b>${lastInputAkhir.toUpperCase()}</b>`
+      :'tidak ditemukan'
+    resultDiv.innerHTML=`<div class="empty"><span class="material-icons-round">search_off</span><span style="text-align:center;line-height:1.6">${msg}</span></div>`;return
+  }
+  const page=slice();const offset=(currentPage-1)*PAGE_SIZE
+  let html='',lastLetter=''
+  for(let i=0;i<page.length;i++){
+    const w=page[i],num=offset+i+1
+    const letter=w[0].toUpperCase()
+    if(letter!==lastLetter){html+=`<div class="alpha-header-row"><span class="alpha-badge">${letter}</span></div>`;lastLetter=letter}
+    const a=lastInputAwal,b=lastInputAkhir
+    let wordHtml=''
+    if(a&&b) wordHtml=`<span class="chip-prefix">${a}</span>${w.slice(a.length,-b.length)}<span class="chip-suffix">${b}</span>`
+    else if(a) wordHtml=`<span class="chip-prefix">${a}</span>${w.slice(a.length)}`
+    else wordHtml=`${w.slice(0,-b.length)}<span class="chip-suffix">${b}</span>`
+    html+=makeWordRow(w,num,wordHtml)
+  }
+  resultDiv.innerHTML=html
+}
+
+document.getElementById('huruf').addEventListener('input',cari)
+document.getElementById('huruf').addEventListener('paste',function(e){
+  e.preventDefault()
+  const pasted=(e.clipboardData||window.clipboardData).getData('text').replace(/\s/g,'').slice(0,3)
+  this.value=pasted;cari()
+})
+document.getElementById('hurufAwal').addEventListener('input',cariKepit)
+document.getElementById('hurufAwal').addEventListener('paste',function(e){
+  e.preventDefault()
+  const pasted=(e.clipboardData||window.clipboardData).getData('text').replace(/\s/g,'').slice(0,3)
+  this.value=pasted;cariKepit()
+})
+document.getElementById('hurufAkhir').addEventListener('input',cariKepit)
+document.getElementById('hurufAkhir').addEventListener('paste',function(e){
+  e.preventDefault()
+  const pasted=(e.clipboardData||window.clipboardData).getData('text').replace(/\s/g,'').slice(0,3)
+  this.value=pasted;cariKepit()
+})
+
+let hiddenWords=new Set(JSON.parse(localStorage.getItem('sk_hidden')||'[]'))
+let reportedWords=new Set(JSON.parse(localStorage.getItem('sk_reported')||'[]'))
+function saveHidden(){localStorage.setItem('sk_hidden',JSON.stringify([...hiddenWords]))}
+function saveReported(){localStorage.setItem('sk_reported',JSON.stringify([...reportedWords]))}
+function reportWord(w,btn){if(reportedWords.has(w))return;openRModal(w,btn)}
+
+function updateFab(){
+  const n=hiddenWords.size,cnt=document.getElementById('fabCount')
+  cnt.textContent=n;cnt.classList.toggle('on',n>0)
+}
+
+function toggleHide(w){
+  if(hiddenWords.has(w))hiddenWords.delete(w);else hiddenWords.add(w)
+  saveHidden();updateFab();renderResult()
+  if(document.getElementById('sheet').classList.contains('on'))renderSheet()
+}
+
+function openSheet(){renderSheet();document.getElementById('sheetOverlay').classList.add('on');document.getElementById('sheet').classList.add('on')}
+function closeSheet(){
+  document.getElementById('sheetOverlay').classList.remove('on')
+  const s=document.getElementById('sheet');s.classList.remove('on');s.style.transform=''
+}
+
+;(function(){
+  const sheet=document.getElementById('sheet')
+  let startY=0,curY=0,dragging=false
+  sheet.addEventListener('touchstart',e=>{
+    if(e.target.closest('.sheet-body')&&sheet.querySelector('.sheet-body').scrollTop>0)return
+    startY=e.touches[0].clientY;dragging=true;sheet.style.transition='none'
+  },{passive:true})
+  sheet.addEventListener('touchmove',e=>{
+    if(!dragging)return;curY=e.touches[0].clientY
+    sheet.style.transform=`translateY(${Math.max(0,curY-startY)}px)`
+  },{passive:true})
+  sheet.addEventListener('touchend',()=>{
+    if(!dragging)return;dragging=false;sheet.style.transition=''
+    if(curY-startY>80)closeSheet();else sheet.style.transform=''
+  })
+})()
+
+function renderSheet(){
+  const body=document.getElementById('sheetBody')
+  const title=document.querySelector('.sheet-title')
+  const clearBtn=document.querySelector('.sheet-clear')
+  const arr=[...hiddenWords].sort()
+  title.textContent='Kata Tersembunyi ('+arr.length+')'
+  clearBtn.style.display=arr.length?'':'none'
+  if(!arr.length){body.innerHTML='<div class="sheet-empty">Belum ada kata yang disembunyikan</div>';return}
+  body.innerHTML=arr.map(w=>`<div class="sheet-row"><span class="sheet-word">${w}</span><button class="sheet-restore" onclick="toggleHide('${w}')" title="Tampilkan">+</button></div>`).join('')
+}
+
+function clearAllHidden(){
+  if(!hiddenWords.size)return
+  if(!confirm('Tampilkan semua '+hiddenWords.size+' kata tersembunyi?'))return
+  hiddenWords.clear();saveHidden();updateFab();renderSheet();renderResult()
+}
+
+updateFab();updateFavHeaderBtn()
+
+;(function(){
+  try{fetch('/api/ping',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:location.pathname,ref:document.referrer||'-'})}).catch(()=>{})}catch(e){}
+})()
+</script>
+</body>
+</html>
