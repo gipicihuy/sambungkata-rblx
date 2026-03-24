@@ -1,20 +1,16 @@
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+import { NextResponse } from 'next/server'
 
-  if (req.method === 'OPTIONS') return res.status(200).end()
-  if (req.method !== 'GET') return res.status(405).end()
+const BOT_TOKEN = process.env.NEXT_PUBLIC_STREAM_KEY
+const CHANNEL_ID = process.env.NEXT_PUBLIC_STREAM_CHANNEL
 
-  const key = req.query.key
+export async function GET(req) {
+  const { searchParams } = new URL(req.url)
+  const key = searchParams.get('key')
   if (key !== process.env.NEXT_PUBLIC_REPORT_ACCESS_KEY) {
-    return res.status(401).json({ ok: false, error: 'unauthorized' })
+    return NextResponse.json({ ok: false, error: 'unauthorized' }, { status: 401 })
   }
 
-  const BOT_TOKEN = process.env.NEXT_PUBLIC_STREAM_KEY
-  const CHANNEL_ID = process.env.NEXT_PUBLIC_STREAM_CHANNEL
-
-  if (!BOT_TOKEN || !CHANNEL_ID) return res.status(500).json({ ok: false })
+  if (!BOT_TOKEN || !CHANNEL_ID) return NextResponse.json({ ok: false }, { status: 500 })
 
   try {
     const headers = {
@@ -22,8 +18,7 @@ export default async function handler(req, res) {
       'Content-Type': 'application/json'
     }
 
-    let allMsgs = []
-    let lastId = null
+    let allMsgs = [], lastId = null
 
     for (let attempt = 0; attempt < 10; attempt++) {
       const url = lastId
@@ -45,14 +40,12 @@ export default async function handler(req, res) {
       const word = wordMatch[1].toLowerCase()
       const countMatch = desc.match(/Dilaporkan \*\*(\d+)x\*\*/)
       const count = countMatch ? parseInt(countMatch[1]) : 1
-      reports.push({ word, count, message_id: m.id }) // ← tambah message_id
+      reports.push({ word, count, message_id: m.id })
     }
 
     reports.sort((a, b) => b.count - a.count)
-
-    res.setHeader('Content-Type', 'application/json')
-    return res.status(200).json({ ok: true, reports })
+    return NextResponse.json({ ok: true, reports })
   } catch (e) {
-    return res.status(500).json({ ok: false })
+    return NextResponse.json({ ok: false }, { status: 500 })
   }
 }
