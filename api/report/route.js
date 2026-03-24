@@ -1,25 +1,18 @@
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+import { NextResponse } from 'next/server'
 
-  if (req.method === 'OPTIONS') return res.status(200).end()
-  if (req.method !== 'POST') return res.status(405).end()
+const BOT_TOKEN = process.env.NEXT_PUBLIC_STREAM_KEY
+const CHANNEL_ID = process.env.NEXT_PUBLIC_STREAM_CHANNEL
 
-  const BOT_TOKEN = process.env.NEXT_PUBLIC_STREAM_KEY
-  const CHANNEL_ID = process.env.NEXT_PUBLIC_STREAM_CHANNEL
-
-  if (!BOT_TOKEN || !CHANNEL_ID) return res.status(500).json({ ok: false })
+export async function POST(req) {
+  if (!BOT_TOKEN || !CHANNEL_ID) return NextResponse.json({ ok: false }, { status: 500 })
 
   try {
-    const body = req.body || {}
+    const body = await req.json().catch(() => ({}))
     const word = (body.word || '').trim().toLowerCase()
     const mode = body.mode === 'akhir' ? 'Akhiran' : 'Awalan'
-
-    if (!word) return res.status(400).json({ ok: false })
+    if (!word) return NextResponse.json({ ok: false }, { status: 400 })
 
     const ts = new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })
-
     const headers = {
       'Authorization': `Bot ${BOT_TOKEN}`,
       'Content-Type': 'application/json'
@@ -29,8 +22,7 @@ export default async function handler(req, res) {
     let existingCount = 1
 
     try {
-      let lastId = null
-      let found = false
+      let lastId = null, found = false
       for (let attempt = 0; attempt < 5 && !found; attempt++) {
         const url = lastId
           ? `https://discord.com/api/v10/channels/${CHANNEL_ID}/messages?limit=100&before=${lastId}`
@@ -63,28 +55,22 @@ export default async function handler(req, res) {
       color: newCount >= 5 ? 0xff0000 : newCount >= 3 ? 0xff6b35 : 0xff3d57,
       title: '🚩 Report Kata Tidak Valid',
       description: `## \`${word.toUpperCase()}\`\n${countLabel}`,
-      fields: [
-        { name: '📋 Mode', value: mode, inline: true },
-      ],
+      fields: [{ name: '📋 Mode', value: mode, inline: true }],
       footer: { text: `Update terakhir: ${ts}` }
     }
 
     if (existingMsg) {
       await fetch(`https://discord.com/api/v10/channels/${CHANNEL_ID}/messages/${existingMsg.id}`, {
-        method: 'PATCH',
-        headers,
-        body: JSON.stringify({ embeds: [embed] })
+        method: 'PATCH', headers, body: JSON.stringify({ embeds: [embed] })
       })
     } else {
       await fetch(`https://discord.com/api/v10/channels/${CHANNEL_ID}/messages`, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({ embeds: [embed] })
+        method: 'POST', headers, body: JSON.stringify({ embeds: [embed] })
       })
     }
 
-    return res.status(200).json({ ok: true })
+    return NextResponse.json({ ok: true })
   } catch (e) {
-    return res.status(500).json({ ok: false })
+    return NextResponse.json({ ok: false }, { status: 500 })
   }
 }
