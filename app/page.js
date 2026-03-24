@@ -197,7 +197,6 @@ export default function Home() {
       </div>
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" />
-      <script src="/kbbi.js" />
       <script dangerouslySetInnerHTML={{ __html: MAIN_JS }} />
     </>
   )
@@ -551,30 +550,38 @@ function getHardness(w){if(!w)return 99;const c=w[w.length-1].toLowerCase();retu
 function lowerBound(arr,t){let l=0,r=arr.length;while(l<r){let m=(l+r)>>1;if(arr[m]<t)l=m+1;else r=m}return l}
 
 function initDB(){
-  const raw=window.__KBBI__
-  if(!raw||!Array.isArray(raw)){document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">skull</span>gagal memuat database</div>';return}
-  const wc='self.onmessage=function(e){const db=[...new Set(e.data.map(k=>k.trim()).filter(k=>k.length>0))].sort();self.postMessage(db)}'
-  const worker=new Worker(URL.createObjectURL(new Blob([wc],{type:'application/javascript'})))
-  worker.postMessage(raw)
-  worker.onmessage=function(e){
-    database=e.data;dbReady=true;worker.terminate()
-    try{delete window.__KBBI__}catch(err){}
-    const bar=document.getElementById('loadingBar')
-    bar.classList.remove('indeterminate');bar.style.width='100%'
-    setTimeout(()=>{document.getElementById('loadingWrap').style.display='none'},400)
-    document.getElementById('huruf').disabled=false
-    document.getElementById('huruf').placeholder='ketik 1-3 huruf'
-    document.getElementById('hurufAwal').disabled=false
-    document.getElementById('hurufAkhir').disabled=false
-    document.getElementById('hurufAwal').placeholder='Awalan'
-    document.getElementById('hurufAkhir').placeholder='Akhiran'
-    document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
-    document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">keyboard</span>mulai ketik huruf</div>'
-    const robloxToast=document.getElementById('toastRoblox')
-    new bootstrap.Toast(robloxToast,{delay:6000}).show()
-    robloxToast.addEventListener('hidden.bs.toast',()=>showWAToast(),{once:true})
-    updateFavHeaderBtn();renderTrending();cari()
-  }
+  fetch('/api/words')
+    .then(r=>r.json())
+    .then(raw=>{
+      if(!raw||!Array.isArray(raw)){
+        document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">skull</span>gagal memuat database</div>'
+        return
+      }
+      const wc='self.onmessage=function(e){const db=[...new Set(e.data.map(k=>k.trim()).filter(k=>k.length>0))].sort();self.postMessage(db)}'
+      const worker=new Worker(URL.createObjectURL(new Blob([wc],{type:'application/javascript'})))
+      worker.postMessage(raw)
+      worker.onmessage=function(e){
+        database=e.data;dbReady=true;worker.terminate()
+        const bar=document.getElementById('loadingBar')
+        bar.classList.remove('indeterminate');bar.style.width='100%'
+        setTimeout(()=>{document.getElementById('loadingWrap').style.display='none'},400)
+        document.getElementById('huruf').disabled=false
+        document.getElementById('huruf').placeholder='ketik 1-3 huruf'
+        document.getElementById('hurufAwal').disabled=false
+        document.getElementById('hurufAkhir').disabled=false
+        document.getElementById('hurufAwal').placeholder='Awalan'
+        document.getElementById('hurufAkhir').placeholder='Akhiran'
+        document.getElementById('info').textContent=database.length.toLocaleString()+' kata'
+        document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">keyboard</span>mulai ketik huruf</div>'
+        const robloxToast=document.getElementById('toastRoblox')
+        new bootstrap.Toast(robloxToast,{delay:6000}).show()
+        robloxToast.addEventListener('hidden.bs.toast',()=>showWAToast(),{once:true})
+        updateFavHeaderBtn();renderTrending();cari()
+      }
+    })
+    .catch(()=>{
+      document.getElementById('result').innerHTML='<div class="empty"><span class="material-icons-round">skull</span>gagal memuat database</div>'
+    })
 }
 initDB()
 
