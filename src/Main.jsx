@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { _k, _e } from './db.js'
 import './Main.css'
 
 const HR={'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,'g':7,'h':8,'j':9,'k':10,'b':11,'c':12,'d':13,'p':14,'t':15,'l':16,'m':17,'n':18,'r':19,'s':20,'u':21,'i':22,'e':23,'o':24,'a':25}
@@ -46,8 +47,9 @@ export default function Main(){
   const resultRef=useRef(null)
 
   useEffect(()=>{
-    const raw=window.__KBBI__
-    if(!raw||!Array.isArray(raw))return
+    const d=new Uint8Array(_e.length)
+    for(let i=0;i<_e.length;i++)d[i]=_e[i]^_k[i%_k.length]
+    const raw=JSON.parse(new TextDecoder().decode(d))
     const wc=`self.onmessage=function(e){const db=[...new Set(e.data.map(k=>k.trim()).filter(k=>k.length>0))].sort();self.postMessage(db)}`
     const worker=new Worker(URL.createObjectURL(new Blob([wc],{type:'application/javascript'})))
     worker.postMessage(raw)
@@ -55,12 +57,9 @@ export default function Main(){
       setDatabase(e.data)
       setDbReady(true)
       worker.terminate()
-      try{delete window.__KBBI__}catch(err){}
       if(inputHurufRef.current)inputHurufRef.current.disabled=false
       if(inputAwalRef.current)inputAwalRef.current.disabled=false
       if(inputAkhirRef.current)inputAkhirRef.current.disabled=false
-
-      // Show toasts after DB loaded
       const robloxEl=document.getElementById('toastRoblox')
       if(robloxEl&&window.bootstrap){
         const t=new window.bootstrap.Toast(robloxEl,{delay:6000})
@@ -258,7 +257,6 @@ export default function Main(){
     setShowRModal(false)
     setReportedWords(prev=>new Set([...prev,w]))
     fetch('/api/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({word:w,mode:mode})}).catch(()=>{})
-    // Show report toast
     const wordEl=document.getElementById('toastReportWord')
     if(wordEl)wordEl.textContent=w.toUpperCase()
     showBsToast('toastReport',3000)
@@ -273,7 +271,6 @@ export default function Main(){
 
   return (
     <>
-      {/* Bootstrap Toast Container — HTML structure sama persis dengan versi asli */}
       <div className="toast-container">
         <div id="toastRoblox" className="toast toast-roblox align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
           <div className="toast-header">
