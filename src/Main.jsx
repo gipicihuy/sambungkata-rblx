@@ -327,7 +327,7 @@ export default function Main(){
       )}
 
       <div className="result" ref={resultRef}>
-        {!dbReady?<div className="empty"><span className="material-icons">schedule</span>sedang memuat kata...</div>:!hasSearch?<div className="empty"><span className="material-icons">edit</span>mulai ketik huruf</div>:vis.length===0?<div className="empty"><span className="material-icons">info</span>tidak ditemukan</div>:mode==='awal'?renderAwal():mode==='akhir'?renderAkhir():renderKepit()}
+        {!dbReady?<div className="empty"><span className="material-icons-round">hourglass_empty</span>sedang memuat kata...</div>:!hasSearch?<div className="empty"><span className="material-icons-round">keyboard</span>mulai ketik huruf</div>:vis.length===0?<div className="empty"><span className="material-icons-round">search_off</span>tidak ditemukan</div>:mode==='awal'?renderAwal():mode==='akhir'?renderAkhir():renderKepit()}
       </div>
 
       {hiddenWords.size>0&&(
