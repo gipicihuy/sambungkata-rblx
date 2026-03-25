@@ -32,7 +32,9 @@ export default function Main(){
   const [rWord,setRWord]=useState(null)
   const [rBtn,setRBtn]=useState(null)
   const [showFavModal,setShowFavModal]=useState(false)
+  const [favModalVisible,setFavModalVisible]=useState(false)
   const [showSheet,setShowSheet]=useState(false)
+  const [sheetVisible,setSheetVisible]=useState(false)
   const toastShown=useRef({})
 
   const PAGE_SIZE=100
@@ -82,7 +84,7 @@ export default function Main(){
   const isFav=w=>favWords.some(f=>f.word===w)
 
   const toggleFav=(w,el)=>{
-    if(isFav(w)){setShowFavModal(true);return}
+    if(isFav(w)){openFavModal();return}
     const q=mode==='kepit'?lastInputAwal+'···'+lastInputAkhir:lastInput
     setFavWords(prev=>[...prev,{word:w,query:q,mode:mode}])
     if(el){
@@ -97,10 +99,32 @@ export default function Main(){
 
   const removeFav=w=>{setFavWords(prev=>prev.filter(f=>f.word!==w))}
 
+  const openFavModal=()=>{
+    setShowFavModal(true)
+    requestAnimationFrame(()=>requestAnimationFrame(()=>setFavModalVisible(true)))
+  }
+  const closeFavModal=()=>{
+    setFavModalVisible(false)
+    setTimeout(()=>setShowFavModal(false),300)
+  }
   const clearAllFav=()=>{
     if(!favWords.length||!confirm('Hapus semua '+favWords.length+' kata favorit?'))return
     setFavWords([])
-    setShowFavModal(false)
+    closeFavModal()
+  }
+
+  const openSheet=()=>{
+    setShowSheet(true)
+    requestAnimationFrame(()=>requestAnimationFrame(()=>setSheetVisible(true)))
+  }
+  const closeSheet=()=>{
+    setSheetVisible(false)
+    setTimeout(()=>setShowSheet(false),300)
+  }
+  const clearAllHidden=()=>{
+    if(!hiddenWords.size||!confirm('Tampilkan semua '+hiddenWords.size+' kata tersembunyi?'))return
+    setHiddenWords(new Set())
+    closeSheet()
   }
 
   const toggleHide=w=>{
@@ -109,12 +133,6 @@ export default function Main(){
       if(next.has(w))next.delete(w);else next.add(w)
       return next
     })
-  }
-
-  const clearAllHidden=()=>{
-    if(!hiddenWords.size||!confirm('Tampilkan semua '+hiddenWords.size+' kata tersembunyi?'))return
-    setHiddenWords(new Set())
-    setShowSheet(false)
   }
 
   const getVisible=h=>h.filter(k=>!hiddenWords.has(k))
@@ -284,7 +302,7 @@ export default function Main(){
             <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"/>
           </div>
           <div className="toast-body">
-            Kata yang kamu favorit tersimpan di tombol <strong onClick={()=>{window.bootstrap?.Toast.getInstance(document.getElementById('toastFavInfo'))?.hide();setShowFavModal(true)}} style={{color:'#f97316',cursor:'pointer',textDecoration:'underline',textUnderlineOffset:'2px'}}>Favorit</strong>
+            Kata yang kamu favorit tersimpan di tombol <strong onClick={()=>{window.bootstrap?.Toast.getInstance(document.getElementById('toastFavInfo'))?.hide();openFavModal()}} style={{color:'#f97316',cursor:'pointer',textDecoration:'underline',textUnderlineOffset:'2px'}}>Favorit</strong>
           </div>
         </div>
         <div id="toastReport" className="toast toast-report align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
@@ -312,7 +330,7 @@ export default function Main(){
             <div className="info">{dbReady?database.length.toLocaleString()+' kata':'memuat...'}</div>
             {hasSearch&&vis.length>0&&<div className="info-total visible">{vis.length.toLocaleString()+' hasil'}</div>}
             <div className="info-actions">
-              <button className="fav-header-btn" onClick={()=>setShowFavModal(true)}>
+              <button className="fav-header-btn" onClick={openFavModal}>
                 <i className="fa-solid fa-heart"/> Favorit {favWords.length>0&&<span className="fav-hb-count on">{favWords.length}</span>}
               </button>
             </div>
@@ -400,7 +418,7 @@ export default function Main(){
       </div>
 
       {hiddenWords.size>0&&(
-        <div className="fab-hidden" onClick={()=>setShowSheet(true)}>
+        <div className="fab-hidden" onClick={openSheet}>
           <div className="fab-icon">⊘</div>
           <div className="fab-count on">{hiddenWords.size}</div>
         </div>
@@ -420,8 +438,8 @@ export default function Main(){
 
       {showSheet&&(
         <>
-          <div className="sheet-overlay on" onClick={()=>setShowSheet(false)}/>
-          <div className="sheet on">
+          <div className={`sheet-overlay${sheetVisible?' on':''}`} onClick={closeSheet}/>
+          <div className={`sheet${sheetVisible?' on':''}`}>
             <div className="sheet-handle"/>
             <div className="sheet-head">
               <span className="sheet-title">Kata Tersembunyi ({hiddenWords.size})</span>
@@ -443,9 +461,9 @@ export default function Main(){
       )}
 
       {showFavModal&&(
-        <div className="fav-modal on">
+        <div className={`fav-modal${favModalVisible?' on':''}`}>
           <div className="fav-modal-topbar">
-            <button className="fav-modal-back" onClick={()=>setShowFavModal(false)}><i className="fa-solid fa-chevron-left"/></button>
+            <button className="fav-modal-back" onClick={closeFavModal}><i className="fa-solid fa-chevron-left"/></button>
             <span className="fav-modal-title"><i className="fa-solid fa-heart" style={{color:'var(--green)'}}/> Kata Favorit</span>
             {favWords.length>0&&<button className="fav-modal-clear" onClick={clearAllFav}>Hapus Semua</button>}
           </div>
