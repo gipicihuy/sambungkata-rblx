@@ -273,19 +273,19 @@ export default function Main(){
         {mode!=='kepit'?(
           <div className="input-wrap-single">
             <div className="input-wrap">
-              <input ref={inputHurufRef} type="text" maxLength="3" placeholder="memuat kata..." disabled={!dbReady} onChange={cari} onInput={(e)=>{if(e.target.value.length>3)e.target.value=e.target.value.slice(0,3)}}/>
+              <input ref={inputHurufRef} type="text" maxLength="3" placeholder={dbReady?"ketik 1–3 huruf":"memuat..."} onChange={cari} onInput={(e)=>{if(e.target.value.length>3)e.target.value=e.target.value.slice(0,3)}}/>
               {lastInput&&<button className="input-clear visible" onClick={()=>{if(inputHurufRef.current){inputHurufRef.current.value='';setLastInput('');setHasil([])}}} title="Hapus">✕</button>}
             </div>
           </div>
         ):(
           <div className="input-dual on">
             <div className="input-wrap">
-              <input ref={inputAwalRef} type="text" maxLength="3" placeholder="Awalan" disabled={!dbReady} onChange={cariKepit} onInput={(e)=>{if(e.target.value.length>3)e.target.value=e.target.value.slice(0,3)}}/>
+              <input ref={inputAwalRef} type="text" maxLength="3" placeholder={dbReady?"Awalan":"..."} onChange={cariKepit} onInput={(e)=>{if(e.target.value.length>3)e.target.value=e.target.value.slice(0,3)}}/>
               {lastInputAwal&&<button className="input-clear visible" onClick={()=>{if(inputAwalRef.current){inputAwalRef.current.value='';setLastInputAwal('');cariKepit()}}} title="Hapus">✕</button>}
             </div>
             <span className="input-sep">···</span>
             <div className="input-wrap">
-              <input ref={inputAkhirRef} type="text" maxLength="3" placeholder="Akhiran" disabled={!dbReady} onChange={cariKepit} onInput={(e)=>{if(e.target.value.length>3)e.target.value=e.target.value.slice(0,3)}}/>
+              <input ref={inputAkhirRef} type="text" maxLength="3" placeholder={dbReady?"Akhiran":"..."} onChange={cariKepit} onInput={(e)=>{if(e.target.value.length>3)e.target.value=e.target.value.slice(0,3)}}/>
               {lastInputAkhir&&<button className="input-clear visible" onClick={()=>{if(inputAkhirRef.current){inputAkhirRef.current.value='';setLastInputAkhir('');cariKepit()}}} title="Hapus">✕</button>}
             </div>
           </div>
@@ -327,7 +327,7 @@ export default function Main(){
       )}
 
       <div className="result" ref={resultRef}>
-        {!dbReady?<div className="empty"><span className="material-icons">hourglass_empty</span>sedang memuat kata...</div>:!hasSearch?<div className="empty"><span className="material-icons">keyboard</span>mulai ketik huruf</div>:vis.length===0?<div className="empty"><span className="material-icons">search_off</span>tidak ditemukan</div>:mode==='awal'?renderAwal():mode==='akhir'?renderAkhir():renderKepit()}
+        {!dbReady?<div className="empty"><span className="material-icons">schedule</span>sedang memuat kata...</div>:!hasSearch?<div className="empty"><span className="material-icons">edit</span>mulai ketik huruf</div>:vis.length===0?<div className="empty"><span className="material-icons">info</span>tidak ditemukan</div>:mode==='awal'?renderAwal():mode==='akhir'?renderAkhir():renderKepit()}
       </div>
 
       {hiddenWords.size>0&&(
