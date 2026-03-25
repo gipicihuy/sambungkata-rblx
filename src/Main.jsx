@@ -7,6 +7,20 @@ function getHardness(w){if(!w)return 99;const c=w[w.length-1].toLowerCase();retu
 
 function lowerBound(arr,t){let l=0,r=arr.length;while(l<r){let m=(l+r)>>1;if(arr[m]<t)l=m+1;else r=m}return l}
 
+// Toast component
+function Toast({id,type,title,iconEl,body,onClose}){
+  return (
+    <div className={`toast toast-${type}`}>
+      <div className="toast-header">
+        <span className={`icon-${type}`}>{iconEl}</span>
+        <span className="me-auto">{title}</span>
+        <button className="btn-close" onClick={()=>onClose(id)} aria-label="Close"/>
+      </div>
+      <div className="toast-body" dangerouslySetInnerHTML={{__html:body}}/>
+    </div>
+  )
+}
+
 export default function Main(){
   const [database,setDatabase]=useState([])
   const [dbReady,setDbReady]=useState(false)
@@ -26,7 +40,8 @@ export default function Main(){
   const [rBtn,setRBtn]=useState(null)
   const [showFavModal,setShowFavModal]=useState(false)
   const [showSheet,setShowSheet]=useState(false)
-  const [settings,setSettings]=useState(null)
+  const [toasts,setToasts]=useState([])
+  const toastShown=useRef({})
 
   const PAGE_SIZE=100
   const trackedQueries=useRef(new Set())
@@ -35,7 +50,17 @@ export default function Main(){
   const inputAwalRef=useRef(null)
   const inputAkhirRef=useRef(null)
   const resultRef=useRef(null)
-  const sheetBodyRef=useRef(null)
+
+  const addToast=(id,type,title,iconEl,body)=>{
+    if(toastShown.current[id])return
+    toastShown.current[id]=true
+    setToasts(prev=>[...prev,{id,type,title,iconEl,body}])
+    setTimeout(()=>removeToast(id),id==='toastWA'?8000:6000)
+  }
+
+  const removeToast=(id)=>{
+    setToasts(prev=>prev.filter(t=>t.id!==id))
+  }
 
   useEffect(()=>{
     const raw=window.__KBBI__
@@ -51,6 +76,16 @@ export default function Main(){
       if(inputHurufRef.current)inputHurufRef.current.disabled=false
       if(inputAwalRef.current)inputAwalRef.current.disabled=false
       if(inputAkhirRef.current)inputAkhirRef.current.disabled=false
+
+      // Show toasts after DB loaded
+      setTimeout(()=>{
+        addToast('toastRoblox','roblox','Warning','!',
+          'note: tidak semua kata yang disini bisa dipakai di map roblox <strong>Sambung Kata</strong>')
+      },800)
+      setTimeout(()=>{
+        addToast('toastWA','wa','Saluran WhatsApp',<i className="fa-brands fa-whatsapp"/>,
+          'Follow saluran WhatsApp untuk mendapatkan info terbaru! <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener">Klik di sini 🔔</a>')
+      },2500)
     }
   },[])
 
@@ -58,34 +93,32 @@ export default function Main(){
     fetch('settings.json').then(r=>r.json()).then(cfg=>{
       setTrendAwal(cfg.trending_awal||[])
       setTrendAkhir(cfg.trending_akhir||[])
-      setSettings(cfg)
     }).catch(()=>{})
   },[])
 
-  useEffect(()=>{
-    localStorage.setItem('sk_favs',JSON.stringify(favWords))
-  },[favWords])
-
-  useEffect(()=>{
-    localStorage.setItem('sk_hidden',JSON.stringify([...hiddenWords]))
-  },[hiddenWords])
-
-  useEffect(()=>{
-    localStorage.setItem('sk_reported',JSON.stringify([...reportedWords]))
-  },[reportedWords])
+  useEffect(()=>{localStorage.setItem('sk_favs',JSON.stringify(favWords))},[favWords])
+  useEffect(()=>{localStorage.setItem('sk_hidden',JSON.stringify([...hiddenWords]))},[hiddenWords])
+  useEffect(()=>{localStorage.setItem('sk_reported',JSON.stringify([...reportedWords]))},[reportedWords])
 
   const isFav=w=>favWords.some(f=>f.word===w)
 
   const toggleFav=(w,el)=>{
-    if(isFav(w)){setShowFavModal(true);return}
+    if(isFav(w)){
+      // Show fav modal and highlight the word
+      setShowFavModal(true)
+      return
+    }
     const q=mode==='kepit'?lastInputAwal+'···'+lastInputAkhir:lastInput
-    setFavWords([...favWords,{word:w,query:q,mode:mode}])
-    if(el){el.classList.add('active')}
+    setFavWords(prev=>[...prev,{word:w,query:q,mode:mode}])
+
+    // Show fav info toast once
+    setTimeout(()=>{
+      addToast('toastFavInfo','fav-info','Kata Favorit','♥',
+        'Kata yang kamu favorit tersimpan di tombol <strong style="color:#f97316">Favorit</strong> di pojok kanan atas.')
+    },300)
   }
 
-  const removeFav=w=>{
-    setFavWords(favWords.filter(f=>f.word!==w))
-  }
+  const removeFav=w=>{setFavWords(prev=>prev.filter(f=>f.word!==w))}
 
   const clearAllFav=()=>{
     if(!favWords.length||!confirm('Hapus semua '+favWords.length+' kata favorit?'))return
@@ -94,9 +127,11 @@ export default function Main(){
   }
 
   const toggleHide=w=>{
-    const newHidden=new Set(hiddenWords)
-    if(newHidden.has(w))newHidden.delete(w);else newHidden.add(w)
-    setHiddenWords(newHidden)
+    setHiddenWords(prev=>{
+      const next=new Set(prev)
+      if(next.has(w))next.delete(w);else next.add(w)
+      return next
+    })
   }
 
   const clearAllHidden=()=>{
@@ -115,11 +150,7 @@ export default function Main(){
     if(inputHurufRef.current)inputHurufRef.current.value=input
     setLastInput(input)
     setCurrentPage(1)
-
-    if(!input){
-      setHasil([])
-      return
-    }
+    if(!input){setHasil([]);return}
 
     clearTimeout(searchTimer.current)
     searchTimer.current=setTimeout(()=>{
@@ -150,9 +181,7 @@ export default function Main(){
     setLastInputAwal(rawA)
     setLastInputAkhir(rawB)
     setCurrentPage(1)
-
     if(!rawA&&!rawB){setHasil([]);return}
-
     let res=database.filter(k=>{
       if(rawA&&rawB)return k.startsWith(rawA)&&k.endsWith(rawB)&&k.length>rawA.length+rawB.length
       if(rawA)return k.startsWith(rawA)
@@ -232,9 +261,12 @@ export default function Main(){
     if(!rWord)return
     const w=rWord
     setShowRModal(false)
-    setReportedWords(new Set([...reportedWords,w]))
-    if(rBtn)rBtn.classList.add('reported')
+    setReportedWords(prev=>new Set([...prev,w]))
     fetch('/api/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({word:w,mode:mode})}).catch(()=>{})
+    // Show report success toast
+    toastShown.current['toastReport']=false
+    addToast('toastReport','report','Report Terkirim','⚑',
+      `Kata <strong>${w}</strong> berhasil dilaporkan. Terima kasih!`)
     setRWord(null)
     setRBtn(null)
   }
@@ -246,6 +278,13 @@ export default function Main(){
 
   return (
     <>
+      {/* Toast Container */}
+      <div className="toast-container">
+        {toasts.map(t=>(
+          <Toast key={t.id} {...t} onClose={removeToast}/>
+        ))}
+      </div>
+
       <div className="top">
         <div className="header">
           <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
@@ -291,12 +330,13 @@ export default function Main(){
           </div>
         )}
         <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener" className="wa-banner">
+          <div className="wa-sheen"/>
           <div className="wa-banner-icon"><i className="fa-brands fa-whatsapp"/></div>
           <div className="wa-banner-text">
             <span className="wa-banner-title">Follow saluran WhatsApp</span>
             <span className="wa-banner-sub">Dapatkan info update website ini 🔔</span>
           </div>
-          <div className="wa-banner-arrow"><span style={{fontSize:'15px',color:'#25D366'}}>open_in_new</span></div>
+          <div className="wa-banner-arrow"><span className="material-icons-round" style={{fontSize:'15px',color:'#25D366'}}>open_in_new</span></div>
         </a>
       </div>
 
@@ -304,7 +344,7 @@ export default function Main(){
         <div className="loading-bar indeterminate"/>
       </div>
 
-      <div className={`trending-wrap${!hasSearch&&dbReady?'visible':''}`}>
+      <div className={`trending-wrap${!hasSearch&&dbReady?' visible':''}`}>
         <div className="trending-inner">
           <div className="trending-label">🔥 Populer</div>
           <div className="trending-chips">
@@ -321,31 +361,38 @@ export default function Main(){
         <div className="result-toolbar visible">
           <span className="toolbar-count">{vis.length.toLocaleString()+(mode==='kepit'?' kata':'')+' ditemukan'}</span>
           <button className="toolbar-copy" onClick={()=>{navigator.clipboard.writeText(vis.join('\n'))}}>
-            <span style={{fontSize:'14px'}}>content_copy</span> Salin Semua
+            <span className="material-icons-round" style={{fontSize:'14px'}}>content_copy</span> Salin Semua
           </button>
         </div>
       )}
 
       <div className="result" ref={resultRef}>
-        {!dbReady?<div className="empty"><span className="material-icons-round">hourglass_empty</span>sedang memuat kata...</div>:!hasSearch?<div className="empty"><span className="material-icons-round">keyboard</span>mulai ketik huruf</div>:vis.length===0?<div className="empty"><span className="material-icons-round">search_off</span>tidak ditemukan</div>:mode==='awal'?renderAwal():mode==='akhir'?renderAkhir():renderKepit()}
+        {!dbReady
+          ?<div className="empty"><span className="material-icons-round">hourglass_empty</span>sedang memuat kata...</div>
+          :!hasSearch
+            ?<div className="empty"><span className="material-icons-round">keyboard</span>mulai ketik huruf</div>
+            :vis.length===0
+              ?<div className="empty"><span className="material-icons-round">search_off</span>tidak ditemukan</div>
+              :mode==='awal'?renderAwal():mode==='akhir'?renderAkhir():renderKepit()
+        }
       </div>
 
       {hiddenWords.size>0&&(
         <div className="fab-hidden" onClick={()=>setShowSheet(true)}>
           <div className="fab-icon">⊘</div>
-          {hiddenWords.size>0&&<div className="fab-count on">{hiddenWords.size}</div>}
+          <div className="fab-count on">{hiddenWords.size}</div>
         </div>
       )}
 
       {showPagination&&(
         <div className="pg-bar on">
-          <button className={`pg-btn${currentPage<=1?' dim':''}`} onClick={()=>setCurrentPage(1)} title="Pertama">«</button>
-          <button className={`pg-btn${currentPage<=1?' dim':''}`} onClick={()=>setCurrentPage(Math.max(1,currentPage-1))}>‹</button>
+          <button className={`pg-btn${currentPage<=1?' dim':''}`} onClick={()=>{setCurrentPage(1);resultRef.current?.scrollTo(0,0)}} title="Pertama">«</button>
+          <button className={`pg-btn${currentPage<=1?' dim':''}`} onClick={()=>{setCurrentPage(p=>Math.max(1,p-1));resultRef.current?.scrollTo(0,0)}}>‹</button>
           <div className="pg-divider"/>
           <div className="pg-info"><b>{currentPage}</b> / {totalPages}</div>
           <div className="pg-divider"/>
-          <button className={`pg-btn${currentPage>=totalPages?' dim':''}`} onClick={()=>setCurrentPage(Math.min(totalPages,currentPage+1))}>›</button>
-          <button className={`pg-btn${currentPage>=totalPages?' dim':''}`} onClick={()=>setCurrentPage(totalPages)} title="Terakhir">»</button>
+          <button className={`pg-btn${currentPage>=totalPages?' dim':''}`} onClick={()=>{setCurrentPage(p=>Math.min(totalPages,p+1));resultRef.current?.scrollTo(0,0)}}>›</button>
+          <button className={`pg-btn${currentPage>=totalPages?' dim':''}`} onClick={()=>{setCurrentPage(totalPages);resultRef.current?.scrollTo(0,0)}} title="Terakhir">»</button>
         </div>
       )}
 
@@ -356,15 +403,18 @@ export default function Main(){
             <div className="sheet-handle"/>
             <div className="sheet-head">
               <span className="sheet-title">Kata Tersembunyi ({hiddenWords.size})</span>
-              <button className="sheet-clear" onClick={clearAllHidden} style={{display:hiddenWords.size?'':'none'}}>Tampilkan Semua</button>
+              {hiddenWords.size>0&&<button className="sheet-clear" onClick={clearAllHidden}>Tampilkan Semua</button>}
             </div>
-            <div className="sheet-body" ref={sheetBodyRef}>
-              {hiddenWords.size===0?<div className="sheet-empty">Belum ada kata yang disembunyikan</div>:[...hiddenWords].sort().map(w=>(
-                <div key={w} className="sheet-row">
-                  <span className="sheet-word">{w}</span>
-                  <button className="sheet-restore" onClick={()=>toggleHide(w)} title="Tampilkan">+</button>
-                </div>
-              ))}
+            <div className="sheet-body">
+              {hiddenWords.size===0
+                ?<div className="sheet-empty">Belum ada kata yang disembunyikan</div>
+                :[...hiddenWords].sort().map(w=>(
+                  <div key={w} className="sheet-row">
+                    <span className="sheet-word">{w}</span>
+                    <button className="sheet-restore" onClick={()=>toggleHide(w)} title="Tampilkan">+</button>
+                  </div>
+                ))
+              }
             </div>
           </div>
         </>
@@ -375,29 +425,34 @@ export default function Main(){
           <div className="fav-modal-topbar">
             <button className="fav-modal-back" onClick={()=>setShowFavModal(false)}><i className="fa-solid fa-chevron-left"/></button>
             <span className="fav-modal-title"><i className="fa-solid fa-heart" style={{color:'var(--green)'}}/> Kata Favorit</span>
-            <button className="fav-modal-clear" onClick={clearAllFav} style={{display:favWords.length?'':'none'}}>Hapus Semua</button>
+            {favWords.length>0&&<button className="fav-modal-clear" onClick={clearAllFav}>Hapus Semua</button>}
           </div>
           <div className="fav-modal-body">
-            {favWords.length===0?<div className="fav-modal-empty"><span className="fav-empty-icon">♡</span>Belum ada kata favorit.</div>:favWords.length>0&&<>
-              <div className="fav-jump-bar">{[...new Set(favWords.map(f=>f.word[0].toUpperCase()))].sort().map(l=>(
-                <button key={l} className="fav-jump-chip" onClick={()=>{const el=document.querySelector(`[data-fav-grp="${l}"]`);if(el)el.scrollIntoView({block:'start',behavior:'smooth'})}}>{l}</button>
-              ))}</div>
-              {[...new Set(favWords.map(f=>f.word[0].toUpperCase()))].sort().flatMap(l=>{
-                const items=favWords.filter(f=>f.word[0].toUpperCase()===l).sort((a,b)=>a.word.localeCompare(b.word))
-                return [
-                  <div key={'grp-'+l} data-fav-grp={l} className="fav-group-header">
-                    <span className="fav-group-badge">{l}</span>
-                    <span className="fav-group-count">{items.length} kata</span>
-                  </div>,
-                  ...items.map(f=>(
-                    <div key={f.word} className="fav-row" onClick={()=>navigator.clipboard.writeText(f.word)}>
-                      <span className="fav-row-word">{f.word}</span>
-                      <button className="fav-row-remove" onClick={e=>{e.stopPropagation();removeFav(f.word)}} title="Hapus dari favorit"><i className="fa-solid fa-trash-can"/></button>
-                    </div>
-                  ))
-                ]
-              })}
-            </>}
+            {favWords.length===0
+              ?<div className="fav-modal-empty"><span className="fav-empty-icon">♡</span>Belum ada kata favorit.</div>
+              :<>
+                <div className="fav-jump-bar">
+                  {[...new Set(favWords.map(f=>f.word[0].toUpperCase()))].sort().map(l=>(
+                    <button key={l} className="fav-jump-chip" onClick={()=>{const el=document.querySelector(`[data-fav-grp="${l}"]`);if(el)el.scrollIntoView({block:'start',behavior:'smooth'})}}>{l}</button>
+                  ))}
+                </div>
+                {[...new Set(favWords.map(f=>f.word[0].toUpperCase()))].sort().flatMap(l=>{
+                  const items=favWords.filter(f=>f.word[0].toUpperCase()===l).sort((a,b)=>a.word.localeCompare(b.word))
+                  return [
+                    <div key={'grp-'+l} data-fav-grp={l} className="fav-group-header">
+                      <span className="fav-group-badge">{l}</span>
+                      <span className="fav-group-count">{items.length} kata</span>
+                    </div>,
+                    ...items.map(f=>(
+                      <div key={f.word} className="fav-row" onClick={()=>navigator.clipboard.writeText(f.word)}>
+                        <span className="fav-row-word">{f.word}</span>
+                        <button className="fav-row-remove" onClick={e=>{e.stopPropagation();removeFav(f.word)}} title="Hapus dari favorit"><i className="fa-solid fa-trash-can"/></button>
+                      </div>
+                    ))
+                  ]
+                })}
+              </>
+            }
           </div>
         </div>
       )}
