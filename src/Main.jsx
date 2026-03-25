@@ -7,18 +7,11 @@ function getHardness(w){if(!w)return 99;const c=w[w.length-1].toLowerCase();retu
 
 function lowerBound(arr,t){let l=0,r=arr.length;while(l<r){let m=(l+r)>>1;if(arr[m]<t)l=m+1;else r=m}return l}
 
-// Toast component
-function Toast({id,type,title,iconEl,body,onClose}){
-  return (
-    <div className={`toast toast-${type}`}>
-      <div className="toast-header">
-        <span className={`icon-${type}`}>{iconEl}</span>
-        <span className="me-auto">{title}</span>
-        <button className="btn-close" onClick={()=>onClose(id)} aria-label="Close"/>
-      </div>
-      <div className="toast-body" dangerouslySetInnerHTML={{__html:body}}/>
-    </div>
-  )
+function showBsToast(id,delay=6000){
+  const el=document.getElementById(id)
+  if(!el||!window.bootstrap)return
+  const t=window.bootstrap.Toast.getOrCreateInstance(el,{delay})
+  t.show()
 }
 
 export default function Main(){
@@ -40,7 +33,6 @@ export default function Main(){
   const [rBtn,setRBtn]=useState(null)
   const [showFavModal,setShowFavModal]=useState(false)
   const [showSheet,setShowSheet]=useState(false)
-  const [toasts,setToasts]=useState([])
   const toastShown=useRef({})
 
   const PAGE_SIZE=100
@@ -50,17 +42,6 @@ export default function Main(){
   const inputAwalRef=useRef(null)
   const inputAkhirRef=useRef(null)
   const resultRef=useRef(null)
-
-  const addToast=(id,type,title,iconEl,body)=>{
-    if(toastShown.current[id])return
-    toastShown.current[id]=true
-    setToasts(prev=>[...prev,{id,type,title,iconEl,body}])
-    setTimeout(()=>removeToast(id),id==='toastWA'?8000:6000)
-  }
-
-  const removeToast=(id)=>{
-    setToasts(prev=>prev.filter(t=>t.id!==id))
-  }
 
   useEffect(()=>{
     const raw=window.__KBBI__
@@ -78,14 +59,12 @@ export default function Main(){
       if(inputAkhirRef.current)inputAkhirRef.current.disabled=false
 
       // Show toasts after DB loaded
-      setTimeout(()=>{
-        addToast('toastRoblox','roblox','Warning','!',
-          'note: tidak semua kata yang disini bisa dipakai di map roblox <strong>Sambung Kata</strong>')
-      },800)
-      setTimeout(()=>{
-        addToast('toastWA','wa','Saluran WhatsApp',<i className="fa-brands fa-whatsapp"/>,
-          'Follow saluran WhatsApp untuk mendapatkan info terbaru! <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener">Klik di sini 🔔</a>')
-      },2500)
+      const robloxEl=document.getElementById('toastRoblox')
+      if(robloxEl&&window.bootstrap){
+        const t=new window.bootstrap.Toast(robloxEl,{delay:6000})
+        t.show()
+        robloxEl.addEventListener('hidden.bs.toast',()=>showBsToast('toastWA',8000),{once:true})
+      }
     }
   },[])
 
@@ -103,19 +82,17 @@ export default function Main(){
   const isFav=w=>favWords.some(f=>f.word===w)
 
   const toggleFav=(w,el)=>{
-    if(isFav(w)){
-      // Show fav modal and highlight the word
-      setShowFavModal(true)
-      return
-    }
+    if(isFav(w)){setShowFavModal(true);return}
     const q=mode==='kepit'?lastInputAwal+'···'+lastInputAkhir:lastInput
     setFavWords(prev=>[...prev,{word:w,query:q,mode:mode}])
-
-    // Show fav info toast once
-    setTimeout(()=>{
-      addToast('toastFavInfo','fav-info','Kata Favorit','♥',
-        'Kata yang kamu favorit tersimpan di tombol <strong style="color:#f97316">Favorit</strong> di pojok kanan atas.')
-    },300)
+    if(el){
+      el.classList.add('active')
+      const icon=el.querySelector('i')
+      if(icon)icon.className='fa-solid fa-heart'
+      el.style.transform='scale(1.4)'
+      setTimeout(()=>{el.style.transform=''},180)
+    }
+    showBsToast('toastFavInfo',4000)
   }
 
   const removeFav=w=>{setFavWords(prev=>prev.filter(f=>f.word!==w))}
@@ -263,10 +240,10 @@ export default function Main(){
     setShowRModal(false)
     setReportedWords(prev=>new Set([...prev,w]))
     fetch('/api/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({word:w,mode:mode})}).catch(()=>{})
-    // Show report success toast
-    toastShown.current['toastReport']=false
-    addToast('toastReport','report','Report Terkirim','⚑',
-      `Kata <strong>${w}</strong> berhasil dilaporkan. Terima kasih!`)
+    // Show report toast
+    const wordEl=document.getElementById('toastReportWord')
+    if(wordEl)wordEl.textContent=w.toUpperCase()
+    showBsToast('toastReport',3000)
     setRWord(null)
     setRBtn(null)
   }
@@ -278,11 +255,48 @@ export default function Main(){
 
   return (
     <>
-      {/* Toast Container */}
+      {/* Bootstrap Toast Container — HTML structure sama persis dengan versi asli */}
       <div className="toast-container">
-        {toasts.map(t=>(
-          <Toast key={t.id} {...t} onClose={removeToast}/>
-        ))}
+        <div id="toastRoblox" className="toast toast-roblox align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+          <div className="toast-header">
+            <span className="icon-roblox">!</span>
+            <span className="me-auto">Warning</span>
+            <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"/>
+          </div>
+          <div className="toast-body">
+            note: tidak semua kata yang disini bisa dipakai di map roblox <strong>Sambung Kata</strong>
+          </div>
+        </div>
+        <div id="toastWA" className="toast toast-wa align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+          <div className="toast-header">
+            <span className="icon-wa"><i className="fa-brands fa-whatsapp"/></span>
+            <span className="me-auto">Saluran WhatsApp</span>
+            <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"/>
+          </div>
+          <div className="toast-body">
+            Follow saluran WhatsApp untuk mendapatkan info terbaru! <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener">Klik di sini 🔔</a>
+          </div>
+        </div>
+        <div id="toastFavInfo" className="toast toast-fav-info align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+          <div className="toast-header">
+            <span className="icon-fav-info">♥</span>
+            <span className="me-auto">Kata Favorit</span>
+            <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"/>
+          </div>
+          <div className="toast-body">
+            Kata yang kamu favorit tersimpan di tombol <strong onClick={()=>{window.bootstrap?.Toast.getInstance(document.getElementById('toastFavInfo'))?.hide();setShowFavModal(true)}} style={{color:'#f97316',cursor:'pointer',textDecoration:'underline',textUnderlineOffset:'2px'}}>Favorit</strong>
+          </div>
+        </div>
+        <div id="toastReport" className="toast toast-report align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+          <div className="toast-header">
+            <span className="icon-report">⚑</span>
+            <span className="me-auto">Report Terkirim</span>
+            <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"/>
+          </div>
+          <div className="toast-body">
+            Kata <strong id="toastReportWord"></strong> berhasil dilaporkan. Terima kasih!
+          </div>
+        </div>
       </div>
 
       <div className="top">
@@ -329,8 +343,16 @@ export default function Main(){
             </div>
           </div>
         )}
-        <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener" className="wa-banner">
-          <div className="wa-sheen"/>
+        <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener" className="wa-banner"
+          onPointerDown={e=>{
+            const banner=e.currentTarget
+            const old=banner.querySelector('.wa-sheen')
+            if(old)old.remove()
+            const sheen=document.createElement('span')
+            sheen.className='wa-sheen'
+            banner.appendChild(sheen)
+            sheen.addEventListener('animationend',()=>sheen.remove())
+          }}>
           <div className="wa-banner-icon"><i className="fa-brands fa-whatsapp"/></div>
           <div className="wa-banner-text">
             <span className="wa-banner-title">Follow saluran WhatsApp</span>
