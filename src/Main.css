@@ -105,13 +105,22 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .pg-info{font-size:13px;font-weight:800;color:#94a3b8;padding:0 10px;white-space:nowrap;}
 .pg-info b{color:#fff;}
 
-/* ── Toast (standalone, no Bootstrap JS needed) ── */
+/* ── Reset Bootstrap button/input/a overrides ── */
+button{all:unset;box-sizing:border-box;cursor:pointer;}
+input{all:unset;box-sizing:border-box;}
+a{color:inherit;text-decoration:none;}
+*,*::before,*::after{box-sizing:border-box;}
+/* Reset Bootstrap focus ring */
+button:focus,input:focus,a:focus{outline:none !important;box-shadow:none !important;}
+/* Reset Bootstrap's default button hover background */
+.btn-close:focus{box-shadow:none !important;}
+
+/* ── Toast (Bootstrap JS handles show/hide, we just style) ── */
 .toast-container{position:fixed;top:16px;right:16px;z-index:9999;pointer-events:none;width:auto;max-width:90vw;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
-.toast{pointer-events:auto;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.4);font-family:'Plus Jakarta Sans',sans-serif;padding:0;}
-.toast .toast-header{display:flex;align-items:center;padding:9px 12px 8px;font-size:12px;font-weight:700;border:none;}
+.toast{pointer-events:auto;border-radius:8px !important;box-shadow:0 4px 16px rgba(0,0,0,0.4);font-family:'Plus Jakarta Sans',sans-serif;padding:0;}
+.toast .toast-header{display:flex;align-items:center;padding:9px 12px 8px;font-size:12px;font-weight:700;background:transparent !important;border:none !important;}
 .toast .toast-header .me-auto{flex:1;}
-.toast .btn-close{width:16px;height:16px;background:none;border:none;cursor:pointer;opacity:0.5;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;margin-left:8px;color:#fff;}
-.toast .btn-close::after{content:'✕';}
+.toast .btn-close{width:16px;height:16px;background:none;border:none;cursor:pointer;opacity:0.5;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;margin-left:8px;color:#fff;padding:0;}
 .toast .btn-close:hover{opacity:1;}
 .toast .toast-body{padding:9px 12px 11px;font-size:12px;font-weight:500;line-height:1.55;}
 
