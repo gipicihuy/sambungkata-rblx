@@ -286,9 +286,12 @@ export default function Main(){
       setHasil([])
       setMode(newMode)
     } else {
-      // Pindah ke awal/akhir: ambil value input sekarang (atau state mode lain),
-      // langsung jalanin search di mode baru dengan value yang sama
-      const currentVal=inputHurufRef.current?.value||''
+      // Pindah ke awal/akhir: ambil value dari input yang aktif
+      // kalau dari kepit, pakai inputAwalRef; kalau dari awal/akhir, pakai inputHurufRef
+      const currentVal=mode==='kepit'
+        ?(inputAwalRef.current?.value||'')
+        :(inputHurufRef.current?.value||'')
+      if(inputHurufRef.current)inputHurufRef.current.value=currentVal
       setMode(newMode)
       // Jalanin search setelah mode ke-set — pakai setTimeout agar state mode sudah update
       setTimeout(()=>{
