@@ -20,9 +20,13 @@ export default function Main(){
   const [dbReady,setDbReady]=useState(false)
   const [mode,setMode]=useState('awal')
   const [hasil,setHasil]=useState([])
-  const [lastInput,setLastInput]=useState('')
-  const [lastInputAwal,setLastInputAwal]=useState('')
-  const [lastInputAkhir,setLastInputAkhir]=useState('')
+
+  // Pisah lastInput per mode supaya gak bocor antar mode
+  const [lastInputAwalMode,setLastInputAwalMode]=useState('')   // untuk mode 'awal'
+  const [lastInputAkhirMode,setLastInputAkhirMode]=useState('') // untuk mode 'akhir'
+  const [lastInputAwal,setLastInputAwal]=useState('')           // untuk mode 'kepit' - awalan
+  const [lastInputAkhir,setLastInputAkhir]=useState('')         // untuk mode 'kepit' - akhiran
+
   const [currentPage,setCurrentPage]=useState(1)
   const [favWords,setFavWords]=useState(()=>{try{return JSON.parse(localStorage.getItem('sk_favs')||'[]')}catch{return[]}})
   const [hiddenWords,setHiddenWords]=useState(()=>{try{return new Set(JSON.parse(localStorage.getItem('sk_hidden')||'[]'))}catch{return new Set()}})
@@ -84,7 +88,7 @@ export default function Main(){
 
   const toggleFav=(w,el)=>{
     if(isFav(w)){openFavModal();return}
-    const q=mode==='kepit'?lastInputAwal+'···'+lastInputAkhir:lastInput
+    const q=mode==='kepit'?lastInputAwal+'···'+lastInputAkhir:mode==='awal'?lastInputAwalMode:lastInputAkhirMode
     setFavWords(prev=>[...prev,{word:w,query:q,mode:mode}])
     if(el){
       el.classList.add('active')
@@ -142,8 +146,14 @@ export default function Main(){
     const raw=(inputHurufRef.current?.value||'').toLowerCase().trim()
     const input=raw.slice(0,3)
     if(inputHurufRef.current)inputHurufRef.current.value=input
-    setLastInput(input)
     setCurrentPage(1)
+
+    if(mode==='awal'){
+      setLastInputAwalMode(input)
+    } else {
+      setLastInputAkhirMode(input)
+    }
+
     if(!input){setHasil([]);return}
 
     clearTimeout(searchTimer.current)
@@ -205,7 +215,7 @@ export default function Main(){
     const page=(currentPage-1)*PAGE_SIZE
     return vis.slice(page,page+PAGE_SIZE).map((k,i)=>{
       const num=page+i+1
-      const highlighted=`<span class="chip-prefix">${k.slice(0,lastInput.length)}</span>${k.slice(lastInput.length)}`
+      const highlighted=`<span class="chip-prefix">${k.slice(0,lastInputAwalMode.length)}</span>${k.slice(lastInputAwalMode.length)}`
       return makeWordRow(k,num,highlighted)
     })
   }
@@ -223,7 +233,7 @@ export default function Main(){
         lastLetter=letter
         items.push(<div key={'header-'+letter} className="alpha-header-row"><span className="alpha-badge">{letter}</span></div>)
       }
-      const highlighted=`${w.slice(0,-lastInput.length)}<span class="chip-suffix">${w.slice(-lastInput.length)}</span>`
+      const highlighted=`${w.slice(0,-lastInputAkhirMode.length)}<span class="chip-suffix">${w.slice(-lastInputAkhirMode.length)}</span>`
       items.push(makeWordRow(w,num,highlighted))
       return items
     })
@@ -251,23 +261,52 @@ export default function Main(){
     })
   }
 
-  const confirmReport=()=>{
-    if(!rWord)return
-    const w=rWord
-    setShowRModal(false)
-    setReportedWords(prev=>new Set([...prev,w]))
-    fetch('/api/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({word:w,mode:mode})}).catch(()=>{})
-    const wordEl=document.getElementById('toastReportWord')
-    if(wordEl)wordEl.textContent=w.toUpperCase()
-    showBsToast('toastReport',3000)
-    setRWord(null)
-    setRBtn(null)
-  }
+  // Tentuin hasSearch berdasarkan mode yang aktif
+  const hasSearch=mode==='kepit'
+    ?(lastInputAwal||lastInputAkhir)
+    :mode==='awal'
+      ?lastInputAwalMode
+      :lastInputAkhirMode
 
   const vis=getVisible(hasil)
   const totalPages=Math.ceil(vis.length/PAGE_SIZE)
   const showPagination=totalPages>1
-  const hasSearch=mode==='kepit'?(lastInputAwal||lastInputAkhir):lastInput
+
+  // Handler ganti mode — pertahanin input, langsung re-search di mode baru
+  const switchMode=(newMode)=>{
+    if(newMode===mode)return
+    setCurrentPage(1)
+
+    if(newMode==='kepit'){
+      // Pindah ke kepit: clear kepit inputs, hasil clear
+      if(inputAwalRef.current)inputAwalRef.current.value=''
+      if(inputAkhirRef.current)inputAkhirRef.current.value=''
+      setLastInputAwal('')
+      setLastInputAkhir('')
+      setHasil([])
+      setMode(newMode)
+    } else {
+      // Pindah ke awal/akhir: ambil value input sekarang (atau state mode lain),
+      // langsung jalanin search di mode baru dengan value yang sama
+      const currentVal=inputHurufRef.current?.value||''
+      setMode(newMode)
+      // Jalanin search setelah mode ke-set — pakai setTimeout agar state mode sudah update
+      setTimeout(()=>{
+        if(!currentVal){setHasil([]);return}
+        if(newMode==='awal'){
+          setLastInputAwalMode(currentVal)
+          let res=database.slice(lowerBound(database,currentVal),lowerBound(database,currentVal+'zzz'))
+          res.sort((a,b)=>getHardness(a)-getHardness(b))
+          setHasil(res)
+        } else {
+          setLastInputAkhirMode(currentVal)
+          let res=database.filter(k=>k.endsWith(currentVal))
+          res.sort((a,b)=>a.localeCompare(b))
+          setHasil(res)
+        }
+      },0)
+    }
+  }
 
   return (
     <>
@@ -334,15 +373,21 @@ export default function Main(){
           </div>
         </div>
         <div className="mode">
-          <button className={mode==='awal'?'active':''} onClick={()=>{setMode('awal');setLastInputAwal('');setLastInputAkhir('');setCurrentPage(1)}}>Awalan</button>
-          <button className={mode==='akhir'?'active':''} onClick={()=>{setMode('akhir');setCurrentPage(1)}}>Akhiran</button>
-          <button className={mode==='kepit'?'active':''} onClick={()=>{setMode('kepit');setLastInput('');setCurrentPage(1)}}>Awal+Akhir</button>
+          <button className={mode==='awal'?'active':''} onClick={()=>switchMode('awal')}>Awalan</button>
+          <button className={mode==='akhir'?'active':''} onClick={()=>switchMode('akhir')}>Akhiran</button>
+          <button className={mode==='kepit'?'active':''} onClick={()=>switchMode('kepit')}>Awal+Akhir</button>
         </div>
         {mode!=='kepit'?(
           <div className="input-wrap-single">
             <div className="input-wrap">
               <input ref={inputHurufRef} type="text" maxLength="3" placeholder={dbReady?"ketik 1–3 huruf":"memuat..."} onChange={cari} onInput={(e)=>{if(e.target.value.length>3)e.target.value=e.target.value.slice(0,3)}}/>
-              {lastInput&&<button className="input-clear visible" onClick={()=>{if(inputHurufRef.current){inputHurufRef.current.value='';setLastInput('');setHasil([])}}} title="Hapus">✕</button>}
+              {(mode==='awal'?lastInputAwalMode:lastInputAkhirMode)&&(
+                <button className="input-clear visible" onClick={()=>{
+                  if(inputHurufRef.current)inputHurufRef.current.value=''
+                  if(mode==='awal')setLastInputAwalMode('');else setLastInputAkhirMode('')
+                  setHasil([])
+                }} title="Hapus">✕</button>
+              )}
             </div>
           </div>
         ):(
