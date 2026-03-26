@@ -433,7 +433,7 @@ export default function Main(){
         <div className="trending-inner">
           <div className="trending-label">🔥 Populer</div>
           <div className="trending-chips">
-            {(mode==='awal'?trendAwal:trendAkhir).map((item,i)=>{
+            {(mode==='awal'?trendAwal:mode==='akhir'?trendAkhir:[]).map((item,i)=>{
               const q=typeof item==='object'?item.q:item
               const hot=typeof item==='object'?!!item.hot:false
               return <div key={i} className={`trend-chip${hot?' hot':''}`} onClick={()=>{if(mode==='kepit'){if(inputAwalRef.current)inputAwalRef.current.value=q.slice(0,3);cariKepit()}else{if(inputHurufRef.current)inputHurufRef.current.value=q.slice(0,3);cari()}}}>{q.toUpperCase()}{hot&&' 🔥'}</div>
@@ -441,6 +441,38 @@ export default function Main(){
           </div>
         </div>
       </div>
+
+      {/* Alpha jumpbar — hanya muncul di mode Akhiran kalau ada hasil */}
+      {mode==='akhir'&&hasSearch&&vis.length>0&&(()=>{
+        // Hitung huruf pertama apa aja yang ada dan di page berapa
+        const letterPage={}
+        for(let i=0;i<vis.length;i++){
+          const l=vis[i][0].toLowerCase()
+          if(!(l in letterPage))letterPage[l]=Math.ceil((i+1)/PAGE_SIZE)
+        }
+        const letters='abcdefghijklmnopqrstuvwxyz'.split('').filter(l=>l in letterPage)
+        return (
+          <div className="alpha-jump visible">
+            {letters.map(l=>(
+              <button key={l} className="jump-btn" onClick={()=>{
+                const pg=letterPage[l]
+                setCurrentPage(pg)
+                resultRef.current?.scrollTo(0,0)
+                // Scroll ke header huruf setelah render
+                requestAnimationFrame(()=>{
+                  const headers=resultRef.current?.querySelectorAll('.alpha-header-row')
+                  if(!headers)return
+                  for(const h of headers){
+                    if(h.querySelector('.alpha-badge')?.textContent.toLowerCase()===l){
+                      h.scrollIntoView({block:'start',behavior:'smooth'});break
+                    }
+                  }
+                })
+              }}>{l.toUpperCase()}</button>
+            ))}
+          </div>
+        )
+      })()}
 
       {hasSearch&&vis.length>0&&(
         <div className="result-toolbar visible">
