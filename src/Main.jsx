@@ -429,7 +429,7 @@ export default function Main(){
         <div className="loading-bar indeterminate"/>
       </div>
 
-      <div className={`trending-wrap${!hasSearch&&dbReady?' visible':''}`}>
+      <div className={`trending-wrap${!hasSearch&&dbReady&&mode!=='kepit'?' visible':''}`}>
         <div className="trending-inner">
           <div className="trending-label">🔥 Populer</div>
           <div className="trending-chips">
