@@ -106,6 +106,19 @@ function DonaturAccordion(){
               </div>
             ))}
           </div>
+          <div style={{padding:'0 14px 10px'}}>
+            <a href="https://saweria.co/givyx" target="_blank" rel="noopener" style={{
+              display:'flex',alignItems:'center',justifyContent:'center',gap:'7px',
+              width:'100%',padding:'8px',borderRadius:'8px',
+              background:'rgba(249,115,22,0.08)',border:'1px solid rgba(249,115,22,0.25)',
+              textDecoration:'none',transition:'background .15s,border-color .15s'
+            }}
+            onMouseEnter={e=>{e.currentTarget.style.background='rgba(249,115,22,0.15)';e.currentTarget.style.borderColor='rgba(249,115,22,0.45)'}}
+            onMouseLeave={e=>{e.currentTarget.style.background='rgba(249,115,22,0.08)';e.currentTarget.style.borderColor='rgba(249,115,22,0.25)'}}>
+              <span style={{fontSize:'14px'}}>☕</span>
+              <span style={{fontSize:'11px',fontWeight:800,color:'#f97316',fontFamily:'Plus Jakarta Sans,sans-serif'}}>Traktir Givyx di Saweria</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
