@@ -53,64 +53,23 @@ function DonaturAccordion(){
         <div style={{display:'flex',alignItems:'center',gap:'7px'}}>
           <span style={{fontSize:'14px'}}>🏆</span>
           <span style={{fontSize:'11px',fontWeight:800,color:'#e2eaf4',fontFamily:'Plus Jakarta Sans,sans-serif'}}>Top Donatur</span>
-          <span style={{fontSize:'9px',fontWeight:800,background:'rgba(249,115,22,0.12)',border:'1px solid rgba(249,115,22,0.28)',color:'#f97316',padding:'2px 7px',borderRadius:'10px',fontFamily:'Plus Jakarta Sans,sans-serif'}}>
-            {DONATUR.length} orang
-          </span>
         </div>
-        <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
-          <span style={{fontSize:'9px',fontWeight:700,color:'#556070',fontFamily:'Plus Jakarta Sans,sans-serif'}}>
-            {open?'tutup':'lihat'}
-          </span>
-          <div style={{
-            width:'18px',height:'18px',borderRadius:'50%',
-            background:'rgba(249,115,22,0.1)',border:'1px solid rgba(249,115,22,0.25)',
-            display:'flex',alignItems:'center',justifyContent:'center',
-            transition:'transform .3s cubic-bezier(.4,0,.2,1)',
-            transform:open?'rotate(180deg)':'rotate(0deg)',
-            flexShrink:0
-          }}>
-            <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-              <path d="M1 2.5L4 5.5L7 2.5" stroke="#f97316" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
+        <div style={{
+          width:'18px',height:'18px',borderRadius:'50%',
+          background:'rgba(249,115,22,0.1)',border:'1px solid rgba(249,115,22,0.25)',
+          display:'flex',alignItems:'center',justifyContent:'center',
+          transition:'transform .3s cubic-bezier(.4,0,.2,1)',
+          transform:open?'rotate(180deg)':'rotate(0deg)',
+          flexShrink:0
+        }}>
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+            <path d="M1 2.5L4 5.5L7 2.5" stroke="#f97316" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </div>
       </button>
 
       <div ref={bodyRef} style={{maxHeight:'0px',overflow:'hidden',transition:'max-height .35s cubic-bezier(.4,0,.2,1)'}}>
         <div ref={innerRef}>
-          <div style={{padding:'0 14px 6px',display:'flex',gap:'6px',overflowX:'auto',paddingBottom:'8px'}}>
-            {DONATUR.slice(0,3).map((d,i)=>(
-              <div key={d.name} style={{
-                display:'flex',flexDirection:'column',alignItems:'center',gap:'3px',
-                flexShrink:0,width:'80px',
-                background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.07)',
-                borderRadius:'10px',padding:'8px 6px 6px',
-                borderTop:i===0?'2px solid rgba(249,115,22,0.5)':i===1?'2px solid rgba(160,176,192,0.35)':'2px solid rgba(176,128,80,0.35)'
-              }}>
-                <span style={{fontSize:'16px'}}>{MEDAL[i]}</span>
-                <div style={{
-                  width:'32px',height:'32px',borderRadius:'50%',
-                  background:i===0?'rgba(249,115,22,0.2)':i===1?'rgba(148,163,184,0.15)':'rgba(176,128,80,0.15)',
-                  border:i===0?'1.5px solid rgba(249,115,22,0.5)':i===1?'1.5px solid rgba(148,163,184,0.4)':'1.5px solid rgba(176,128,80,0.4)',
-                  display:'flex',alignItems:'center',justifyContent:'center',
-                  fontSize:'12px',fontWeight:800,
-                  color:i===0?'#f97316':i===1?'#94a3b8':'#b08050',
-                  fontFamily:'Plus Jakarta Sans,sans-serif'
-                }}>
-                  {d.name[0].toUpperCase()}
-                </div>
-                <span style={{fontSize:'10px',fontWeight:800,color:'#e2eaf4',textAlign:'center',width:'100%',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',fontFamily:'Plus Jakarta Sans,sans-serif'}}>
-                  {d.name}
-                </span>
-                <span style={{fontSize:'9px',fontWeight:800,color:i===0?'#f97316':i===1?'#94a3b8':'#b08050',fontFamily:'Plus Jakarta Sans,sans-serif'}}>
-                  {formatRp(d.amount)}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          <div style={{height:'1px',background:'rgba(255,255,255,0.05)',margin:'0 14px 6px'}}/>
-
           <div style={{padding:'0 14px 10px',display:'flex',flexDirection:'column',gap:'1px'}}>
             {DONATUR.map((d,i)=>(
               <div key={d.name}>
@@ -118,14 +77,14 @@ function DonaturAccordion(){
                   style={{display:'flex',alignItems:'center',gap:'8px',padding:'6px 0',cursor:d.message?'pointer':'default',borderRadius:'6px',transition:'background .12s'}}
                   onClick={()=>d.message&&setExpandedMsg(expandedMsg===i?null:i)}
                 >
-                  <span style={{fontSize:i<3?'13px':'10px',minWidth:'20px',textAlign:'center',fontFamily:'Plus Jakarta Sans,sans-serif',color:'#556070'}}>
+                  <span style={{fontSize:i<3?'13px':'11px',minWidth:'20px',textAlign:'center',fontFamily:'Plus Jakarta Sans,sans-serif',color:'#556070'}}>
                     {i<3?MEDAL[i]:i+1}
                   </span>
                   <span style={{fontSize:'12px',fontWeight:800,color:'#e2eaf4',flex:1,fontFamily:'Plus Jakarta Sans,sans-serif'}}>
                     {d.name}
                   </span>
                   {d.message&&(
-                    <span style={{fontSize:'9px',color:'#3a4a5c',fontFamily:'Plus Jakarta Sans,sans-serif',transition:'color .15s',color:expandedMsg===i?'#f97316':'#3a4a5c'}}>
+                    <span style={{fontSize:'9px',fontFamily:'Plus Jakarta Sans,sans-serif',transition:'color .15s',color:expandedMsg===i?'#f97316':'#3a4a5c'}}>
                       {expandedMsg===i?'▲':'▼'}
                     </span>
                   )}
