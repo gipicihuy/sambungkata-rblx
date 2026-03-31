@@ -106,17 +106,21 @@ function DonaturAccordion(){
               </div>
             ))}
           </div>
-          <div style={{padding:'0 14px 10px'}}>
+          <div style={{margin:'4px 14px 12px',padding:'10px 12px',background:'rgba(249,115,22,0.05)',border:'1px solid rgba(249,115,22,0.15)',borderRadius:'10px',display:'flex',flexDirection:'column',gap:'8px'}}>
+            <p style={{fontSize:'11px',fontWeight:500,color:'#8ba3be',lineHeight:'1.65',margin:0,fontFamily:'Plus Jakarta Sans,sans-serif'}}>
+              Bantu kami tetap aktif dengan berdonasi — sekecil apapun kontribusimu sangat berarti bagi kami. 🙏
+            </p>
             <a href="https://saweria.co/givyx" target="_blank" rel="noopener" style={{
-              display:'flex',alignItems:'center',justifyContent:'center',gap:'7px',
-              width:'100%',padding:'8px',borderRadius:'8px',
-              background:'rgba(249,115,22,0.08)',border:'1px solid rgba(249,115,22,0.25)',
+              display:'inline-flex',alignItems:'center',gap:'6px',
+              alignSelf:'flex-start',
+              padding:'6px 13px',borderRadius:'8px',
+              background:'rgba(249,115,22,0.12)',border:'1px solid rgba(249,115,22,0.3)',
               textDecoration:'none',transition:'background .15s,border-color .15s'
             }}
-            onMouseEnter={e=>{e.currentTarget.style.background='rgba(249,115,22,0.15)';e.currentTarget.style.borderColor='rgba(249,115,22,0.45)'}}
-            onMouseLeave={e=>{e.currentTarget.style.background='rgba(249,115,22,0.08)';e.currentTarget.style.borderColor='rgba(249,115,22,0.25)'}}>
-              <span style={{fontSize:'14px'}}>☕</span>
-              <span style={{fontSize:'11px',fontWeight:800,color:'#f97316',fontFamily:'Plus Jakarta Sans,sans-serif'}}>Traktir Givyx di Saweria</span>
+            onMouseEnter={e=>{e.currentTarget.style.background='rgba(249,115,22,0.2)';e.currentTarget.style.borderColor='rgba(249,115,22,0.5)'}}
+            onMouseLeave={e=>{e.currentTarget.style.background='rgba(249,115,22,0.12)';e.currentTarget.style.borderColor='rgba(249,115,22,0.3)'}}>
+              <i className="fa-solid fa-heart" style={{fontSize:'11px',color:'#f97316'}}/>
+              <span style={{fontSize:'11px',fontWeight:800,color:'#f97316',fontFamily:'Plus Jakarta Sans,sans-serif'}}>Dukung Kami</span>
             </a>
           </div>
         </div>
