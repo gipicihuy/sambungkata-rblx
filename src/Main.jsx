@@ -14,9 +14,7 @@ const DONATUR = [
 const MEDAL = ['🥇','🥈','🥉']
 
 function formatRp(n){
-  if(n>=1000000)return'Rp'+(n/1000000).toFixed(n%1000000===0?0:1)+'jt'
-  if(n>=1000)return'Rp'+(n/1000).toFixed(n%1000===0?0:1)+'rb'
-  return'Rp'+n
+  return'Rp '+n.toLocaleString('id-ID')
 }
 
 function DonaturAccordion(){
