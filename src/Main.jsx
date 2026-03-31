@@ -9,6 +9,7 @@ const DONATUR = [
   { name: 'dealit',  amount: 5000,  message: 'makasi ya bang, udah bikin kamus sambung kata yang bagus, semoga rezeki lu selalu berlimpah' },
   { name: 'GUAVAAA', amount: 2000,  message: 'bang pilihan abjad yang di atas ilang, plis perbaiki lagi bang😭' },
   { name: 'orang',   amount: 1000,  message: 'haii admin' },
+  { name: 'Zidan',    amount: 1000,  message: 'keren bang webnya😋' },
 ]
 
 const MEDAL = ['🥇','🥈','🥉']
@@ -108,7 +109,7 @@ function DonaturAccordion(){
           </div>
           <div style={{margin:'4px 14px 12px',padding:'10px 12px',background:'rgba(249,115,22,0.05)',border:'1px solid rgba(249,115,22,0.15)',borderRadius:'10px',display:'flex',flexDirection:'column',gap:'8px'}}>
             <p style={{fontSize:'11px',fontWeight:500,color:'#8ba3be',lineHeight:'1.65',margin:0,fontFamily:'Plus Jakarta Sans,sans-serif'}}>
-              Bantu kami tetap aktif dengan berdonasi — sekecil apapun kontribusimu sangat berarti bagi kami. 🙏
+              Bantu kami tetap aktif dengan berdonasi, sekecil apapun kontribusimu sangat berarti bagi kami🙏
             </p>
             <a href="https://saweria.co/givyx" target="_blank" rel="noopener" style={{
               display:'inline-flex',alignItems:'center',gap:'6px',
