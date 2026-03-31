@@ -4,6 +4,157 @@ import './Main.css'
 
 const HR={'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,'g':7,'h':8,'j':9,'k':10,'b':11,'c':12,'d':13,'p':14,'t':15,'l':16,'m':17,'n':18,'r':19,'s':20,'u':21,'i':22,'e':23,'o':24,'a':25}
 
+const DONATUR = [
+  { name: 'don',     amount: 50000, message: 'gacor wak' },
+  { name: 'dealit',  amount: 5000,  message: 'makasi ya bang, udah bikin kamus sambung kata yang bagus, semoga rezeki lu selalu berlimpah' },
+  { name: 'GUAVAAA', amount: 2000,  message: 'bang pilihan abjad yang di atas ilang, plis perbaiki lagi bang😭' },
+  { name: 'orang',   amount: 1000,  message: 'haii admin' },
+]
+
+const MEDAL = ['🥇','🥈','🥉']
+
+function formatRp(n){
+  if(n>=1000000)return'Rp'+(n/1000000).toFixed(n%1000000===0?0:1)+'jt'
+  if(n>=1000)return'Rp'+(n/1000).toFixed(n%1000===0?0:1)+'rb'
+  return'Rp'+n
+}
+
+function DonaturAccordion(){
+  const [open,setOpen]=useState(false)
+  const [expandedMsg,setExpandedMsg]=useState(null)
+  const bodyRef=useRef(null)
+  const innerRef=useRef(null)
+
+  useEffect(()=>{
+    const el=bodyRef.current
+    const inner=innerRef.current
+    if(!el||!inner)return
+    if(open){
+      el.style.maxHeight=inner.scrollHeight+'px'
+    }else{
+      el.style.maxHeight='0px'
+      setExpandedMsg(null)
+    }
+  },[open])
+
+  useEffect(()=>{
+    const el=bodyRef.current
+    const inner=innerRef.current
+    if(!el||!inner||!open)return
+    el.style.maxHeight=inner.scrollHeight+'px'
+  },[expandedMsg])
+
+  return(
+    <div style={{background:'#1c1e21',borderBottom:'1px solid rgba(255,255,255,0.07)'}}>
+      <button
+        onClick={()=>setOpen(o=>!o)}
+        style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'9px 14px',background:'transparent',border:'none',cursor:'pointer',fontFamily:'inherit'}}
+      >
+        <div style={{display:'flex',alignItems:'center',gap:'7px'}}>
+          <span style={{fontSize:'14px'}}>🏆</span>
+          <span style={{fontSize:'11px',fontWeight:800,color:'#e2eaf4',fontFamily:'Plus Jakarta Sans,sans-serif'}}>Top Donatur</span>
+          <span style={{fontSize:'9px',fontWeight:800,background:'rgba(249,115,22,0.12)',border:'1px solid rgba(249,115,22,0.28)',color:'#f97316',padding:'2px 7px',borderRadius:'10px',fontFamily:'Plus Jakarta Sans,sans-serif'}}>
+            {DONATUR.length} orang
+          </span>
+        </div>
+        <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
+          <span style={{fontSize:'9px',fontWeight:700,color:'#556070',fontFamily:'Plus Jakarta Sans,sans-serif'}}>
+            {open?'tutup':'lihat'}
+          </span>
+          <div style={{
+            width:'18px',height:'18px',borderRadius:'50%',
+            background:'rgba(249,115,22,0.1)',border:'1px solid rgba(249,115,22,0.25)',
+            display:'flex',alignItems:'center',justifyContent:'center',
+            transition:'transform .3s cubic-bezier(.4,0,.2,1)',
+            transform:open?'rotate(180deg)':'rotate(0deg)',
+            flexShrink:0
+          }}>
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+              <path d="M1 2.5L4 5.5L7 2.5" stroke="#f97316" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </button>
+
+      <div ref={bodyRef} style={{maxHeight:'0px',overflow:'hidden',transition:'max-height .35s cubic-bezier(.4,0,.2,1)'}}>
+        <div ref={innerRef}>
+          <div style={{padding:'0 14px 6px',display:'flex',gap:'6px',overflowX:'auto',paddingBottom:'8px'}}>
+            {DONATUR.slice(0,3).map((d,i)=>(
+              <div key={d.name} style={{
+                display:'flex',flexDirection:'column',alignItems:'center',gap:'3px',
+                flexShrink:0,width:'80px',
+                background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.07)',
+                borderRadius:'10px',padding:'8px 6px 6px',
+                borderTop:i===0?'2px solid rgba(249,115,22,0.5)':i===1?'2px solid rgba(160,176,192,0.35)':'2px solid rgba(176,128,80,0.35)'
+              }}>
+                <span style={{fontSize:'16px'}}>{MEDAL[i]}</span>
+                <div style={{
+                  width:'32px',height:'32px',borderRadius:'50%',
+                  background:i===0?'rgba(249,115,22,0.2)':i===1?'rgba(148,163,184,0.15)':'rgba(176,128,80,0.15)',
+                  border:i===0?'1.5px solid rgba(249,115,22,0.5)':i===1?'1.5px solid rgba(148,163,184,0.4)':'1.5px solid rgba(176,128,80,0.4)',
+                  display:'flex',alignItems:'center',justifyContent:'center',
+                  fontSize:'12px',fontWeight:800,
+                  color:i===0?'#f97316':i===1?'#94a3b8':'#b08050',
+                  fontFamily:'Plus Jakarta Sans,sans-serif'
+                }}>
+                  {d.name[0].toUpperCase()}
+                </div>
+                <span style={{fontSize:'10px',fontWeight:800,color:'#e2eaf4',textAlign:'center',width:'100%',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',fontFamily:'Plus Jakarta Sans,sans-serif'}}>
+                  {d.name}
+                </span>
+                <span style={{fontSize:'9px',fontWeight:800,color:i===0?'#f97316':i===1?'#94a3b8':'#b08050',fontFamily:'Plus Jakarta Sans,sans-serif'}}>
+                  {formatRp(d.amount)}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div style={{height:'1px',background:'rgba(255,255,255,0.05)',margin:'0 14px 6px'}}/>
+
+          <div style={{padding:'0 14px 10px',display:'flex',flexDirection:'column',gap:'1px'}}>
+            {DONATUR.map((d,i)=>(
+              <div key={d.name}>
+                <div
+                  style={{display:'flex',alignItems:'center',gap:'8px',padding:'6px 0',cursor:d.message?'pointer':'default',borderRadius:'6px',transition:'background .12s'}}
+                  onClick={()=>d.message&&setExpandedMsg(expandedMsg===i?null:i)}
+                >
+                  <span style={{fontSize:i<3?'13px':'10px',minWidth:'20px',textAlign:'center',fontFamily:'Plus Jakarta Sans,sans-serif',color:'#556070'}}>
+                    {i<3?MEDAL[i]:i+1}
+                  </span>
+                  <span style={{fontSize:'12px',fontWeight:800,color:'#e2eaf4',flex:1,fontFamily:'Plus Jakarta Sans,sans-serif'}}>
+                    {d.name}
+                  </span>
+                  {d.message&&(
+                    <span style={{fontSize:'9px',color:'#3a4a5c',fontFamily:'Plus Jakarta Sans,sans-serif',transition:'color .15s',color:expandedMsg===i?'#f97316':'#3a4a5c'}}>
+                      {expandedMsg===i?'▲':'▼'}
+                    </span>
+                  )}
+                  <span style={{fontSize:'11px',fontWeight:800,color:'#f97316',fontFamily:'Plus Jakarta Sans,sans-serif',flexShrink:0}}>
+                    {formatRp(d.amount)}
+                  </span>
+                </div>
+                {expandedMsg===i&&d.message&&(
+                  <div style={{
+                    margin:'0 0 6px 28px',padding:'7px 10px',
+                    background:'rgba(249,115,22,0.06)',
+                    borderLeft:'2px solid rgba(249,115,22,0.35)',
+                    borderRadius:'0 6px 6px 0',
+                    fontSize:'11px',fontWeight:500,color:'#8ba3be',
+                    lineHeight:'1.55',fontFamily:'Plus Jakarta Sans,sans-serif',
+                    fontStyle:'italic'
+                  }}>
+                    "{d.message}"
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function getHardness(w){if(!w)return 99;const c=w[w.length-1].toLowerCase();return HR[c]!==undefined?HR[c]:99}
 
 function lowerBound(arr,t){let l=0,r=arr.length;while(l<r){let m=(l+r)>>1;if(arr[m]<t)l=m+1;else r=m}return l}
@@ -21,11 +172,10 @@ export default function Main(){
   const [mode,setMode]=useState('awal')
   const [hasil,setHasil]=useState([])
 
-  // Pisah lastInput per mode supaya gak bocor antar mode
-  const [lastInputAwalMode,setLastInputAwalMode]=useState('')   // untuk mode 'awal'
-  const [lastInputAkhirMode,setLastInputAkhirMode]=useState('') // untuk mode 'akhir'
-  const [lastInputAwal,setLastInputAwal]=useState('')           // untuk mode 'kepit' - awalan
-  const [lastInputAkhir,setLastInputAkhir]=useState('')         // untuk mode 'kepit' - akhiran
+  const [lastInputAwalMode,setLastInputAwalMode]=useState('')
+  const [lastInputAkhirMode,setLastInputAkhirMode]=useState('')
+  const [lastInputAwal,setLastInputAwal]=useState('')
+  const [lastInputAkhir,setLastInputAkhir]=useState('')
 
   const [currentPage,setCurrentPage]=useState(1)
   const [favWords,setFavWords]=useState(()=>{try{return JSON.parse(localStorage.getItem('sk_favs')||'[]')}catch{return[]}})
@@ -195,6 +345,18 @@ export default function Main(){
     setHasil(res)
   }
 
+  const confirmReport=()=>{
+    if(!rWord)return
+    setReportedWords(prev=>new Set([...prev,rWord]))
+    if(rBtn){rBtn.classList.add('reported')}
+    setShowRModal(false)
+    const wordEl=document.getElementById('toastReportWord')
+    if(wordEl)wordEl.textContent=rWord.toUpperCase()
+    showBsToast('toastReport',4000)
+    fetch('/api/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({word:rWord,mode})}).catch(()=>{})
+    setRWord(null);setRBtn(null)
+  }
+
   const makeWordRow=(w,num,wordHtml)=>{
     const isRep=reportedWords.has(w),isFaved=isFav(w)
     return (
@@ -261,7 +423,6 @@ export default function Main(){
     })
   }
 
-  // Tentuin hasSearch berdasarkan mode yang aktif
   const hasSearch=mode==='kepit'
     ?(lastInputAwal||lastInputAkhir)
     :mode==='awal'
@@ -272,13 +433,11 @@ export default function Main(){
   const totalPages=Math.ceil(vis.length/PAGE_SIZE)
   const showPagination=totalPages>1
 
-  // Handler ganti mode — pertahanin input, langsung re-search di mode baru
   const switchMode=(newMode)=>{
     if(newMode===mode)return
     setCurrentPage(1)
 
     if(newMode==='kepit'){
-      // Pindah ke kepit: clear kepit inputs, hasil clear
       if(inputAwalRef.current)inputAwalRef.current.value=''
       if(inputAkhirRef.current)inputAkhirRef.current.value=''
       setLastInputAwal('')
@@ -286,14 +445,11 @@ export default function Main(){
       setHasil([])
       setMode(newMode)
     } else {
-      // Pindah ke awal/akhir: ambil value dari input yang aktif
-      // kalau dari kepit, pakai inputAwalRef; kalau dari awal/akhir, pakai inputHurufRef
       const currentVal=mode==='kepit'
         ?(inputAwalRef.current?.value||'')
         :(inputHurufRef.current?.value||'')
       if(inputHurufRef.current)inputHurufRef.current.value=currentVal
       setMode(newMode)
-      // Jalanin search setelah mode ke-set — pakai setTimeout agar state mode sudah update
       setTimeout(()=>{
         if(!currentVal){setHasil([]);return}
         if(newMode==='awal'){
@@ -429,6 +585,8 @@ export default function Main(){
         <div className="loading-bar indeterminate"/>
       </div>
 
+      <DonaturAccordion/>
+
       <div className={`trending-wrap${!hasSearch&&dbReady&&mode!=='kepit'?' visible':''}`}>
         <div className="trending-inner">
           <div className="trending-label">🔥 Populer</div>
@@ -442,9 +600,7 @@ export default function Main(){
         </div>
       </div>
 
-      {/* Alpha jumpbar — hanya muncul di mode Akhiran kalau ada hasil */}
       {mode==='akhir'&&hasSearch&&vis.length>0&&(()=>{
-        // Hitung huruf pertama apa aja yang ada dan di page berapa
         const letterPage={}
         for(let i=0;i<vis.length;i++){
           const l=vis[i][0].toLowerCase()
@@ -458,7 +614,6 @@ export default function Main(){
                 const pg=letterPage[l]
                 setCurrentPage(pg)
                 resultRef.current?.scrollTo(0,0)
-                // Scroll ke header huruf setelah render
                 requestAnimationFrame(()=>{
                   const headers=resultRef.current?.querySelectorAll('.alpha-header-row')
                   if(!headers)return
