@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import xorDbPlugin from './vite-plugin-xor-db.js'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), xorDbPlugin()],
   server: {
     port: 5173,
     open: true
