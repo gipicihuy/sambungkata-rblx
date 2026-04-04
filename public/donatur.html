@@ -19,6 +19,7 @@
   --bg:#111318;
   --border:rgba(255,255,255,0.07);
   --orange:#f97316;
+  --yellow:#fbbf24;
   --text:#e2eaf4;
   --subtext:#556070;
   --card:#1c1e21;
@@ -97,38 +98,76 @@ body{
 
 /* leaderboard */
 .leaderboard{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:14px;overflow:hidden;
+  display:flex;flex-direction:column;gap:10px;
   margin-bottom:20px;
 }
-.lb-row{
-  display:flex;align-items:flex-start;gap:12px;
-  padding:12px 16px;
-  border-bottom:1px solid rgba(255,255,255,.04);
-  transition:background .1s;
+
+/* card donatur — NEW design */
+.lb-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px 16px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color .15s,background .15s;
 }
-.lb-row:last-child{border-bottom:none;}
-.lb-row:hover{background:rgba(255,255,255,.02);}
-.lb-rank{
-  width:32px;height:32px;flex-shrink:0;
+.lb-card:hover{border-color:rgba(255,255,255,0.13);background:#1f2228;}
+
+/* rank accent strip on left */
+.lb-card::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;width:3px;
+  border-radius:14px 0 0 14px;
+}
+.lb-card.gold::before{background:linear-gradient(180deg,#fbbf24,#f59e0b);}
+.lb-card.silver::before{background:linear-gradient(180deg,#94a3b8,#64748b);}
+.lb-card.bronze::before{background:linear-gradient(180deg,#cd7c54,#92532a);}
+.lb-card.other::before{background:rgba(255,255,255,0.06);}
+
+.lb-card-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.lb-rank-badge{
+  width:36px;height:36px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
-  border-radius:8px;font-size:11px;font-weight:800;
-  margin-top:1px;
+  border-radius:10px;font-size:18px;
 }
-.lb-rank.gold  {background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.22);color:#fbbf24;font-size:17px;}
-.lb-rank.silver{background:rgba(148,163,184,.08);border:1px solid rgba(148,163,184,.18);color:#94a3b8;font-size:17px;}
-.lb-rank.bronze{background:rgba(180,100,60,.1);border:1px solid rgba(180,100,60,.2);color:#cd7c54;font-size:17px;}
-.lb-rank.other {background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--subtext);}
+.lb-rank-badge.gold {background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.28);}
+.lb-rank-badge.silver{background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.22);}
+.lb-rank-badge.bronze{background:rgba(205,124,84,.1);border:1px solid rgba(205,124,84,.22);}
+.lb-rank-badge.other{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:13px;font-weight:800;color:var(--subtext);}
 .lb-info{flex:1;min-width:0;}
-.lb-name{font-size:14px;font-weight:800;color:#e2eaf4;line-height:1.2;margin-bottom:2px;}
-.lb-msg{
-  font-size:11px;font-weight:500;color:#445566;
-  line-height:1.55;font-style:italic;
+.lb-name{font-size:15px;font-weight:800;color:#fff;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lb-date{font-size:10px;font-weight:600;color:#3a4e5e;margin-top:1px;}
+.lb-amount-badge{
+  flex-shrink:0;
+  padding:5px 11px;
+  border-radius:20px;
+  font-size:13px;font-weight:800;
 }
-.lb-amount{
-  font-size:13px;font-weight:800;color:var(--orange);
-  flex-shrink:0;white-space:nowrap;padding-top:2px;
+.gold .lb-amount-badge {background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.25);color:#fbbf24;}
+.silver .lb-amount-badge{background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.2);color:#94a3b8;}
+.bronze .lb-amount-badge{background:rgba(205,124,84,.1);border:1px solid rgba(205,124,84,.2);color:#cd7c54;}
+.other .lb-amount-badge {background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);color:var(--orange);}
+
+/* message bubble */
+.lb-msg-wrap{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:10px;
+  padding:9px 12px;
+  position:relative;
+}
+.lb-msg-wrap::before{
+  content:'"';
+  position:absolute;top:-4px;left:10px;
+  font-size:28px;line-height:1;
+  color:rgba(255,255,255,.08);
+  font-family:serif;
+}
+.lb-msg{
+  font-size:12px;font-weight:500;color:#7a9ab8;
+  line-height:1.6;font-style:italic;
+  padding-left:8px;
 }
 
 /* thank you */
@@ -145,6 +184,15 @@ body{
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .hero{animation:fadeUp .3s ease both;}
 .page{animation:fadeUp .35s ease .05s both;}
+
+/* stagger cards */
+.lb-card:nth-child(1){animation:fadeUp .3s ease .05s both;}
+.lb-card:nth-child(2){animation:fadeUp .3s ease .10s both;}
+.lb-card:nth-child(3){animation:fadeUp .3s ease .15s both;}
+.lb-card:nth-child(4){animation:fadeUp .3s ease .20s both;}
+.lb-card:nth-child(5){animation:fadeUp .3s ease .25s both;}
+.lb-card:nth-child(6){animation:fadeUp .3s ease .30s both;}
+.lb-card:nth-child(7){animation:fadeUp .3s ease .35s both;}
 </style>
 </head>
 <body>
@@ -190,36 +238,52 @@ body{
 
 <script>
 const DONATUR = [
-  { name: 'don',     amount: 50000, message: 'gacor wak' },
-  { name: 'dealit',  amount: 5000,  message: 'makasi ya bang, udah bikin kamus sambung kata yang bagus, semoga rezeki lu selalu berlimpah' },
-  { name: 'GUAVAAA', amount: 2000,  message: 'bang pilihan abjad yang di atas ilang, plis perbaiki lagi bang😭' },
-  { name: 'orang',   amount: 1000,  message: 'haii admin' },
-  { name: 'Zidan',   amount: 1000,  message: 'keren bang webnya😋' },
+  { name: 'don',              amount: 50000, message: 'gacor wak',                                                                          date: null },
+  { name: 'Luzy',             amount: 10000, message: 'Mantap tapi ada yang gabisa dipakai, kalau bisa diilangin',                          date: '4 Apr 2026' },
+  { name: 'Azam pacar gaby',  amount: 2000,  message: 'Doain saya sama gaby langgeng, sama doain ayah saya cepat sembuh',                   date: '2 Apr 2026' },
+  { name: 'dealit',           amount: 5000,  message: 'makasi ya bang, udah bikin kamus sambung kata yang bagus, semoga rezeki lu selalu berlimpah', date: null },
+  { name: 'GUAVAAA',          amount: 2000,  message: 'bang pilihan abjad yang di atas ilang, plis perbaiki lagi bang😭',                   date: null },
+  { name: 'orang',            amount: 1000,  message: 'haii admin',                                                                         date: null },
+  { name: 'Zidan',            amount: 1000,  message: 'keren bang webnya😋',                                                                date: null },
 ]
 
-const RANK_CLASS = ['gold','silver','bronze']
-const RANK_ICON  = ['🥇','🥈','🥉']
+// Sort by amount descending
+DONATUR.sort((a, b) => b.amount - a.amount)
+
+const RANK_CLASS = ['gold', 'silver', 'bronze']
+const RANK_ICON  = ['🥇', '🥈', '🥉']
 
 function formatRp(n){ return 'Rp ' + n.toLocaleString('id-ID') }
 
 const lb = document.getElementById('leaderboard')
 
 DONATUR.forEach((d, i) => {
-  const row = document.createElement('div')
-  row.className = 'lb-row'
   const rankCls  = RANK_CLASS[i] || 'other'
-  const rankIcon = i < 3 ? RANK_ICON[i] : (i + 1)
-  row.innerHTML = `
-    <div class="lb-rank ${rankCls}">${rankIcon}</div>
-    <div class="lb-info">
-      <div class="lb-name">${d.name}</div>
-      ${d.message ? `<div class="lb-msg">"${d.message}"</div>` : ''}
-    </div>
-    <div class="lb-amount">${formatRp(d.amount)}</div>
-  `
-  lb.appendChild(row)
-})
+  const rankIcon = i < 3 ? RANK_ICON[i] : String(i + 1)
 
+  const card = document.createElement('div')
+  card.className = `lb-card ${rankCls}`
+
+  card.innerHTML = `
+    <div class="lb-card-top">
+      <div class="lb-rank-badge ${rankCls}">${rankIcon}</div>
+      <div class="lb-info">
+        <div class="lb-name">${d.name}</div>
+        ${d.date ? `<div class="lb-date"><i class="fa-regular fa-clock" style="font-size:9px;margin-right:3px"></i>${d.date}</div>` : ''}
+      </div>
+      <div class="lb-amount-badge">${formatRp(d.amount)}</div>
+    </div>
+    ${d.message ? `
+    <div class="lb-msg-wrap">
+      <div class="lb-msg">${d.message}</div>
+    </div>` : ''}
+  `
+
+  lb.appendChild(card)
+})
+</script>
+
+<script>
 try{fetch('/api/ping',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:'/donatur',ref:document.referrer||'-'})}).catch(()=>{})}catch(e){}
 </script>
 </body>
