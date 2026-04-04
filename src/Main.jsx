@@ -400,6 +400,24 @@ export default function Main(){
             </div>
           </div>
         </div>
+        <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener" className="wa-banner"
+          style={{marginBottom:'10px'}}
+          onPointerDown={e=>{
+            const banner=e.currentTarget
+            const old=banner.querySelector('.wa-sheen')
+            if(old)old.remove()
+            const sheen=document.createElement('span')
+            sheen.className='wa-sheen'
+            banner.appendChild(sheen)
+            sheen.addEventListener('animationend',()=>sheen.remove())
+          }}>
+          <div className="wa-banner-icon"><i className="fa-brands fa-whatsapp"/></div>
+          <div className="wa-banner-text">
+            <span className="wa-banner-title">Follow saluran WhatsApp</span>
+            <span className="wa-banner-sub">Dapatkan info update website ini 🔔</span>
+          </div>
+          <div className="wa-banner-arrow"><span className="material-icons-round" style={{fontSize:'15px',color:'#25D366'}}>open_in_new</span></div>
+        </a>
         <div className="mode">
           <button className={mode==='awal'?'active':''} onClick={()=>switchMode('awal')}>Awalan</button>
           <button className={mode==='akhir'?'active':''} onClick={()=>switchMode('akhir')}>Akhiran</button>
@@ -431,23 +449,6 @@ export default function Main(){
             </div>
           </div>
         )}
-        <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener" className="wa-banner"
-          onPointerDown={e=>{
-            const banner=e.currentTarget
-            const old=banner.querySelector('.wa-sheen')
-            if(old)old.remove()
-            const sheen=document.createElement('span')
-            sheen.className='wa-sheen'
-            banner.appendChild(sheen)
-            sheen.addEventListener('animationend',()=>sheen.remove())
-          }}>
-          <div className="wa-banner-icon"><i className="fa-brands fa-whatsapp"/></div>
-          <div className="wa-banner-text">
-            <span className="wa-banner-title">Follow saluran WhatsApp</span>
-            <span className="wa-banner-sub">Dapatkan info update website ini 🔔</span>
-          </div>
-          <div className="wa-banner-arrow"><span className="material-icons-round" style={{fontSize:'15px',color:'#25D366'}}>open_in_new</span></div>
-        </a>
       </div>
 
       <div className="loading-bar-wrap" style={{display:dbReady?'none':''}}>
