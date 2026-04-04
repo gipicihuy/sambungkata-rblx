@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Donatur - Sambung Kata">
+<title>Donatur - Sambung Kata</title>
+<link rel="icon" href="sambungkata.jpg">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sambung Kata">
+<link rel="apple-touch-icon" href="sambungkata.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111318;
+  --border:rgba(255,255,255,0.07);
+  --orange:#f97316;
+  --text:#e2eaf4;
+  --subtext:#556070;
+  --card:#1c1e21;
+}
+html,body{min-height:100%;overflow-x:hidden;}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background-color:var(--bg);
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);
+  background-size:60px 60px;
+  color:var(--text);
+}
+
+/* topbar */
+.topbar{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:10;
+}
+.topbar-back{
+  width:34px;height:34px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,0.1);border-radius:8px;
+  background:rgba(255,255,255,0.04);color:var(--text);
+  font-size:14px;text-decoration:none;
+  transition:background .12s,border-color .12s,color .12s;
+}
+.topbar-back:hover{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.35);color:var(--orange);}
+.topbar-logo{display:flex;align-items:center;gap:9px;}
+.topbar-logo img{width:32px;height:32px;border-radius:7px;object-fit:cover;}
+.topbar-name{font-size:16px;font-weight:800;color:#fff;line-height:1.1;}
+.topbar-sub{font-size:11px;font-weight:600;color:var(--subtext);}
+
+/* hero */
+.hero{text-align:center;padding:36px 20px 20px;}
+.hero-emoji{font-size:52px;line-height:1;margin-bottom:14px;display:block;}
+.hero-title{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.4px;margin-bottom:6px;}
+.hero-sub{font-size:13px;font-weight:500;color:var(--subtext);line-height:1.65;max-width:300px;margin:0 auto;}
+
+/* page */
+.page{max-width:480px;margin:0 auto;padding:0 16px 80px;}
+
+/* cta */
+.cta-card{
+  background:rgba(249,115,22,0.05);
+  border:1px solid rgba(249,115,22,0.18);
+  border-radius:14px;
+  padding:16px 16px 14px;
+  margin-bottom:20px;
+}
+.cta-text{font-size:12px;font-weight:500;color:#907050;line-height:1.7;margin-bottom:12px;}
+.cta-text b{color:#c07840;font-weight:700;}
+.btn-donate{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:12px;border-radius:10px;
+  background:var(--orange);color:#fff;
+  font-size:14px;font-weight:800;
+  text-decoration:none;border:none;cursor:pointer;
+  box-shadow:0 4px 20px rgba(249,115,22,.28);
+  transition:filter .15s,transform .1s;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.btn-donate:hover{filter:brightness(1.1);color:#fff;}
+.btn-donate:active{transform:scale(.97);}
+
+/* section label */
+.section-label{
+  font-size:10px;font-weight:800;letter-spacing:.9px;
+  color:var(--subtext);text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+/* leaderboard */
+.leaderboard{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  margin-bottom:20px;
+}
+.lb-row{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 16px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  transition:background .1s;
+}
+.lb-row:last-child{border-bottom:none;}
+.lb-row:hover{background:rgba(255,255,255,.02);}
+.lb-rank{
+  width:32px;height:32px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:8px;font-size:11px;font-weight:800;
+  margin-top:1px;
+}
+.lb-rank.gold  {background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.22);color:#fbbf24;font-size:17px;}
+.lb-rank.silver{background:rgba(148,163,184,.08);border:1px solid rgba(148,163,184,.18);color:#94a3b8;font-size:17px;}
+.lb-rank.bronze{background:rgba(180,100,60,.1);border:1px solid rgba(180,100,60,.2);color:#cd7c54;font-size:17px;}
+.lb-rank.other {background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--subtext);}
+.lb-info{flex:1;min-width:0;}
+.lb-name{font-size:14px;font-weight:800;color:#e2eaf4;line-height:1.2;margin-bottom:2px;}
+.lb-msg{
+  font-size:11px;font-weight:500;color:#445566;
+  line-height:1.55;font-style:italic;
+}
+.lb-amount{
+  font-size:13px;font-weight:800;color:var(--orange);
+  flex-shrink:0;white-space:nowrap;padding-top:2px;
+}
+
+/* thank you */
+.thankyou{
+  padding:14px 16px;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+  font-size:12px;font-weight:500;color:#445566;
+  line-height:1.7;text-align:center;
+}
+.thankyou b{color:#667788;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.hero{animation:fadeUp .3s ease both;}
+.page{animation:fadeUp .35s ease .05s both;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="topbar-back"><i class="fa-solid fa-chevron-left"></i></a>
+  <div class="topbar-logo">
+    <img src="sambungkata.jpg" alt="logo">
+    <div>
+      <div class="topbar-name">Sambung Kata</div>
+      <div class="topbar-sub">Hall of Fame Donatur</div>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <span class="hero-emoji">🏆</span>
+  <div class="hero-title">Top Donatur</div>
+  <div class="hero-sub">Orang-orang keren yang udah bantu Sambung Kata tetap hidup. Makasih banyak! 🙏</div>
+</div>
+
+<div class="page">
+
+  <div class="cta-card">
+    <p class="cta-text">
+      Website ini gratis dan bebas iklan. Kalau kamu ngerasa terbantu, <b>donasi sekecil apapun</b> sangat berarti buat kami supaya bisa terus update dan berkembang 💪
+    </p>
+    <a class="btn-donate" href="https://saweria.co/givyx" target="_blank" rel="noopener">
+      <i class="fa-solid fa-heart"></i> Dukung di Saweria
+    </a>
+  </div>
+
+  <div class="section-label">🥇 Leaderboard</div>
+
+  <div class="leaderboard" id="leaderboard"></div>
+
+  <div class="thankyou">
+    Nama kamu akan muncul di sini setelah donasi dikonfirmasi.<br>
+    <b>Terima kasih sudah mendukung Sambung Kata!</b>
+  </div>
+
+</div>
+
+<script>
+const DONATUR = [
+  { name: 'don',     amount: 50000, message: 'gacor wak' },
+  { name: 'dealit',  amount: 5000,  message: 'makasi ya bang, udah bikin kamus sambung kata yang bagus, semoga rezeki lu selalu berlimpah' },
+  { name: 'GUAVAAA', amount: 2000,  message: 'bang pilihan abjad yang di atas ilang, plis perbaiki lagi bang😭' },
+  { name: 'orang',   amount: 1000,  message: 'haii admin' },
+  { name: 'Zidan',   amount: 1000,  message: 'keren bang webnya😋' },
+]
+
+const RANK_CLASS = ['gold','silver','bronze']
+const RANK_ICON  = ['🥇','🥈','🥉']
+
+function formatRp(n){ return 'Rp ' + n.toLocaleString('id-ID') }
+
+const lb = document.getElementById('leaderboard')
+
+DONATUR.forEach((d, i) => {
+  const row = document.createElement('div')
+  row.className = 'lb-row'
+  const rankCls  = RANK_CLASS[i] || 'other'
+  const rankIcon = i < 3 ? RANK_ICON[i] : (i + 1)
+  row.innerHTML = `
+    <div class="lb-rank ${rankCls}">${rankIcon}</div>
+    <div class="lb-info">
+      <div class="lb-name">${d.name}</div>
+      ${d.message ? `<div class="lb-msg">"${d.message}"</div>` : ''}
+    </div>
+    <div class="lb-amount">${formatRp(d.amount)}</div>
+  `
+  lb.appendChild(row)
+})
+
+try{fetch('/api/ping',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:'/donatur',ref:document.referrer||'-'})}).catch(()=>{})}catch(e){}
+</script>
+</body>
+</html>
