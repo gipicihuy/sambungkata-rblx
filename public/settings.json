@@ -1,13 +1,13 @@
 {
   "trending_awal": [
-    {"q": "ez", "hot": true},
+    {"q": "ks", "hot": true},
     {"q": "if", "hot": false},
-    {"q": "sf", "hot": true},
+    {"q": "oi", "hot": true},
     {"q": "x", "hot": false},
     {"q": "ex", "hot": false}
   ],
   "trending_akhir": [
-    {"q": "sf", "hot": true},
+    {"q": "yuk", "hot": true},
     {"q": "ks", "hot": false},
     {"q": "if", "hot": true},
     {"q": "cy", "hot": true},
