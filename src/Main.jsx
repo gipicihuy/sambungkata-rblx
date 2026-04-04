@@ -374,18 +374,11 @@ export default function Main(){
             <div className="info">{dbReady?database.length.toLocaleString()+' kata':'memuat...'}</div>
             {hasSearch&&vis.length>0&&<div className="info-total visible">{vis.length.toLocaleString()+' hasil'}</div>}
             <div className="info-actions">
-              <button className="fav-header-btn" onClick={openFavModal}>
-                <i className="fa-solid fa-heart"/> Favorit {favWords.length>0&&<span className="fav-hb-count on">{favWords.length}</span>}
-              </button>
-              <a href="/donatur" style={{
-                display:'inline-flex',alignItems:'center',gap:'4px',
-                padding:'4px 9px',fontSize:'11px',fontWeight:800,
-                border:'1px solid rgba(251,191,36,0.4)',borderRadius:'6px',
-                background:'rgba(251,191,36,0.08)',color:'#fbbf24',
-                textDecoration:'none',cursor:'pointer',
-                transition:'background 0.12s,border-color 0.12s',
-                userSelect:'none',whiteSpace:'nowrap',lineHeight:1,
-                fontFamily:"'Plus Jakarta Sans',sans-serif",
+              <a href="/donatur" className="fav-header-btn" style={{
+                textDecoration:'none',
+                border:'1px solid rgba(251,191,36,0.4)',
+                background:'rgba(251,191,36,0.08)',
+                color:'#fbbf24',
                 boxShadow:'0 0 12px rgba(251,191,36,0.1)',
               }}
                 onMouseEnter={e=>{e.currentTarget.style.background='rgba(251,191,36,0.18)';e.currentTarget.style.borderColor='rgba(251,191,36,0.65)'}}
@@ -393,6 +386,9 @@ export default function Main(){
               >
                 🏆 Donatur
               </a>
+              <button className="fav-header-btn" onClick={openFavModal}>
+                <i className="fa-solid fa-heart"/> Favorit {favWords.length>0&&<span className="fav-hb-count on">{favWords.length}</span>}
+              </button>
             </div>
           </div>
         </div>
