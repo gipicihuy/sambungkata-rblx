@@ -35,6 +35,7 @@ export default function Main(){
   const [showRModal,setShowRModal]=useState(false)
   const [rWord,setRWord]=useState(null)
   const [rBtn,setRBtn]=useState(null)
+  
   const [showFavModal,setShowFavModal]=useState(false)
   const [favModalVisible,setFavModalVisible]=useState(false)
   const [showSheet,setShowSheet]=useState(false)
@@ -60,6 +61,7 @@ export default function Main(){
       setDatabase(e.data)
       setDbReady(true)
       worker.terminate()
+      
       if(inputHurufRef.current)inputHurufRef.current.disabled=false
       if(inputAwalRef.current)inputAwalRef.current.disabled=false
       if(inputAkhirRef.current)inputAkhirRef.current.disabled=false
@@ -376,17 +378,23 @@ export default function Main(){
             <div className="info-actions">
               <a href="/donatur" className="fav-header-btn" style={{
                 textDecoration:'none',
+                display:'inline-flex',
+                alignItems:'center',
+                justifyContent:'center',
+                height:'32px',
+                boxSizing:'border-box',
                 border:'1px solid rgba(251,191,36,0.4)',
                 background:'rgba(251,191,36,0.08)',
                 color:'#fbbf24',
                 boxShadow:'0 0 12px rgba(251,191,36,0.1)',
+                padding:'0 10px'
               }}
                 onMouseEnter={e=>{e.currentTarget.style.background='rgba(251,191,36,0.18)';e.currentTarget.style.borderColor='rgba(251,191,36,0.65)'}}
                 onMouseLeave={e=>{e.currentTarget.style.background='rgba(251,191,36,0.08)';e.currentTarget.style.borderColor='rgba(251,191,36,0.4)'}}
               >
                 🏆 Donatur
               </a>
-              <button className="fav-header-btn" onClick={openFavModal}>
+              <button className="fav-header-btn" onClick={openFavModal} style={{height:'32px', display:'inline-flex', alignItems:'center', boxSizing:'border-box'}}>
                 <i className="fa-solid fa-heart"/> Favorit {favWords.length>0&&<span className="fav-hb-count on">{favWords.length}</span>}
               </button>
             </div>
