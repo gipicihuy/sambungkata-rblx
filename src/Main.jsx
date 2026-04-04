@@ -377,7 +377,20 @@ export default function Main(){
               <button className="fav-header-btn" onClick={openFavModal}>
                 <i className="fa-solid fa-heart"/> Favorit {favWords.length>0&&<span className="fav-hb-count on">{favWords.length}</span>}
               </button>
-              <a href="/donatur" className="fav-header-btn" style={{textDecoration:'none'}}>
+              <a href="/donatur" style={{
+                display:'inline-flex',alignItems:'center',gap:'4px',
+                padding:'4px 9px',fontSize:'11px',fontWeight:800,
+                border:'1px solid rgba(251,191,36,0.4)',borderRadius:'6px',
+                background:'rgba(251,191,36,0.08)',color:'#fbbf24',
+                textDecoration:'none',cursor:'pointer',
+                transition:'background 0.12s,border-color 0.12s',
+                userSelect:'none',whiteSpace:'nowrap',lineHeight:1,
+                fontFamily:"'Plus Jakarta Sans',sans-serif",
+                boxShadow:'0 0 12px rgba(251,191,36,0.1)',
+              }}
+                onMouseEnter={e=>{e.currentTarget.style.background='rgba(251,191,36,0.18)';e.currentTarget.style.borderColor='rgba(251,191,36,0.65)'}}
+                onMouseLeave={e=>{e.currentTarget.style.background='rgba(251,191,36,0.08)';e.currentTarget.style.borderColor='rgba(251,191,36,0.4)'}}
+              >
                 🏆 Donatur
               </a>
             </div>
