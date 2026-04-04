@@ -4,132 +4,6 @@ import './Main.css'
 
 const HR={'q':0,'x':1,'z':2,'y':3,'f':4,'v':5,'w':6,'g':7,'h':8,'j':9,'k':10,'b':11,'c':12,'d':13,'p':14,'t':15,'l':16,'m':17,'n':18,'r':19,'s':20,'u':21,'i':22,'e':23,'o':24,'a':25}
 
-const DONATUR = [
-  { name: 'don',     amount: 50000, message: 'gacor wak' },
-  { name: 'dealit',  amount: 5000,  message: 'makasi ya bang, udah bikin kamus sambung kata yang bagus, semoga rezeki lu selalu berlimpah' },
-  { name: 'GUAVAAA', amount: 2000,  message: 'bang pilihan abjad yang di atas ilang, plis perbaiki lagi bang😭' },
-  { name: 'orang',   amount: 1000,  message: 'haii admin' },
-  { name: 'Zidan',    amount: 1000,  message: 'keren bang webnya😋' },
-]
-
-const MEDAL = ['🥇','🥈','🥉']
-
-function formatRp(n){
-  return'Rp '+n.toLocaleString('id-ID')
-}
-
-function DonaturAccordion(){
-  const [open,setOpen]=useState(false)
-  const [expandedMsg,setExpandedMsg]=useState(null)
-  const bodyRef=useRef(null)
-  const innerRef=useRef(null)
-
-  useEffect(()=>{
-    const el=bodyRef.current
-    const inner=innerRef.current
-    if(!el||!inner)return
-    if(open){
-      el.style.maxHeight=inner.scrollHeight+'px'
-    }else{
-      el.style.maxHeight='0px'
-      setExpandedMsg(null)
-    }
-  },[open])
-
-  useEffect(()=>{
-    const el=bodyRef.current
-    const inner=innerRef.current
-    if(!el||!inner||!open)return
-    el.style.maxHeight=inner.scrollHeight+'px'
-  },[expandedMsg])
-
-  return(
-    <div style={{background:'#1c1e21',borderBottom:'1px solid rgba(255,255,255,0.07)'}}>
-      <button
-        onClick={()=>setOpen(o=>!o)}
-        style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'11px 16px',background:'transparent',border:'none',cursor:'pointer',fontFamily:'inherit'}}
-      >
-        <div style={{display:'flex',alignItems:'center',gap:'9px'}}>
-          <span style={{fontSize:'18px'}}>🏆</span>
-          <span style={{fontSize:'13px',fontWeight:800,color:'#e2eaf4',fontFamily:'Plus Jakarta Sans,sans-serif'}}>Top Donatur</span>
-        </div>
-        <div style={{
-          width:'22px',height:'22px',borderRadius:'50%',
-          background:'rgba(249,115,22,0.1)',border:'1px solid rgba(249,115,22,0.25)',
-          display:'flex',alignItems:'center',justifyContent:'center',
-          transition:'transform .3s cubic-bezier(.4,0,.2,1)',
-          transform:open?'rotate(180deg)':'rotate(0deg)',
-          flexShrink:0
-        }}>
-          <svg width="10" height="10" viewBox="0 0 8 8" fill="none">
-            <path d="M1 2.5L4 5.5L7 2.5" stroke="#f97316" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-      </button>
-
-      <div ref={bodyRef} style={{maxHeight:'0px',overflow:'hidden',transition:'max-height .35s cubic-bezier(.4,0,.2,1)'}}>
-        <div ref={innerRef}>
-          <div style={{padding:'0 16px 12px',display:'flex',flexDirection:'column',gap:'2px'}}>
-            {DONATUR.map((d,i)=>(
-              <div key={d.name}>
-                <div
-                  style={{display:'flex',alignItems:'center',gap:'10px',padding:'9px 0',cursor:d.message?'pointer':'default',borderRadius:'6px',transition:'background .12s'}}
-                  onClick={()=>d.message&&setExpandedMsg(expandedMsg===i?null:i)}
-                >
-                  <span style={{fontSize:i<3?'16px':'13px',minWidth:'26px',textAlign:'center',fontFamily:'Plus Jakarta Sans,sans-serif',color:'#556070'}}>
-                    {i<3?MEDAL[i]:i+1}
-                  </span>
-                  <span style={{fontSize:'14px',fontWeight:800,color:'#e2eaf4',flex:1,fontFamily:'Plus Jakarta Sans,sans-serif'}}>
-                    {d.name}
-                  </span>
-                  {d.message&&(
-                    <span style={{fontSize:'11px',fontFamily:'Plus Jakarta Sans,sans-serif',transition:'color .15s',color:expandedMsg===i?'#f97316':'#3a4a5c'}}>
-                      {expandedMsg===i?'▲':'▼'}
-                    </span>
-                  )}
-                  <span style={{fontSize:'13px',fontWeight:800,color:'#f97316',fontFamily:'Plus Jakarta Sans,sans-serif',flexShrink:0}}>
-                    {formatRp(d.amount)}
-                  </span>
-                </div>
-                {expandedMsg===i&&d.message&&(
-                  <div style={{
-                    margin:'0 0 8px 36px',padding:'9px 12px',
-                    background:'rgba(249,115,22,0.06)',
-                    borderLeft:'2px solid rgba(249,115,22,0.35)',
-                    borderRadius:'0 6px 6px 0',
-                    fontSize:'12px',fontWeight:500,color:'#8ba3be',
-                    lineHeight:'1.6',fontFamily:'Plus Jakarta Sans,sans-serif',
-                    fontStyle:'italic'
-                  }}>
-                    "{d.message}"
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-          <div style={{margin:'4px 16px 14px',padding:'12px 14px',background:'rgba(249,115,22,0.05)',border:'1px solid rgba(249,115,22,0.15)',borderRadius:'10px',display:'flex',flexDirection:'column',gap:'10px'}}>
-            <p style={{fontSize:'12px',fontWeight:500,color:'#8ba3be',lineHeight:'1.65',margin:0,fontFamily:'Plus Jakarta Sans,sans-serif'}}>
-              Bantu kami tetap aktif dengan berdonasi, sekecil apapun kontribusimu sangat berarti bagi kami🙏
-            </p>
-            <a href="https://saweria.co/givyx" target="_blank" rel="noopener" style={{
-              display:'inline-flex',alignItems:'center',gap:'7px',
-              alignSelf:'flex-start',
-              padding:'7px 15px',borderRadius:'8px',
-              background:'rgba(249,115,22,0.12)',border:'1px solid rgba(249,115,22,0.3)',
-              textDecoration:'none',transition:'background .15s,border-color .15s'
-            }}
-            onMouseEnter={e=>{e.currentTarget.style.background='rgba(249,115,22,0.2)';e.currentTarget.style.borderColor='rgba(249,115,22,0.5)'}}
-            onMouseLeave={e=>{e.currentTarget.style.background='rgba(249,115,22,0.12)';e.currentTarget.style.borderColor='rgba(249,115,22,0.3)'}}>
-              <i className="fa-solid fa-heart" style={{fontSize:'12px',color:'#f97316'}}/>
-              <span style={{fontSize:'12px',fontWeight:800,color:'#f97316',fontFamily:'Plus Jakarta Sans,sans-serif'}}>Dukung Kami</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function getHardness(w){if(!w)return 99;const c=w[w.length-1].toLowerCase();return HR[c]!==undefined?HR[c]:99}
 
 function lowerBound(arr,t){let l=0,r=arr.length;while(l<r){let m=(l+r)>>1;if(arr[m]<t)l=m+1;else r=m}return l}
@@ -503,6 +377,9 @@ export default function Main(){
               <button className="fav-header-btn" onClick={openFavModal}>
                 <i className="fa-solid fa-heart"/> Favorit {favWords.length>0&&<span className="fav-hb-count on">{favWords.length}</span>}
               </button>
+              <a href="/donatur" className="fav-header-btn" style={{textDecoration:'none'}}>
+                🏆 Donatur
+              </a>
             </div>
           </div>
         </div>
@@ -559,8 +436,6 @@ export default function Main(){
       <div className="loading-bar-wrap" style={{display:dbReady?'none':''}}>
         <div className="loading-bar indeterminate"/>
       </div>
-
-      <DonaturAccordion/>
 
       <div className={`trending-wrap${!hasSearch&&dbReady&&mode!=='kepit'?' visible':''}`}>
         <div className="trending-inner">
