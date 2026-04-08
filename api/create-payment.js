@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   const PAKASIR_API_KEY = process.env.PAKASIR_API_KEY
 
   if (!PAKASIR_SLUG || !PAKASIR_API_KEY) {
-    return res.status(500).json({ ok: false, error: 'server misconfigured', slug: !!PAKASIR_SLUG, key: !!PAKASIR_API_KEY })
+    return res.status(500).json({ ok: false, error: 'server misconfigured' })
   }
 
   const { name, amount, message } = req.body || {}
@@ -20,39 +20,31 @@ export default async function handler(req, res) {
 
   const order_id = 'SK' + Date.now() + Math.random().toString(36).slice(2, 7).toUpperCase()
 
-  const payload = {
-    project: PAKASIR_SLUG,
-    order_id,
-    amount,
-    api_key: PAKASIR_API_KEY
-  }
-
   try {
     const pakasirRes = await fetch('https://app.pakasir.com/api/transactioncreate/qris', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({
+        project: PAKASIR_SLUG,
+        order_id,
+        amount,
+        api_key: PAKASIR_API_KEY
+      })
     })
 
-    const text = await pakasirRes.text()
-    let data
-    try { data = JSON.parse(text) } catch { data = null }
+    const data = await pakasirRes.json()
+    const payment = data?.payment
 
-    if (!pakasirRes.ok || !data?.payment_number) {
-      return res.status(502).json({
-        ok: false,
-        error: 'gagal membuat transaksi',
-        debug_status: pakasirRes.status,
-        debug_body: text.slice(0, 500)
-      })
+    if (!pakasirRes.ok || !payment?.payment_number) {
+      return res.status(502).json({ ok: false, error: 'gagal membuat transaksi' })
     }
 
     return res.status(200).json({
       ok: true,
       order_id,
-      qr_string: data.payment_number,
-      total: data.total_payment,
-      expired_at: data.expired_at
+      qr_string: payment.payment_number,
+      total: payment.total_payment,
+      expired_at: payment.expired_at
     })
   } catch (e) {
     return res.status(500).json({ ok: false, error: e.message })
