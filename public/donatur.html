@@ -45,6 +45,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
 .field label{display:block;font-size:11px;font-weight:700;color:#8ba3be;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;}
 .field input,.field textarea{width:100%;background:rgba(10,10,11,0.6);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;padding:10px 12px;outline:none;transition:border-color .15s;}
 .field input:focus,.field textarea:focus{border-color:var(--orange);}
+.field input:hover,.field textarea:hover{border-color:rgba(249,115,22,0.35);}
 .field textarea{resize:none;height:70px;line-height:1.5;}
 .field input::placeholder,.field textarea::placeholder{color:#3a4a5c;font-weight:500;}
 .nominal-presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
@@ -66,20 +67,24 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
 .qris-amount{font-size:22px;font-weight:800;color:var(--orange);margin-bottom:16px;letter-spacing:-.5px;}
 .qris-box{display:flex;align-items:center;justify-content:center;background:#fff;border-radius:12px;padding:12px;margin:0 auto 14px;width:fit-content;}
 .qris-box canvas,.qris-box img{display:block;}
-.qris-expire{font-size:11px;font-weight:600;color:#8ba3be;margin-bottom:14px;}
-.qris-expire span{color:#fbbf24;font-weight:700;}
-.btn-done{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border-radius:10px;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);color:#4ade80;font-size:14px;font-weight:800;cursor:pointer;transition:background .12s;font-family:'Plus Jakarta Sans',sans-serif;}
-.btn-done:hover{background:rgba(74,222,128,0.18);}
-.btn-cancel{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.08);color:#556070;font-size:13px;font-weight:700;cursor:pointer;transition:background .12s,color .12s;font-family:'Plus Jakarta Sans',sans-serif;margin-top:8px;}
+.qris-expire-wrap{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:16px;}
+.qris-expire-label{font-size:11px;font-weight:600;color:#8ba3be;}
+.qris-countdown{font-size:13px;font-weight:800;color:#fbbf24;font-variant-numeric:tabular-nums;}
+.qris-countdown.urgent{color:#ff6b81;}
+.btn-done{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border-radius:10px;background:rgba(74,222,128,0.07);border:1px solid rgba(74,222,128,0.25);color:#4ade80;font-size:14px;font-weight:800;cursor:pointer;transition:background .12s,border-color .12s;font-family:'Plus Jakarta Sans',sans-serif;}
+.btn-done:hover{background:rgba(74,222,128,0.14);border-color:rgba(74,222,128,0.45);}
+.btn-done:active{transform:scale(.97);}
+.btn-cancel{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.08);color:#556070;font-size:13px;font-weight:700;cursor:pointer;transition:background .12s,color .12s,border-color .12s;font-family:'Plus Jakarta Sans',sans-serif;margin-top:8px;}
 .btn-cancel:hover{background:rgba(255,61,87,0.07);border-color:rgba(255,61,87,0.2);color:#ff6b81;}
 .error-msg{font-size:12px;font-weight:600;color:#ff6b81;background:rgba(255,61,87,0.07);border:1px solid rgba(255,61,87,0.2);border-radius:8px;padding:10px 12px;margin-top:10px;display:none;}
 .error-msg.visible{display:block;}
 .section-label{font-size:10px;font-weight:800;letter-spacing:.9px;color:#8ba3be;text-transform:uppercase;margin-bottom:10px;}
 .leaderboard{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
-.lb-card{background:var(--card);border:1px solid var(--border);border-radius:0;padding:14px 16px;position:relative;overflow:hidden;transition:border-color .15s,background .15s;}
-.lb-card:hover{border-color:rgba(255,255,255,0.13);background:#1f2228;}
+.lb-card{background:var(--card);border:1px solid var(--border);border-radius:0;padding:14px 16px;position:relative;overflow:hidden;transition:border-color .15s,background .15s;cursor:default;}
+.lb-card:hover{border-color:rgba(249,115,22,0.2);background:#1f2228;}
 .lb-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0;}
 .lb-card.other::before{background:rgba(255,255,255,0.06);}
+.lb-card:hover::before{background:rgba(249,115,22,0.35);}
 .lb-card-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
 .lb-rank-badge{width:36px;height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:0;}
 .lb-rank-badge.other{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:13px;font-weight:800;color:#9db3cc;}
@@ -148,8 +153,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
     </div>
 
     <div class="field">
-      <label>Nominal (min. Rp 1.000)</label>
-      <input type="number" id="donorAmount" placeholder="contoh: 10000" min="1000" step="1000" autocomplete="off">
+      <label>Nominal (min. Rp 1)</label>
+      <input type="number" id="donorAmount" placeholder="contoh: 10000" min="1" step="1000" autocomplete="off">
       <div class="nominal-presets">
         <button class="preset-btn" data-val="2000">Rp 2.000</button>
         <button class="preset-btn" data-val="5000">Rp 5.000</button>
@@ -178,7 +183,10 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
       <div class="qris-name" id="qrisName"></div>
       <div class="qris-amount" id="qrisAmount"></div>
       <div class="qris-box" id="qrisBox"></div>
-      <div class="qris-expire">Expired: <span id="qrisExpire">-</span></div>
+      <div class="qris-expire-wrap">
+        <span class="qris-expire-label">Expired dalam</span>
+        <span class="qris-countdown" id="qrisCountdown">--:--</span>
+      </div>
       <button class="btn-done" id="btnDone">
         <i class="fa-solid fa-check"></i> Sudah Bayar
       </button>
@@ -285,6 +293,8 @@ const qrisBox = document.getElementById('qrisBox')
 const donateCard = document.querySelector('.donate-card')
 let currentOrderId = null
 let currentAmount = null
+let countdownInterval = null
+let expiredAt = null
 
 function showError(msg) {
   errorMsg.textContent = msg
@@ -294,6 +304,38 @@ function clearError() {
   errorMsg.classList.remove('visible')
 }
 
+function startCountdown(expiredAtStr) {
+  if (countdownInterval) clearInterval(countdownInterval)
+  expiredAt = new Date(expiredAtStr)
+  const el = document.getElementById('qrisCountdown')
+
+  function tick() {
+    const now = new Date()
+    const diff = Math.max(0, Math.floor((expiredAt - now) / 1000))
+    const m = Math.floor(diff / 60)
+    const s = diff % 60
+    el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`
+    if (diff <= 60) {
+      el.classList.add('urgent')
+    } else {
+      el.classList.remove('urgent')
+    }
+    if (diff === 0) {
+      clearInterval(countdownInterval)
+      el.textContent = 'Expired'
+      el.classList.add('urgent')
+    }
+  }
+
+  tick()
+  countdownInterval = setInterval(tick, 1000)
+}
+
+function stopCountdown() {
+  if (countdownInterval) clearInterval(countdownInterval)
+  countdownInterval = null
+}
+
 btnGenerate.addEventListener('click', async () => {
   clearError()
   const name = document.getElementById('donorName').value.trim()
@@ -301,7 +343,7 @@ btnGenerate.addEventListener('click', async () => {
   const message = document.getElementById('donorMessage').value.trim()
 
   if (!name) return showError('Nama tidak boleh kosong.')
-  if (!amount || amount < 1000) return showError('Nominal minimal Rp 1.000.')
+  if (!amount || amount < 1) return showError('Nominal minimal Rp 1.')
 
   btnGenerate.disabled = true
   btnGenerate.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Membuat QRIS...'
@@ -318,10 +360,7 @@ btnGenerate.addEventListener('click', async () => {
     document.getElementById('qrisName').textContent = name
     document.getElementById('qrisAmount').textContent = formatRp(data.total || amount)
 
-    if (data.expired_at) {
-      const exp = new Date(data.expired_at)
-      document.getElementById('qrisExpire').textContent = exp.toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })
-    }
+    if (data.expired_at) startCountdown(data.expired_at)
 
     qrisBox.innerHTML = ''
     new QRCode(qrisBox, {
@@ -347,6 +386,7 @@ btnGenerate.addEventListener('click', async () => {
 })
 
 function resetForm() {
+  stopCountdown()
   qrisSection.classList.remove('visible')
   donateCard.style.display = 'block'
   document.getElementById('donorName').value = ''
@@ -384,8 +424,7 @@ document.getElementById('btnDone').addEventListener('click', async () => {
 })
 
 document.getElementById('btnCancel').addEventListener('click', () => {
-  qrisSection.classList.remove('visible')
-  donateCard.style.display = 'block'
+  resetForm()
 })
 </script>
 
