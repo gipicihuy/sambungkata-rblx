@@ -26,6 +26,9 @@
   --card:#1c1e21;
 }
 html,body{min-height:100%;overflow-x:hidden;}
+*{-webkit-tap-highlight-color:transparent;}
+a,button,input,textarea,select{outline:none;}
+button{-webkit-appearance:none;}
 body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);background-image:linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);background-size:60px 60px;color:var(--text);}
 .topbar{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
 .topbar-back{width:34px;height:34px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.1);border-radius:0;background:rgba(255,255,255,0.04);color:var(--text);font-size:14px;text-decoration:none;transition:background .12s,border-color .12s,color .12s;}
