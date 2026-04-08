@@ -17,13 +17,18 @@ export default async function handler(req, res) {
   if (!order_id || !amount) return res.status(400).json({ ok: false, error: 'missing params' })
 
   try {
-    const url = `https://app.pakasir.com/api/transactiondetail?project=${PAKASIR_SLUG}&amount=${amount}&order_id=${order_id}&api_key=${PAKASIR_API_KEY}`
+    const url = `https://app.pakasir.com/api/transactiondetail?project=${encodeURIComponent(PAKASIR_SLUG)}&amount=${encodeURIComponent(amount)}&order_id=${encodeURIComponent(order_id)}&api_key=${encodeURIComponent(PAKASIR_API_KEY)}`
     const pakasirRes = await fetch(url)
-    const data = await pakasirRes.json()
+    
+    if (!pakasirRes.ok) {
+      return res.status(502).json({ ok: false, error: 'Pakasir API error', status: 'pending' })
+    }
 
+    const data = await pakasirRes.json()
     const status = data?.transaction?.status || 'pending'
+    
     return res.status(200).json({ ok: true, status })
   } catch (e) {
-    return res.status(500).json({ ok: false, error: e.message })
+    return res.status(500).json({ ok: false, error: e.message, status: 'pending' })
   }
 }
