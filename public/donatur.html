@@ -39,10 +39,16 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
 .topbar-sub{font-size:11px;font-weight:600;color:var(--subtext);}
 .topbar-sub a{color:var(--orange);text-decoration:none;}
 .topbar-sub a:hover{text-decoration:underline;}
-.hero{text-align:center;padding:28px 20px 16px;}
-.hero-emoji{font-size:44px;line-height:1;margin-bottom:10px;display:block;}
-.hero-title{font-size:20px;font-weight:800;color:#fbbf24;letter-spacing:-.4px;margin-bottom:5px;}
-.hero-sub{font-size:13px;font-weight:500;color:#8ba3be;line-height:1.65;max-width:300px;margin:0 auto;}
+.hero{text-align:center;padding:48px 24px 28px;}
+.hero-icon{width:90px;height:90px;border-radius:22px;overflow:hidden;margin:0 auto 18px;border:2px solid rgba(249,115,22,.3);box-shadow:0 0 48px rgba(249,115,22,.18);}
+.hero-icon img{width:100%;height:100%;object-fit:cover;}
+.hero-name{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:6px;}
+.hero-tag{font-size:13px;font-weight:600;color:var(--subtext);}
+.ver-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 13px;margin-top:14px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);border-radius:20px;font-size:11px;font-weight:800;color:var(--orange);}
+.safety-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.safety-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;}
+.safety-badge.green{background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);color:var(--orange);}
+.safety-badge.blue{background:rgba(59,141,255,.1);border:1px solid rgba(59,141,255,.25);color:#60a5fa;}
 .page{max-width:480px;margin:0 auto;padding:0 16px 80px;}
 .donate-card{background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.18);border-radius:12px;padding:14px 14px;margin-bottom:18px;}
 .donate-card-title{font-size:12px;font-weight:800;color:#e6c180;margin-bottom:11px;display:flex;align-items:center;gap:6px;}
@@ -83,7 +89,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
 .btn-cancel:hover{background:rgba(255,61,87,0.07);border-color:rgba(255,61,87,0.2);color:#ff6b81;}
 .error-msg{font-size:12px;font-weight:600;color:#ff6b81;background:rgba(255,61,87,0.07);border:1px solid rgba(255,61,87,0.2);border-radius:8px;padding:10px 12px;margin-top:10px;display:none;}
 .error-msg.visible{display:block;}
-.section-label{font-size:10px;font-weight:800;letter-spacing:.9px;color:#8ba3be;text-transform:uppercase;margin-bottom:10px;}
+.section-label{font-size:14px;font-weight:800;letter-spacing:.4px;color:#fff;margin-bottom:10px;}
 .leaderboard{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
 .lb-card{background:var(--card);border:1px solid var(--border);border-radius:0;padding:14px 16px;position:relative;overflow:hidden;transition:border-color .15s,background .15s;cursor:default;}
 .lb-card:hover{border-color:rgba(249,115,22,0.2);background:#1f2228;}
@@ -142,9 +148,14 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
 </div>
 
 <div class="hero">
-  <span class="hero-emoji">🏆</span>
-  <div class="hero-title">Top Donatur</div>
-  <div class="hero-sub">Orang-orang baik yang udah bantu Kamus Sambung Kata tetap aktif. Thanks semuanya🔥</div>
+  <div class="hero-icon"><img src="sambungkata.jpg" alt="Sambung Kata"></div>
+  <div class="hero-name">Hall of Fame</div>
+  <div class="hero-tag">Orang-orang baik yang udah bantu Kamus Sambung Kata tetap aktif</div>
+  <div class="ver-badge"><i class="fa-solid fa-trophy" style="font-size:9px"></i> Thanks semuanya 🔥</div>
+  <div class="safety-row">
+    <div class="safety-badge green"><i class="fa-solid fa-heart" style="font-size:10px"></i> Top Donatur</div>
+    <div class="safety-badge blue"><i class="fa-solid fa-star" style="font-size:10px"></i> Support Aktif</div>
+  </div>
 </div>
 
 <div class="page">
@@ -291,6 +302,8 @@ amountInput.addEventListener('input', () => {
   presets.forEach(b => { if (parseInt(b.dataset.val) === v) b.classList.add('active') })
 })
 
+const PAID_STATUSES = ['completed','paid','success','settlement','capture','200']
+
 const btnGenerate = document.getElementById('btnGenerate')
 const errorMsg = document.getElementById('errorMsg')
 const qrisSection = document.getElementById('qrisSection')
@@ -413,7 +426,8 @@ document.getElementById('btnDone').addEventListener('click', async () => {
     const res = await fetch(`/api/check-payment?order_id=${currentOrderId}&amount=${currentAmount}`)
     const data = await res.json()
 
-    if (data.status === 'completed') {
+    const status = (data.status || '').toLowerCase()
+    if (PAID_STATUSES.includes(status)) {
       resetForm()
       alert('Terima kasih atas donasi kamu! 🙏🔥')
     } else {
