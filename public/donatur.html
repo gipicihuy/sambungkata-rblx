@@ -30,9 +30,18 @@ html,body{min-height:100%;overflow-x:hidden;}
 a,button,input,textarea,select{outline:none;}
 button{-webkit-appearance:none;}
 body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);background-image:linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);background-size:60px 60px;color:var(--text);}
+.topbar{display:flex;align-items:center;gap:12px;padding:14px 20px;background:#1c1e21;border-bottom:1px solid var(--border);}
+.topbar-back{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.1);border-radius:8px;background:rgba(255,255,255,0.04);color:var(--text);font-size:14px;text-decoration:none;transition:background .12s,border-color .12s,color .12s;flex-shrink:0;}
+.topbar-back:hover{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.35);color:var(--orange);}
+.topbar-logo{display:flex;align-items:center;gap:9px;}
+.topbar-logo img{width:32px;height:32px;border-radius:7px;object-fit:cover;}
+.topbar-name{font-size:16px;font-weight:800;color:#fff;line-height:1.1;}
+.topbar-sub{font-size:11px;font-weight:600;color:var(--subtext);}
+.topbar-sub a{color:var(--orange);text-decoration:none;}
+.topbar-sub a:hover{text-decoration:underline;}
 .hero{text-align:center;padding:28px 20px 16px;}
 .hero-emoji{font-size:44px;line-height:1;margin-bottom:10px;display:block;}
-.hero-title{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.4px;margin-bottom:5px;}
+.hero-title{font-size:20px;font-weight:800;color:#fbbf24;letter-spacing:-.4px;margin-bottom:5px;}
 .hero-sub{font-size:13px;font-weight:500;color:#8ba3be;line-height:1.65;max-width:300px;margin:0 auto;}
 .page{max-width:480px;margin:0 auto;padding:0 16px 80px;}
 .donate-card{background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.18);border-radius:12px;padding:14px 14px;margin-bottom:18px;}
@@ -120,6 +129,17 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
 </style>
 </head>
 <body>
+
+<div class="topbar">
+  <a href="/" class="topbar-back"><i class="fa-solid fa-chevron-left"></i></a>
+  <div class="topbar-logo">
+    <img src="sambungkata.jpg" alt="logo">
+    <div>
+      <div class="topbar-name">Sambung Kata</div>
+      <div class="topbar-sub">by <a href="https://tiktok.com/@_yudxx" target="_blank" rel="noopener">@Givyx</a></div>
+    </div>
+  </div>
+</div>
 
 <div class="hero">
   <span class="hero-emoji">🏆</span>
