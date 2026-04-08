@@ -156,8 +156,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
     </div>
 
     <div class="field">
-      <label>Nominal (min. Rp 1)</label>
-      <input type="number" id="donorAmount" placeholder="contoh: 10000" min="1" step="1000" autocomplete="off">
+      <label>Nominal (min. Rp 1.000)</label>
+      <input type="number" id="donorAmount" placeholder="contoh: 10000" min="1000" step="1000" autocomplete="off">
       <div class="nominal-presets">
         <button class="preset-btn" data-val="2000">Rp 2.000</button>
         <button class="preset-btn" data-val="5000">Rp 5.000</button>
@@ -346,7 +346,7 @@ btnGenerate.addEventListener('click', async () => {
   const message = document.getElementById('donorMessage').value.trim()
 
   if (!name) return showError('Nama tidak boleh kosong.')
-  if (!amount || amount < 1) return showError('Nominal minimal Rp 1.')
+  if (!amount || amount < 1000) return showError('Nominal minimal Rp 1.000.')
 
   btnGenerate.disabled = true
   btnGenerate.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Membuat QRIS...'
