@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   const { name, amount, message } = req.body || {}
 
   if (!name || !amount) return res.status(400).json({ ok: false, error: 'missing fields' })
-  if (typeof amount !== 'number' || amount < 1000) return res.status(400).json({ ok: false, error: 'minimum amount Rp 1.000' })
+  if (typeof amount !== 'number' || amount < 1) return res.status(400).json({ ok: false, error: 'minimum amount Rp 1.000' })
 
   const order_id = 'SK' + Date.now() + Math.random().toString(36).slice(2, 7).toUpperCase()
 
