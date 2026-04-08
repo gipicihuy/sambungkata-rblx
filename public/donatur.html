@@ -36,9 +36,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
 .topbar-logo{display:flex;align-items:center;gap:9px;}
 .topbar-logo img{width:32px;height:32px;border-radius:7px;object-fit:cover;}
 .topbar-name{font-size:16px;font-weight:800;color:#fff;line-height:1.1;}
-.topbar-sub{font-size:11px;font-weight:600;color:var(--subtext);}
-.topbar-sub a{color:var(--orange);text-decoration:none;}
-.topbar-sub a:hover{text-decoration:underline;}
+.topbar-sub{font-size:11px;font-weight:700;color:#fbbf24;}
 .hero{text-align:center;padding:28px 20px 16px;}
 .hero-emoji{font-size:44px;line-height:1;margin-bottom:10px;display:block;}
 .hero-title{font-size:20px;font-weight:800;color:#fbbf24;letter-spacing:-.4px;margin-bottom:5px;}
@@ -136,7 +134,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
     <img src="sambungkata.jpg" alt="logo">
     <div>
       <div class="topbar-name">Sambung Kata</div>
-      <div class="topbar-sub">by <a href="https://tiktok.com/@_yudxx" target="_blank" rel="noopener">@Givyx</a></div>
+      <div class="topbar-sub">Hall Of Fame Donatur</div>
     </div>
   </div>
 </div>
@@ -410,10 +408,10 @@ document.getElementById('btnDone').addEventListener('click', async () => {
   btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengecek pembayaran...'
 
   try {
-    const res = await fetch(`/api/check-payment?order_id=${currentOrderId}&amount=${currentAmount}`)
+    const res = await fetch(`/api/check-payment?order_id=${encodeURIComponent(currentOrderId)}&amount=${currentAmount}`)
     const data = await res.json()
 
-    if (data.status === 'completed') {
+    if (data.ok && data.status === 'completed') {
       resetForm()
       alert('Terima kasih atas donasi kamu! 🙏🔥')
     } else {
