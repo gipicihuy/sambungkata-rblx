@@ -283,6 +283,8 @@ const errorMsg = document.getElementById('errorMsg')
 const qrisSection = document.getElementById('qrisSection')
 const qrisBox = document.getElementById('qrisBox')
 const donateCard = document.querySelector('.donate-card')
+let currentOrderId = null
+let currentAmount = null
 
 function showError(msg) {
   errorMsg.textContent = msg
@@ -331,6 +333,8 @@ btnGenerate.addEventListener('click', async () => {
       correctLevel: QRCode.CorrectLevel.M
     })
 
+    currentOrderId = data.order_id
+    currentAmount = data.total || amount
     donateCard.style.display = 'none'
     qrisSection.classList.add('visible')
     qrisSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -342,14 +346,41 @@ btnGenerate.addEventListener('click', async () => {
   }
 })
 
-document.getElementById('btnDone').addEventListener('click', () => {
+function resetForm() {
   qrisSection.classList.remove('visible')
   donateCard.style.display = 'block'
   document.getElementById('donorName').value = ''
   document.getElementById('donorAmount').value = ''
   document.getElementById('donorMessage').value = ''
   presets.forEach(b => b.classList.remove('active'))
-  alert('Terima kasih atas donasi kamu! 🙏🔥')
+  currentOrderId = null
+  currentAmount = null
+}
+
+document.getElementById('btnDone').addEventListener('click', async () => {
+  if (!currentOrderId || !currentAmount) return resetForm()
+
+  const btn = document.getElementById('btnDone')
+  btn.disabled = true
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengecek pembayaran...'
+
+  try {
+    const res = await fetch(`/api/check-payment?order_id=${currentOrderId}&amount=${currentAmount}`)
+    const data = await res.json()
+
+    if (data.status === 'completed') {
+      resetForm()
+      alert('Terima kasih atas donasi kamu! 🙏🔥')
+    } else {
+      btn.disabled = false
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> Sudah Bayar'
+      alert('Pembayaran belum terdeteksi. Pastikan kamu sudah scan dan bayar QR-nya ya!')
+    }
+  } catch (e) {
+    btn.disabled = false
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> Sudah Bayar'
+    alert('Gagal cek status, coba lagi.')
+  }
 })
 
 document.getElementById('btnCancel').addEventListener('click', () => {
