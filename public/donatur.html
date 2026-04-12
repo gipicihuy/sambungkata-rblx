@@ -13,7 +13,6 @@
 <link rel="apple-touch-icon" href="sambungkata.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -26,104 +25,215 @@
   --card:#1c1e21;
 }
 html,body{min-height:100%;overflow-x:hidden;}
-*{-webkit-tap-highlight-color:transparent;}
-a,button,input,textarea,select{outline:none;}
-button{-webkit-appearance:none;}
-body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);background-image:linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);background-size:60px 60px;color:var(--text);}
-.topbar{display:flex;align-items:center;gap:12px;padding:14px 20px;background:#1c1e21;border-bottom:1px solid var(--border);}
-.topbar-back{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.1);border-radius:8px;background:rgba(255,255,255,0.04);color:var(--text);font-size:14px;text-decoration:none;transition:background .12s,border-color .12s,color .12s;flex-shrink:0;}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background-color:var(--bg);
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);
+  background-size:60px 60px;
+  color:var(--text);
+}
+.topbar{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:10;
+}
+.topbar-back{
+  width:34px;height:34px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,0.1);border-radius:0;
+  background:rgba(255,255,255,0.04);color:var(--text);
+  font-size:14px;text-decoration:none;
+  transition:background .12s,border-color .12s,color .12s;
+}
 .topbar-back:hover{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.35);color:var(--orange);}
 .topbar-logo{display:flex;align-items:center;gap:9px;}
-.topbar-logo img{width:32px;height:32px;border-radius:7px;object-fit:cover;}
+.topbar-logo img{width:32px;height:32px;border-radius:0;object-fit:cover;}
 .topbar-name{font-size:16px;font-weight:800;color:#fff;line-height:1.1;}
-.topbar-sub{font-size:11px;font-weight:700;color:#fbbf24;}
-.hero{text-align:center;padding:28px 20px 16px;}
-.hero-emoji{font-size:44px;line-height:1;margin-bottom:10px;display:block;}
-.hero-title{font-size:20px;font-weight:800;color:#fbbf24;letter-spacing:-.4px;margin-bottom:5px;}
+.topbar-sub{font-size:11px;font-weight:600;color:#9db3cc;}
+.hero{text-align:center;padding:36px 20px 20px;}
+.hero-emoji{font-size:52px;line-height:1;margin-bottom:14px;display:block;}
+.hero-title{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.4px;margin-bottom:6px;}
 .hero-sub{font-size:13px;font-weight:500;color:#8ba3be;line-height:1.65;max-width:300px;margin:0 auto;}
 .page{max-width:480px;margin:0 auto;padding:0 16px 80px;}
-.donate-card{background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.18);border-radius:12px;padding:14px 14px;margin-bottom:18px;}
-.donate-card-title{font-size:12px;font-weight:800;color:#e6c180;margin-bottom:11px;display:flex;align-items:center;gap:6px;}
-.field{margin-bottom:9px;}
-.field label{display:block;font-size:10px;font-weight:700;color:#8ba3be;letter-spacing:.5px;text-transform:uppercase;margin-bottom:5px;}
-.field input,.field textarea{width:100%;background:rgba(10,10,11,0.6);border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;padding:8px 11px;outline:none;transition:border-color .15s;}
-.field input:focus,.field textarea:focus{border-color:var(--orange);}
-.field input:hover,.field textarea:hover{border-color:rgba(249,115,22,0.35);}
-.field textarea{resize:none;height:60px;line-height:1.5;}
-.field input::placeholder,.field textarea::placeholder{color:#3a4a5c;font-weight:500;}
-.nominal-presets{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;}
-.preset-btn{padding:5px 10px;border-radius:6px;border:1px solid rgba(249,115,22,0.25);background:rgba(249,115,22,0.07);color:#f97316;font-size:11px;font-weight:800;cursor:pointer;transition:background .12s,border-color .12s,transform .1s;font-family:'Plus Jakarta Sans',sans-serif;user-select:none;}
-.preset-btn:hover{background:rgba(249,115,22,0.18);border-color:rgba(249,115,22,0.5);}
-.preset-btn:active{transform:scale(0.93);}
-.preset-btn.active{background:rgba(249,115,22,0.25);border-color:rgba(249,115,22,0.7);}
-.btn-generate{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;border-radius:9px;background:var(--orange);color:#fff;font-size:14px;font-weight:800;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(249,115,22,.28);transition:filter .15s,transform .1s,opacity .15s;font-family:'Plus Jakarta Sans',sans-serif;position:relative;overflow:hidden;user-select:none;margin-top:4px;}
-.btn-generate:hover{filter:brightness(1.1);}
-.btn-generate:active{transform:scale(.97);}
-.btn-generate:disabled{opacity:.5;cursor:not-allowed;filter:none;}
-.btn-generate-sheen{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,0.45) 48%,rgba(255,255,255,0.65) 50%,rgba(255,255,255,0.45) 52%,transparent 80%);pointer-events:none;animation:sheenSlide .45s ease-out forwards;}
+.cta-card{
+  background:rgba(249,115,22,0.05);
+  border:1px solid rgba(249,115,22,0.18);
+  border-radius:14px;
+  padding:16px 16px 14px;
+  margin-bottom:20px;
+}
+.cta-text{font-size:12px;font-weight:500;color:#b8956d;line-height:1.7;margin-bottom:12px;}
+.cta-text b{color:#e6c180;font-weight:700;}
+.btn-donate{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:12px;border-radius:10px;
+  background:var(--orange);color:#fff;
+  font-size:14px;font-weight:800;
+  text-decoration:none;border:none;cursor:pointer;
+  box-shadow:0 4px 20px rgba(249,115,22,.28);
+  transition:filter .15s,transform .1s;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  position:relative;overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
+  outline:none;
+  user-select:none;
+}
+.btn-donate:hover{filter:brightness(1.1);color:#fff;}
+.btn-donate:focus{outline:none;color:#fff;}
+.btn-donate:active{transform:scale(.97);}
+.btn-donate-sheen{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,0.45) 48%,rgba(255,255,255,0.65) 50%,rgba(255,255,255,0.45) 52%,transparent 80%);
+  pointer-events:none;
+  animation:sheenSlide .45s ease-out forwards;
+}
 @keyframes sheenSlide{0%{transform:translateX(-100%) skewX(-12deg)}100%{transform:translateX(100%) skewX(-12deg)}}
-.qris-section{display:none;margin-bottom:20px;}
-.qris-section.visible{display:block;}
-.qris-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 16px;text-align:center;}
-.qris-label{font-size:11px;font-weight:700;color:#8ba3be;letter-spacing:.6px;text-transform:uppercase;margin-bottom:4px;}
-.qris-name{font-size:15px;font-weight:800;color:#fff;margin-bottom:4px;}
-.qris-amount{font-size:22px;font-weight:800;color:var(--orange);margin-bottom:16px;letter-spacing:-.5px;}
-.qris-box{display:flex;align-items:center;justify-content:center;background:#fff;border-radius:12px;padding:12px;margin:0 auto 14px;width:fit-content;}
-.qris-box canvas,.qris-box img{display:block;}
-.qris-expire-wrap{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:16px;}
-.qris-expire-label{font-size:11px;font-weight:600;color:#8ba3be;}
-.qris-countdown{font-size:13px;font-weight:800;color:#fbbf24;font-variant-numeric:tabular-nums;}
-.qris-countdown.urgent{color:#ff6b81;}
-.btn-done{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border-radius:10px;background:rgba(74,222,128,0.07);border:1px solid rgba(74,222,128,0.25);color:#4ade80;font-size:14px;font-weight:800;cursor:pointer;transition:background .12s,border-color .12s;font-family:'Plus Jakarta Sans',sans-serif;}
-.btn-done:hover{background:rgba(74,222,128,0.14);border-color:rgba(74,222,128,0.45);}
-.btn-done:active{transform:scale(.97);}
-.btn-cancel{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.08);color:#556070;font-size:13px;font-weight:700;cursor:pointer;transition:background .12s,color .12s,border-color .12s;font-family:'Plus Jakarta Sans',sans-serif;margin-top:8px;}
-.btn-cancel:hover{background:rgba(255,61,87,0.07);border-color:rgba(255,61,87,0.2);color:#ff6b81;}
-.error-msg{font-size:12px;font-weight:600;color:#ff6b81;background:rgba(255,61,87,0.07);border:1px solid rgba(255,61,87,0.2);border-radius:8px;padding:10px 12px;margin-top:10px;display:none;}
-.error-msg.visible{display:block;}
-.section-label{font-size:10px;font-weight:800;letter-spacing:.9px;color:#8ba3be;text-transform:uppercase;margin-bottom:10px;}
-.leaderboard{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
-.lb-card{background:var(--card);border:1px solid var(--border);border-radius:0;padding:14px 16px;position:relative;overflow:hidden;transition:border-color .15s,background .15s;cursor:default;}
-.lb-card:hover{border-color:rgba(249,115,22,0.2);background:#1f2228;}
-.lb-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0;}
+.section-label{
+  font-size:10px;font-weight:800;letter-spacing:.9px;
+  color:#8ba3be;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.leaderboard{
+  display:flex;flex-direction:column;gap:10px;
+  margin-bottom:20px;
+}
+.lb-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:0;
+  padding:14px 16px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color .15s,background .15s;
+}
+.lb-card:hover{border-color:rgba(255,255,255,0.13);background:#1f2228;}
+.lb-card::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;width:3px;
+  border-radius:0;
+}
 .lb-card.other::before{background:rgba(255,255,255,0.06);}
-.lb-card:hover::before{background:rgba(249,115,22,0.35);}
 .lb-card-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
-.lb-rank-badge{width:36px;height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:0;}
+.lb-rank-badge{
+  width:36px;height:36px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:0;
+}
 .lb-rank-badge.other{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:13px;font-weight:800;color:#9db3cc;}
 .lb-info{flex:1;min-width:0;}
 .lb-name{font-size:15px;font-weight:800;color:#fff;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .lb-date{font-size:10px;font-weight:600;color:#7a9ab8;margin-top:2px;display:flex;align-items:center;gap:3px;line-height:1;}
 .lb-date i{font-size:9px;line-height:1;}
-.lb-amount-badge{flex-shrink:0;padding:5px 11px;border-radius:20px;font-size:13px;font-weight:800;}
+.lb-amount-badge{
+  flex-shrink:0;
+  padding:5px 11px;
+  border-radius:20px;
+  font-size:13px;font-weight:800;
+}
 .other .lb-amount-badge{background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);color:var(--orange);}
-.lb-msg-wrap{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:0;padding:9px 12px;}
-.lb-msg{font-size:12px;font-weight:500;color:#9db3cc;line-height:1.6;padding-left:8px;}
-.thankyou{padding:14px 16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:0;font-size:12px;font-weight:500;color:#9db3cc;line-height:1.7;text-align:center;}
+.lb-msg-wrap{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:0;
+  padding:9px 12px;
+}
+.lb-msg{
+  font-size:12px;font-weight:500;color:#9db3cc;
+  line-height:1.6;
+  padding-left:8px;
+}
+.thankyou{
+  padding:14px 16px;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:0;
+  font-size:12px;font-weight:500;color:#9db3cc;
+  line-height:1.7;text-align:center;
+}
 .thankyou b{color:#c5d9f0;}
-.podium-wrap{display:flex;align-items:flex-end;justify-content:center;gap:8px;margin-bottom:20px;}
-.podium-col{display:flex;flex-direction:column;align-items:center;flex:1;max-width:116px;min-width:0;}
-.podium-avatar{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;color:#fff;flex-shrink:0;margin-bottom:7px;position:relative;}
+.podium-wrap{
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:8px;
+  margin-bottom:20px;
+}
+.podium-col{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  flex:1;
+  max-width:116px;
+  min-width:0;
+}
+.podium-avatar{
+  width:50px;height:50px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:19px;font-weight:800;color:#fff;
+  flex-shrink:0;margin-bottom:7px;
+  position:relative;
+}
 .podium-rank2 .podium-avatar{background:linear-gradient(135deg,#94a3b8,#64748b);box-shadow:0 0 12px rgba(148,163,184,.2);}
 .podium-rank1 .podium-avatar{background:linear-gradient(135deg,#6366f1,#4f46e5);box-shadow:0 0 16px rgba(99,102,241,.35);}
 .podium-rank3 .podium-avatar{background:linear-gradient(135deg,#cd7c54,#92532a);box-shadow:0 0 12px rgba(205,124,84,.2);}
-.podium-medal{position:absolute;top:-8px;right:-6px;font-size:18px;line-height:1;}
-.podium-medal-crown{font-size:22px;top:-12px;right:-7px;transform:rotate(20deg);display:inline-block;filter:drop-shadow(0 0 5px rgba(251,191,36,.6));}
-.podium-name{font-size:11px;font-weight:800;color:#fff;text-align:center;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;width:100%;}
-.podium-date{font-size:8px;font-weight:600;color:#7a9ab8;text-align:center;margin-bottom:3px;display:flex;align-items:center;justify-content:center;gap:3px;line-height:1;}
+.podium-medal{
+  position:absolute;top:-8px;right:-6px;
+  font-size:18px;line-height:1;
+}
+.podium-medal-crown{
+  font-size:22px;
+  top:-12px;right:-7px;
+  transform:rotate(20deg);
+  display:inline-block;
+  filter:drop-shadow(0 0 5px rgba(251,191,36,.6));
+}
+.podium-name{
+  font-size:11px;font-weight:800;color:#fff;
+  text-align:center;margin-bottom:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:100%;width:100%;
+}
+.podium-date{
+  font-size:8px;font-weight:600;color:#7a9ab8;
+  text-align:center;margin-bottom:3px;
+  display:flex;align-items:center;justify-content:center;gap:3px;
+  line-height:1;
+}
 .podium-date i{font-size:7px;line-height:1;}
-.podium-amount{font-size:11px;font-weight:700;text-align:center;margin-bottom:5px;}
+.podium-amount{
+  font-size:11px;font-weight:700;
+  text-align:center;margin-bottom:5px;
+}
 .podium-rank2 .podium-amount{color:#94a3b8;}
 .podium-rank1 .podium-amount{color:#fbbf24;}
 .podium-rank3 .podium-amount{color:#cd7c54;}
-.podium-msg{font-size:10px;font-weight:500;color:#9db3cc;text-align:center;line-height:1.5;margin-bottom:7px;width:100%;word-break:break-word;}
-.podium-stage{width:100%;border-radius:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;}
+.podium-msg{
+  font-size:10px;font-weight:500;color:#9db3cc;
+  text-align:center;
+  line-height:1.5;margin-bottom:7px;
+  width:100%;
+  word-break:break-word;
+}
+.podium-stage{
+  width:100%;border-radius:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:900;
+}
 .podium-rank2 .podium-stage{height:40px;background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.18);border-bottom:none;color:#94a3b8;}
 .podium-rank1 .podium-stage{height:56px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.22);border-bottom:none;color:#fbbf24;}
 .podium-rank3 .podium-stage{height:30px;background:rgba(205,124,84,.08);border:1px solid rgba(205,124,84,.18);border-bottom:none;color:#cd7c54;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .hero{animation:fadeUp .3s ease both;}
 .page{animation:fadeUp .35s ease .05s both;}
+.lb-card:nth-child(1){animation:fadeUp .3s ease .05s both;}
+.lb-card:nth-child(2){animation:fadeUp .3s ease .10s both;}
+.lb-card:nth-child(3){animation:fadeUp .3s ease .15s both;}
+.lb-card:nth-child(4){animation:fadeUp .3s ease .20s both;}
+.lb-card:nth-child(5){animation:fadeUp .3s ease .25s both;}
 </style>
 </head>
 <body>
@@ -134,7 +244,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
     <img src="sambungkata.jpg" alt="logo">
     <div>
       <div class="topbar-name">Sambung Kata</div>
-      <div class="topbar-sub">Hall Of Fame Donatur</div>
+      <div class="topbar-sub">Hall of Fame Donatur</div>
     </div>
   </div>
 </div>
@@ -147,60 +257,20 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
 
 <div class="page">
 
-  <div class="donate-card">
-    <div class="donate-card-title"><i class="fa-solid fa-qrcode"></i> Donasi via QRIS</div>
-
-    <div class="field">
-      <label>Nama kamu</label>
-      <input type="text" id="donorName" placeholder="Nama / username kamu" maxlength="40" autocomplete="off">
-    </div>
-
-    <div class="field">
-      <label>Nominal (min. Rp 1.000)</label>
-      <input type="number" id="donorAmount" placeholder="contoh: 10000" min="1000" step="1000" autocomplete="off">
-      <div class="nominal-presets">
-        <button class="preset-btn" data-val="2000">Rp 2.000</button>
-        <button class="preset-btn" data-val="5000">Rp 5.000</button>
-        <button class="preset-btn" data-val="10000">Rp 10.000</button>
-        <button class="preset-btn" data-val="20000">Rp 20.000</button>
-        <button class="preset-btn" data-val="50000">Rp 50.000</button>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Pesan (opsional)</label>
-      <textarea id="donorMessage" placeholder="Tulis pesan atau saran buat admin..."></textarea>
-    </div>
-
-    <div class="error-msg" id="errorMsg"></div>
-
-    <button class="btn-generate" id="btnGenerate"
-      onpointerdown="const old=this.querySelector('.btn-generate-sheen');if(old)old.remove();const s=document.createElement('span');s.className='btn-generate-sheen';this.appendChild(s);s.addEventListener('animationend',()=>s.remove())">
-      <i class="fa-solid fa-qrcode"></i> Generate QRIS
-    </button>
-  </div>
-
-  <div class="qris-section" id="qrisSection">
-    <div class="qris-card">
-      <div class="qris-label">Donasi dari</div>
-      <div class="qris-name" id="qrisName"></div>
-      <div class="qris-amount" id="qrisAmount"></div>
-      <div class="qris-box" id="qrisBox"></div>
-      <div class="qris-expire-wrap">
-        <span class="qris-expire-label">Expired dalam</span>
-        <span class="qris-countdown" id="qrisCountdown">--:--</span>
-      </div>
-      <button class="btn-done" id="btnDone">
-        <i class="fa-solid fa-check"></i> Sudah Bayar
-      </button>
-      <button class="btn-cancel" id="btnCancel">
-        <i class="fa-solid fa-xmark"></i> Batal / Ganti Nominal
-      </button>
-    </div>
+  <div class="cta-card">
+    <p class="cta-text">
+      Website ini free dan bebas iklan. Kalo kamu ngerasa terbantu, <b>donasi sekecil apapun</b> sangat berarti buat kami supaya bisa terus update dan berkembang 💪🔥<br><b>Mau nama kamu masuk di web ini? gas donasi disini😋</b>
+    </p>
+    <a class="btn-donate" href="https://saweria.co/givyx" target="_blank" rel="noopener"
+      onpointerdown="const old=this.querySelector('.btn-donate-sheen');if(old)old.remove();const s=document.createElement('span');s.className='btn-donate-sheen';this.appendChild(s);s.addEventListener('animationend',()=>s.remove())">
+      <i class="fa-solid fa-heart"></i> Dukung di Saweria
+    </a>
   </div>
 
   <div class="section-label">🥇 Leaderboard</div>
+
   <div class="podium-wrap" id="podium"></div>
+
   <div class="leaderboard" id="leaderboard"></div>
 
   <div class="thankyou">
@@ -214,16 +284,16 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);backg
 const DONATUR = [
   { name: 'don',             amount: 50000, date: '26 Mar 2026', message: 'gacor wak' },
   { name: 'Luzy',            amount: 10000, date: '4 Apr 2026',  message: 'Mantap tapi ada yang gabisa dipakai, kalau bisa diilangin' },
-  { name: 'aurynee',         amount: 7350,  date: '6 Apr 2026',  message: 'thank you udah bikin kamus sambung kata ini, semangat terus bang' },
-  { name: 'akbr',            amount: 4000,  date: '7 Apr 2026',  message: 'maaf min cmn segini' },
   { name: 'dealit',          amount: 5000,  date: '26 Mar 2026', message: 'makasi ya bang, udah bikin kamus sambung kata yang bagus, semoga rezeki lu selalu berlimpah, dan diberi kesehatan sekeluarga' },
-  { name: 'noobernoobmannoob', amount: 5001, date: '6 Apr 2026', message: 'keren web nya bang, smooth parah' },
   { name: 'Azam pacar gaby', amount: 2000,  date: '2 Apr 2026',  message: 'Doain saya sama gaby langgeng, sama doain ayah saya cepat sembuh' },
   { name: 'GUAVAAA',         amount: 2000,  date: '25 Mar 2026', message: 'bang pilihan abjad yang di atas ilang, plis perbaiki lagi bang😭' },
-  { name: 'FirzGanteng&Soleh', amount: 1000, date: '7 Apr 2026', message: 'bang di ex banyak yang gak bisa,btw web nya bagus' },
   { name: 'orang',           amount: 1000,  date: '29 Mar 2026', message: 'haii admin' },
   { name: 'Zidan',           amount: 1000,  date: '30 Mar 2026', message: 'keren bang webnya😋' },
-  { name: 'fennec',          amount: 1000,  date: '4 Apr 2026',  message: 'mantap apknya aku sampe ws 100+😋' }
+  { name: 'fennec',          amount: 1000,  date: '4 Apr 2026',  message: 'mantap apknya aku sampe ws 100+😋' },
+  { name: 'akbr',            amount: 4000,  date: '7 Apr 2026',  message: 'maaf min cmn segini' },
+  { name: 'noobernoobmannoob', amount: 5001, date: '6 Apr 2026', message: 'keren web nya bang, smooth parah' },
+  { name: 'aurynee',         amount: 7350,  date: '6 Apr 2026',  message: 'thank you udah bikin kamus sambung kata ini, semangat terus bang' },
+  { name: 'FirzGanteng&Soleh', amount: 1000, date: '7 Apr 2026', message: 'bang di ex banyak yang gak bisa,btw web nya bagus' }
 ]
 DONATUR.sort((a, b) => b.amount - a.amount)
 
@@ -235,6 +305,7 @@ const podiumOrder = [
   { idx: 0, cls: 'podium-rank1', medal: '🥇', rank: 1 },
   { idx: 2, cls: 'podium-rank3', medal: '🥉', rank: 3 },
 ]
+
 podiumOrder.forEach(({ idx, cls, medal, rank }) => {
   const d = DONATUR[idx]
   if (!d) return
@@ -245,7 +316,10 @@ podiumOrder.forEach(({ idx, cls, medal, rank }) => {
     ? '<span class="podium-medal podium-medal-crown">\u{1F451}</span>'
     : `<span class="podium-medal">${medal}</span>`
   col.innerHTML = `
-    <div class="podium-avatar">${d.name[0].toUpperCase()}${medalHtml}</div>
+    <div class="podium-avatar">
+      ${d.name[0].toUpperCase()}
+      ${medalHtml}
+    </div>
     <div class="podium-name">${d.name}</div>
     ${d.date ? `<div class="podium-date"><i class="fa-regular fa-clock"></i>${d.date}</div>` : ''}
     <div class="podium-amount">${formatRp(d.amount)}</div>
@@ -269,165 +343,12 @@ DONATUR.slice(3).forEach((d, i) => {
       </div>
       <div class="lb-amount-badge">${formatRp(d.amount)}</div>
     </div>
-    ${d.message ? `<div class="lb-msg-wrap"><div class="lb-msg">\u201C${d.message}\u201D</div></div>` : ''}
+    ${d.message ? `
+    <div class="lb-msg-wrap">
+      <div class="lb-msg">\u201C${d.message}\u201D</div>
+    </div>` : ''}
   `
   lb.appendChild(card)
-})
-
-const presets = document.querySelectorAll('.preset-btn')
-const amountInput = document.getElementById('donorAmount')
-presets.forEach(btn => {
-  btn.addEventListener('click', () => {
-    amountInput.value = btn.dataset.val
-    presets.forEach(b => b.classList.remove('active'))
-    btn.classList.add('active')
-  })
-})
-amountInput.addEventListener('input', () => {
-  presets.forEach(b => b.classList.remove('active'))
-  const v = parseInt(amountInput.value)
-  presets.forEach(b => { if (parseInt(b.dataset.val) === v) b.classList.add('active') })
-})
-
-const btnGenerate = document.getElementById('btnGenerate')
-const errorMsg = document.getElementById('errorMsg')
-const qrisSection = document.getElementById('qrisSection')
-const qrisBox = document.getElementById('qrisBox')
-const donateCard = document.querySelector('.donate-card')
-let currentOrderId = null
-let currentAmount = null
-let countdownInterval = null
-let expiredAt = null
-
-function showError(msg) {
-  errorMsg.textContent = msg
-  errorMsg.classList.add('visible')
-}
-function clearError() {
-  errorMsg.classList.remove('visible')
-}
-
-function startCountdown(expiredAtStr) {
-  if (countdownInterval) clearInterval(countdownInterval)
-  expiredAt = new Date(expiredAtStr)
-  const el = document.getElementById('qrisCountdown')
-
-  function tick() {
-    const now = new Date()
-    const diff = Math.max(0, Math.floor((expiredAt - now) / 1000))
-    const m = Math.floor(diff / 60)
-    const s = diff % 60
-    el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`
-    if (diff <= 60) {
-      el.classList.add('urgent')
-    } else {
-      el.classList.remove('urgent')
-    }
-    if (diff === 0) {
-      clearInterval(countdownInterval)
-      el.textContent = 'Expired'
-      el.classList.add('urgent')
-    }
-  }
-
-  tick()
-  countdownInterval = setInterval(tick, 1000)
-}
-
-function stopCountdown() {
-  if (countdownInterval) clearInterval(countdownInterval)
-  countdownInterval = null
-}
-
-btnGenerate.addEventListener('click', async () => {
-  clearError()
-  const name = document.getElementById('donorName').value.trim()
-  const amount = parseInt(amountInput.value)
-  const message = document.getElementById('donorMessage').value.trim()
-
-  if (!name) return showError('Nama tidak boleh kosong.')
-  if (!amount || amount < 1000) return showError('Nominal minimal Rp 1.000.')
-
-  btnGenerate.disabled = true
-  btnGenerate.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Membuat QRIS...'
-
-  try {
-    const res = await fetch('/api/create-payment', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, amount, message })
-    })
-    const data = await res.json()
-    if (!data.ok) throw new Error(data.error || 'Gagal membuat transaksi')
-
-    document.getElementById('qrisName').textContent = name
-    document.getElementById('qrisAmount').textContent = formatRp(data.total || amount)
-
-    if (data.expired_at) startCountdown(data.expired_at)
-
-    qrisBox.innerHTML = ''
-    new QRCode(qrisBox, {
-      text: data.qr_string,
-      width: 220,
-      height: 220,
-      colorDark: '#000000',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M
-    })
-
-    currentOrderId = data.order_id
-    currentAmount = data.total || amount
-    donateCard.style.display = 'none'
-    qrisSection.classList.add('visible')
-    qrisSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  } catch (e) {
-    showError(e.message || 'Terjadi kesalahan, coba lagi.')
-  } finally {
-    btnGenerate.disabled = false
-    btnGenerate.innerHTML = '<i class="fa-solid fa-qrcode"></i> Generate QRIS'
-  }
-})
-
-function resetForm() {
-  stopCountdown()
-  qrisSection.classList.remove('visible')
-  donateCard.style.display = 'block'
-  document.getElementById('donorName').value = ''
-  document.getElementById('donorAmount').value = ''
-  document.getElementById('donorMessage').value = ''
-  presets.forEach(b => b.classList.remove('active'))
-  currentOrderId = null
-  currentAmount = null
-}
-
-document.getElementById('btnDone').addEventListener('click', async () => {
-  if (!currentOrderId || !currentAmount) return resetForm()
-
-  const btn = document.getElementById('btnDone')
-  btn.disabled = true
-  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengecek pembayaran...'
-
-  try {
-    const res = await fetch(`/api/check-payment?order_id=${encodeURIComponent(currentOrderId)}&amount=${currentAmount}`)
-    const data = await res.json()
-
-    if (data.ok && data.status === 'completed') {
-      resetForm()
-      alert('Terima kasih atas donasi kamu! 🙏🔥')
-    } else {
-      btn.disabled = false
-      btn.innerHTML = '<i class="fa-solid fa-check"></i> Sudah Bayar'
-      alert('Pembayaran belum terdeteksi. Pastikan kamu sudah scan dan bayar QR-nya ya!')
-    }
-  } catch (e) {
-    btn.disabled = false
-    btn.innerHTML = '<i class="fa-solid fa-check"></i> Sudah Bayar'
-    alert('Gagal cek status, coba lagi.')
-  }
-})
-
-document.getElementById('btnCancel').addEventListener('click', () => {
-  resetForm()
 })
 </script>
 
