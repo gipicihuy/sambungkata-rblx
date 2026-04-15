@@ -145,7 +145,7 @@ export default function Main(){
     if(!dbReady)return
     if(mode==='kepit'){cariKepit();return}
     const raw=(inputHurufRef.current?.value||'').toLowerCase().trim()
-    const input=raw.slice(0,3)
+    const input=raw.slice(0,5)
     if(inputHurufRef.current)inputHurufRef.current.value=input
     setCurrentPage(1)
 
@@ -179,8 +179,8 @@ export default function Main(){
 
   const cariKepit=()=>{
     if(!dbReady)return
-    const rawA=(inputAwalRef.current?.value||'').toLowerCase().trim().slice(0,3)
-    const rawB=(inputAkhirRef.current?.value||'').toLowerCase().trim().slice(0,3)
+    const rawA=(inputAwalRef.current?.value||'').toLowerCase().trim().slice(0,5)
+    const rawB=(inputAkhirRef.current?.value||'').toLowerCase().trim().slice(0,5)
     if(inputAwalRef.current)inputAwalRef.current.value=rawA
     if(inputAkhirRef.current)inputAkhirRef.current.value=rawB
     setLastInputAwal(rawA)
@@ -426,7 +426,7 @@ export default function Main(){
         {mode!=='kepit'?(
           <div className="input-wrap-single">
             <div className="input-wrap">
-              <input ref={inputHurufRef} type="text" maxLength="3" placeholder={dbReady?"ketik 1–3 huruf":"memuat..."} onChange={cari} onInput={(e)=>{if(e.target.value.length>3)e.target.value=e.target.value.slice(0,3)}}/>
+              <input ref={inputHurufRef} type="text" maxLength="5" placeholder={dbReady?"ketik 1–5 huruf":"memuat..."} onChange={cari} onInput={(e)=>{if(e.target.value.length>5)e.target.value=e.target.value.slice(0,5)}}/>
               {(mode==='awal'?lastInputAwalMode:lastInputAkhirMode)&&(
                 <button className="input-clear visible" onClick={()=>{
                   if(inputHurufRef.current)inputHurufRef.current.value=''
@@ -439,12 +439,12 @@ export default function Main(){
         ):(
           <div className="input-dual on">
             <div className="input-wrap">
-              <input ref={inputAwalRef} type="text" maxLength="3" placeholder={dbReady?"Awalan":"..."} onChange={cariKepit} onInput={(e)=>{if(e.target.value.length>3)e.target.value=e.target.value.slice(0,3)}}/>
+              <input ref={inputAwalRef} type="text" maxLength="5" placeholder={dbReady?"Awalan":"..."} onChange={cariKepit} onInput={(e)=>{if(e.target.value.length>5)e.target.value=e.target.value.slice(0,5)}}/>
               {lastInputAwal&&<button className="input-clear visible" onClick={()=>{if(inputAwalRef.current){inputAwalRef.current.value='';setLastInputAwal('');cariKepit()}}} title="Hapus">✕</button>}
             </div>
             <span className="input-sep">···</span>
             <div className="input-wrap">
-              <input ref={inputAkhirRef} type="text" maxLength="3" placeholder={dbReady?"Akhiran":"..."} onChange={cariKepit} onInput={(e)=>{if(e.target.value.length>3)e.target.value=e.target.value.slice(0,3)}}/>
+              <input ref={inputAkhirRef} type="text" maxLength="5" placeholder={dbReady?"Akhiran":"..."} onChange={cariKepit} onInput={(e)=>{if(e.target.value.length>5)e.target.value=e.target.value.slice(0,5)}}/>
               {lastInputAkhir&&<button className="input-clear visible" onClick={()=>{if(inputAkhirRef.current){inputAkhirRef.current.value='';setLastInputAkhir('');cariKepit()}}} title="Hapus">✕</button>}
             </div>
           </div>
@@ -462,7 +462,7 @@ export default function Main(){
             {(mode==='awal'?trendAwal:mode==='akhir'?trendAkhir:[]).map((item,i)=>{
               const q=typeof item==='object'?item.q:item
               const hot=typeof item==='object'?!!item.hot:false
-              return <div key={i} className={`trend-chip${hot?' hot':''}`} onClick={()=>{if(mode==='kepit'){if(inputAwalRef.current)inputAwalRef.current.value=q.slice(0,3);cariKepit()}else{if(inputHurufRef.current)inputHurufRef.current.value=q.slice(0,3);cari()}}}>{q.toUpperCase()}{hot&&' 🔥'}</div>
+              return <div key={i} className={`trend-chip${hot?' hot':''}`} onClick={()=>{if(mode==='kepit'){if(inputAwalRef.current)inputAwalRef.current.value=q.slice(0,5);cariKepit()}else{if(inputHurufRef.current)inputHurufRef.current.value=q.slice(0,5);cari()}}}>{q.toUpperCase()}{hot&&' 🔥'}</div>
             })}
           </div>
         </div>
