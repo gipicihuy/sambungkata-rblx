@@ -21,7 +21,7 @@
   --orange:#f97316;
   --yellow:#fbbf24;
   --text:#f0f4f9;
-  --subtext:#7a8fa3;
+  --subtext:#556070;
   --card:#1c1e21;
 }
 html,body{min-height:100%;overflow-x:hidden;}
@@ -36,24 +36,23 @@ body{
 }
 .topbar{
   display:flex;align-items:center;gap:12px;
-  padding:14px 16px;
-  background:var(--card);
+  padding:14px 20px;
+  background:#1c1e21;
   border-bottom:1px solid var(--border);
-  position:sticky;top:0;z-index:10;
 }
 .topbar-back{
-  width:34px;height:34px;flex-shrink:0;
+  width:34px;height:34px;
   display:flex;align-items:center;justify-content:center;
-  border:1px solid rgba(255,255,255,0.1);border-radius:0;
+  border:1px solid rgba(255,255,255,0.1);border-radius:8px;
   background:rgba(255,255,255,0.04);color:var(--text);
   font-size:14px;text-decoration:none;
-  transition:background .12s,border-color .12s,color .12s;
+  transition:background .12s,border-color .12s,color .12s;flex-shrink:0;
 }
 .topbar-back:hover{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.35);color:var(--orange);}
 .topbar-logo{display:flex;align-items:center;gap:9px;}
-.topbar-logo img{width:32px;height:32px;border-radius:0;object-fit:cover;}
+.topbar-logo img{width:32px;height:32px;border-radius:7px;object-fit:cover;}
 .topbar-name{font-size:16px;font-weight:800;color:#fff;line-height:1.1;}
-.topbar-sub{font-size:11px;font-weight:600;color:#9db3cc;}
+.topbar-sub{font-size:11px;font-weight:600;color:var(--subtext);}
 .hero{text-align:center;padding:36px 20px 20px;}
 .hero-emoji{font-size:52px;line-height:1;margin-bottom:14px;display:block;}
 .hero-title{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.4px;margin-bottom:6px;}
