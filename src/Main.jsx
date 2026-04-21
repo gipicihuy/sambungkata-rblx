@@ -35,6 +35,7 @@ export default function Main(){
   const [showRModal,setShowRModal]=useState(false)
   const [rWord,setRWord]=useState(null)
   const [rBtn,setRBtn]=useState(null)
+  const [favCopied,setFavCopied]=useState(false)
   
   const [showFavModal,setShowFavModal]=useState(false)
   const [favModalVisible,setFavModalVisible]=useState(false)
@@ -102,6 +103,15 @@ export default function Main(){
   }
 
   const removeFav=w=>{setFavWords(prev=>prev.filter(f=>f.word!==w))}
+
+  const copyAllFav=()=>{
+    if(!favWords.length)return
+    const text=favWords.map(f=>f.word).sort((a,b)=>a.localeCompare(b)).join(', ')
+    navigator.clipboard.writeText(text).then(()=>{
+      setFavCopied(true)
+      setTimeout(()=>setFavCopied(false),2000)
+    })
+  }
 
   const openFavModal=()=>{
     setShowFavModal(true)
@@ -565,7 +575,27 @@ export default function Main(){
           <div className="fav-modal-topbar">
             <button className="fav-modal-back" onClick={closeFavModal}><i className="fa-solid fa-chevron-left"/></button>
             <span className="fav-modal-title"><i className="fa-solid fa-heart" style={{color:'var(--green)'}}/> Kata Favorit</span>
-            {favWords.length>0&&<button className="fav-modal-clear" onClick={clearAllFav}>Hapus Semua</button>}
+            <div style={{display:'flex',alignItems:'center',gap:'6px'}}>
+              {favWords.length>0&&(
+                <button
+                  onClick={copyAllFav}
+                  style={{
+                    fontSize:'11px',fontWeight:700,
+                    borderRadius:'6px',padding:'5px 11px',
+                    cursor:'pointer',
+                    transition:'background 0.12s,border-color 0.12s',
+                    whiteSpace:'nowrap',
+                    fontFamily:"'Plus Jakarta Sans',sans-serif",
+                    background: favCopied ? 'rgba(74,222,128,0.1)' : 'rgba(249,115,22,0.08)',
+                    border: favCopied ? '1px solid rgba(74,222,128,0.35)' : '1px solid rgba(249,115,22,0.2)',
+                    color: favCopied ? '#4ade80' : 'var(--green)',
+                  }}
+                >
+                  {favCopied ? '✓ Tersalin!' : '⎘ Salin Semua'}
+                </button>
+              )}
+              {favWords.length>0&&<button className="fav-modal-clear" onClick={clearAllFav}>Hapus Semua</button>}
+            </div>
           </div>
           <div className="fav-modal-body">
             {favWords.length===0
