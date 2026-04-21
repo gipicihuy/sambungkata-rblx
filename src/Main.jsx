@@ -591,10 +591,10 @@ export default function Main(){
                     color: favCopied ? '#4ade80' : 'var(--green)',
                   }}
                 >
-                  {favCopied ? (   <>✓ Tersalin!</> ) : (   <><span className="material-icons-round" style={{fontSize:'13px',verticalAlign:'middle'}}>content_copy</span> Salin Semua</> )}
+                  {favCopied ? (   <>✓ Tersalin!</> ) : (   <><span className="material-icons-round" style={{fontSize:'13px',verticalAlign:'middle',marginRight:'4px'}}>content_copy</span>Salin Semua</> )}
                 </button>
               )}
-              {favWords.length>0&&<button className="fav-modal-clear" onClick={clearAllFav}>Hapus Semua</button>}
+              {favWords.length>0&&<button className="fav-modal-clear" onClick={clearAllFav}><span className="material-icons-round" style={{fontSize:'13px',verticalAlign:'middle',marginRight:'4px'}}>delete</span>Hapus Semua</button>}
             </div>
           </div>
           <div className="fav-modal-body">
