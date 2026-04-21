@@ -575,7 +575,8 @@ export default function Main(){
           <div className="fav-modal-topbar">
             <button className="fav-modal-back" onClick={closeFavModal}><i className="fa-solid fa-chevron-left"/></button>
             <span className="fav-modal-title"><i className="fa-solid fa-heart" style={{color:'var(--green)'}}/> Kata Favorit</span>
-            <div style={{display:'flex',alignItems:'center',gap:'6px'}}>
+            <div style={{display:'flex',flexDirection:'column',alignItems:'stretch',gap:'5px'}}>
+              {favWords.length>0&&<button className="fav-modal-clear" onClick={clearAllFav}><span className="material-icons-round" style={{fontSize:'13px',verticalAlign:'middle',marginRight:'4px'}}>delete</span>Hapus Semua</button>}
               {favWords.length>0&&(
                 <button
                   onClick={copyAllFav}
@@ -591,10 +592,9 @@ export default function Main(){
                     color: favCopied ? '#4ade80' : 'var(--green)',
                   }}
                 >
-                  {favCopied ? (   <>✓ Tersalin!</> ) : (   <><span className="material-icons-round" style={{fontSize:'13px',verticalAlign:'middle',marginRight:'4px'}}>content_copy</span>Salin Semua</> )}
+                  {favCopied ? <>✓ Tersalin!</> : <><span className="material-icons-round" style={{fontSize:'13px',verticalAlign:'middle',marginRight:'4px'}}>content_copy</span>Salin Semua</>}
                 </button>
               )}
-              {favWords.length>0&&<button className="fav-modal-clear" onClick={clearAllFav}><span className="material-icons-round" style={{fontSize:'13px',verticalAlign:'middle',marginRight:'4px'}}>delete</span>Hapus Semua</button>}
             </div>
           </div>
           <div className="fav-modal-body">
