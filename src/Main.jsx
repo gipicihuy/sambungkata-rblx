@@ -591,7 +591,7 @@ export default function Main(){
                     color: favCopied ? '#4ade80' : 'var(--green)',
                   }}
                 >
-                  {favCopied ? '✓ Tersalin!' : '⎘ Salin Semua'}
+                  {favCopied ? (   <>✓ Tersalin!</> ) : (   <><span className="material-icons-round" style={{fontSize:'13px',verticalAlign:'middle'}}>content_copy</span> Salin Semua</> )}
                 </button>
               )}
               {favWords.length>0&&<button className="fav-modal-clear" onClick={clearAllFav}>Hapus Semua</button>}
