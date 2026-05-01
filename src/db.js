@@ -20123,6 +20123,7 @@ export default [
   "dianut",
   "dianutnya",
   "dianyam",
+  "diap",
   "diapa",
   "diapain",
   "diapakan",
