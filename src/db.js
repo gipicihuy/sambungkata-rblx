@@ -51328,7 +51328,6 @@ export default [
   "lokalistis",
   "lokalit",
   "lokalitas",
-  "lokan",
   "lokananta",
   "lokap",
   "lokapasar",
