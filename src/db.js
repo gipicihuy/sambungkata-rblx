@@ -1534,6 +1534,7 @@ export default [
   "akekun",
   "akel",
   "akelit",
+  "akelus",
   "akene",
   "akeo",
   "aker",
