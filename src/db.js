@@ -9,6 +9,7 @@ export default [
   "aaname",
   "aanmaning",
   "aaui",
+  "aba",
   "abab",
   "abad",
   "abadi",
