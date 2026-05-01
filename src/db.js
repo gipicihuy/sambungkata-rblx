@@ -6276,6 +6276,7 @@ export default [
   "bahwasanya",
   "bai",
   "baiat",
+  "baibilis",
   "baid",
   "baiduri",
   "baik",
