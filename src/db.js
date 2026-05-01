@@ -28,6 +28,7 @@ export default [
   "abe",
   "abelmoschus",
   "aberan",
+  "aberasi",
   "abet",
   "abetalipoproteinemia",
   "abil",
