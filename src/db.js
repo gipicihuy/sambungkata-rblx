@@ -36641,6 +36641,7 @@ export default [
   "iyanate",
   "iyar",
   "iycopersicum",
+  "iyow",
   "iyyah",
   "iyyatul",
   "izin",
