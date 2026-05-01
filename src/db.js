@@ -779,6 +779,7 @@ export default [
   "aerotonometer",
   "aerotropisme",
   "aerotropolis",
+  "aerounatita",
   "aes",
   "aesi",
   "aesiospora",
