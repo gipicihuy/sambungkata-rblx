@@ -74236,6 +74236,7 @@ export default [
   "ovotestis",
   "ovotransferin",
   "ovovivipar",
+  "ovte",
   "ovu",
   "ovul",
   "ovulasi",
