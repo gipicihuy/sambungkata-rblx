@@ -33,6 +33,7 @@ export default [
   "abet",
   "abetalipoproteinemia",
   "abil",
+  "abimanyu",
   "abinru",
   "abio",
   "abir",
