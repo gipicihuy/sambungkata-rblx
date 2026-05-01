@@ -51208,6 +51208,7 @@ export default [
   "loa",
   "loak",
   "loakan",
+  "loatango",
   "lob",
   "loba",
   "lobak",
