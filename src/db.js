@@ -95437,7 +95437,6 @@ export default [
   "simalungun",
   "simare",
   "simatengeu",
-  "simatifit",
   "simatirit",
   "simatoras",
   "simau",
