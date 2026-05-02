@@ -91066,6 +91066,7 @@ export default [
   "sandarnya",
   "sandek",
   "sandel",
+  "sandeq",
   "sandera",
   "sanderanya",
   "sandfly",
