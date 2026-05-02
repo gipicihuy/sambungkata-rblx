@@ -36330,6 +36330,7 @@ export default [
   "irvingia",
   "isa",
   "isa almasih",
+  "isaa",
   "isak",
   "isakan",
   "isalobar",
