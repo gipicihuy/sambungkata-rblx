@@ -32711,7 +32711,6 @@ export default [
   "gwm",
   "gymnurus",
   "gynandra",
-  "gynochtodes",
   "gyoza",
   "gyps",
   "haag",
