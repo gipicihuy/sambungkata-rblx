@@ -74191,6 +74191,8 @@ export default [
   "otur",
   "otus",
   "ouagadougou",
+  "ouguiya",
+  "oula",
   "oun",
   "oups",
   "ouratea",
