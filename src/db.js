@@ -3264,7 +3264,6 @@ export default [
   "androg",
   "androgen",
   "androgini",
-  "androginofor",
   "androginus",
   "andrografolid",
   "andrographis",
