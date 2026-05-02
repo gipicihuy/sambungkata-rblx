@@ -96304,7 +96304,6 @@ export default [
   "smoulder",
   "smouldered",
   "smouldering",
-  "smp",
   "smr",
   "sms",
   "smta",
