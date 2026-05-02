@@ -28741,6 +28741,7 @@ export default [
   "fiksi",
   "fiksional",
   "fiksionalisasi",
+  "fiksionalitas",
   "fiktif",
   "fikus",
   "fil",
