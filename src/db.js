@@ -33072,6 +33072,7 @@ export default [
   "hangut",
   "hani",
   "hanif",
+  "hanifa",
   "hanifah",
   "hanjar",
   "hanjuang",
