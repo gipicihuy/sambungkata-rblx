@@ -5423,6 +5423,7 @@ export default [
   "asyikkan",
   "asyiknya",
   "asytor",
+  "asytore",
   "asytoret",
   "asyu",
   "asyura",
