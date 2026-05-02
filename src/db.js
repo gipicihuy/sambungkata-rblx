@@ -72491,6 +72491,7 @@ export default [
   "nyamur",
   "nyan",
   "nyana",
+  "nyanakahua",
   "nyanau",
   "nyang",
   "nyanggong",
