@@ -3357,6 +3357,7 @@ export default [
   "angelesia",
   "angelika",
   "angelisia",
+  "anget",
   "angga",
   "anggabaya",
   "anggah",
