@@ -96271,6 +96271,7 @@ export default [
   "slumun",
   "sluri",
   "smaragdina",
+  "smarakata",
   "smartfren",
   "smasher",
   "smb",
