@@ -73216,7 +73216,6 @@ export default [
   "olehku",
   "olehmu",
   "olehnya",
-  "oleholeh",
   "olehseluruh",
   "oleifera",
   "olein",
