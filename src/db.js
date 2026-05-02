@@ -97213,6 +97213,7 @@ export default [
   "steroidrol",
   "sterol",
   "steron",
+  "stes",
   "stesia",
   "stet",
   "stetorea",
