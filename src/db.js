@@ -1270,6 +1270,7 @@ export default [
   "ahlusunah",
   "ahmad",
   "ahmadi",
+  "ahmadiah",
   "ahmadiyah",
   "ahmak",
   "ahmar",
