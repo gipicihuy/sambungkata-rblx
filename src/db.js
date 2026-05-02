@@ -73020,6 +73020,7 @@ export default [
   "ohtaishi",
   "ohu",
   "ohyan",
+  "oi",
   "oidium",
   "oiknologi",
   "oikofobia",
