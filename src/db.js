@@ -6015,6 +6015,7 @@ export default [
   "azis",
   "aziz",
   "azmat",
+  "azoferedoksin",
   "azoi",
   "azoikum",
   "azolla",
