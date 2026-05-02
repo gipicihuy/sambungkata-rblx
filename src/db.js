@@ -73883,6 +73883,7 @@ export default [
   "orin",
   "oriolus",
   "orion",
+  "orionid",
   "orip",
   "oris",
   "orisasi",
