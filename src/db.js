@@ -4305,7 +4305,6 @@ export default [
   "aora",
   "aorta",
   "aota",
-  "apa",
   "apaan",
   "apabila",
   "apai",
