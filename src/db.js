@@ -70460,6 +70460,7 @@ export default [
   "nginap",
   "nging",
   "ngini",
+  "nginin",
   "nginjek",
   "ngintip",
   "ngip",
