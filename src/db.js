@@ -44669,7 +44669,6 @@ export default [
   "keyakinan",
   "keyakinannya",
   "keyboard",
-  "keynesianism",
   "kezaliman",
   "kezaliran",
   "kezuhudan",
