@@ -46698,7 +46698,6 @@ export default [
   "kontinyuitas",
   "konto",
   "kontoid",
-  "kontol",
   "kontor",
   "kontorsionis",
   "kontra",
