@@ -108251,6 +108251,7 @@ export default [
   "weker",
   "wel",
   "welahar",
+  "welan",
   "welas",
   "welasan",
   "weleng",
