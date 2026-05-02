@@ -70492,7 +70492,6 @@ export default [
   "ngkor",
   "ngkot",
   "ngli",
-  "nglurug",
   "ngluruk",
   "ngo",
   "ngoarkan",
