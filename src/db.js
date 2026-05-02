@@ -96997,7 +96997,6 @@ export default [
   "srem",
   "srempet",
   "sri",
-  "sri langka",
   "srigading",
   "srigunggu",
   "srigunting",
