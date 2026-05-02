@@ -44050,6 +44050,7 @@ export default [
   "ketarap",
   "ketas",
   "ketat",
+  "ketata",
   "ketatabahasaan",
   "ketatalaksanaan",
   "ketatanegaraan",
