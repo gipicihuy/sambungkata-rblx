@@ -1736,6 +1736,7 @@ export default [
   "aksiomatis",
   "aksion",
   "aksis",
+  "aksismus",
   "akson",
   "aksonometri",
   "aksostil",
