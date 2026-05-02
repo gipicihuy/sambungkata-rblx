@@ -40106,6 +40106,7 @@ export default [
   "keafiatan",
   "keagaan",
   "keagamaan",
+  "keagamaannya",
   "keagenan",
   "keagrariaan",
   "keagresifan",
