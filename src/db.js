@@ -74194,7 +74194,6 @@ export default [
   "ouguiya",
   "oula",
   "ouratea",
-  "outflowing",
   "outline",
   "outsider",
   "outwardness",
