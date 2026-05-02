@@ -74193,7 +74193,6 @@ export default [
   "ouagadougou",
   "ouguiya",
   "oula",
-  "oun",
   "oups",
   "ouratea",
   "outentik",
