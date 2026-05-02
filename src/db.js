@@ -46676,6 +46676,7 @@ export default [
   "konter",
   "kontes",
   "kontestan",
+  "kontestannya",
   "kontestasi",
   "kontet",
   "kontiguitas",
