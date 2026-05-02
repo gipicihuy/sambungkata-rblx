@@ -17543,7 +17543,6 @@ export default [
   "cis",
   "cisadane",
   "cisapu",
-  "cisco",
   "cisgender",
   "cisumdawu",
   "cit",
