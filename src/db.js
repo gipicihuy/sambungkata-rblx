@@ -73020,6 +73020,7 @@ export default [
   "oiknologi",
   "oikumene",
   "oikumenis",
+  "oikumenisme",
   "oil",
   "oimpr",
   "oirulap",
