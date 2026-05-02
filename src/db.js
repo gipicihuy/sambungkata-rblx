@@ -108732,6 +108732,7 @@ export default [
   "xerotherm",
   "xerotype",
   "xiaomi",
+  "xiaoren",
   "xifisternum",
   "xifoid",
   "xifopagus",
