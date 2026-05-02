@@ -53266,6 +53266,7 @@ export default [
   "mandek",
   "mandela",
   "mandelevium",
+  "manden",
   "mander",
   "mandi",
   "mandiang",
