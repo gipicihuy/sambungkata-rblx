@@ -106043,6 +106043,7 @@ export default [
   "uai",
   "uak",
   "uan",
+  "uanbutai",
   "uanda",
   "uang",
   "uangku",
