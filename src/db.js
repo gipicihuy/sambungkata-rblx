@@ -90961,6 +90961,7 @@ export default [
   "samin",
   "samir",
   "samirana",
+  "samkaryanugraha",
   "samkel",
   "samman",
   "samo",
