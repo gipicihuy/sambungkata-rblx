@@ -90891,6 +90891,7 @@ export default [
   "salpeter",
   "salping",
   "salsa",
+  "salsal",
   "salsugin",
   "saltasi",
   "saltik",
