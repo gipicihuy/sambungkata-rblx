@@ -44889,6 +44889,7 @@ export default [
   "kicau",
   "kicauan",
   "kicauannya",
+  "kicaumania",
   "kicep",
   "kici",
   "kicik",
