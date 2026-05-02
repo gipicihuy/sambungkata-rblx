@@ -2,9 +2,5 @@
   "givy": {
     "hash": "e39c8d28e25ffe8a943e25916e01669848a1ac2c3dcd81249940b12350dc450d",
     "role": "admin"
-  },
-  "frangky": {
-    "hash": "bc202c8fb9ff9330feba688ca2a8ba082bb547870dadc525fceb725f73e99a9e",
-    "role": "member"
   }
 }
