@@ -35117,6 +35117,8 @@ export default [
   "ilak",
   "ilalang",
   "ilam",
+  "ilanggela",
+  "ilangopitilo",
   "ilanun",
   "ilar",
   "ilas",
