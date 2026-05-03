@@ -31546,6 +31546,7 @@ export default [
   "ginem",
   "ginesium",
   "ging",
+  "gingerol",
   "ginggang",
   "ginggung",
   "gingivitis",
