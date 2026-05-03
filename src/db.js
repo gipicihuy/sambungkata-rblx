@@ -30435,6 +30435,7 @@ export default [
   "gegat",
   "gegau",
   "gegayaan",
+  "gege",
   "gegedangan",
   "gegedengan",
   "gegelo",
