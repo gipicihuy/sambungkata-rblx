@@ -1798,6 +1798,7 @@ export default [
   "aktuaris",
   "aktuator",
   "aktuil",
+  "aku",
   "akua",
   "akuad",
   "akuades",
