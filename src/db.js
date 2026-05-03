@@ -18805,6 +18805,7 @@ export default [
   "dasalomba",
   "dasamuka",
   "dasan",
+  "dasanama",
   "dasaparamita",
   "dasar",
   "dasarai",
