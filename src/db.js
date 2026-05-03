@@ -31549,6 +31549,7 @@ export default [
   "ginggang",
   "ginggung",
   "gingivitis",
+  "gingivostomatitis",
   "ginglimus",
   "gingor",
   "gingsi",
