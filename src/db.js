@@ -6053,6 +6053,7 @@ export default [
   "babe",
   "babel",
   "babelan",
+  "babeleq",
   "babelih",
   "babesia",
   "babesiasis",
