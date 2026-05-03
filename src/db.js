@@ -66669,7 +66669,6 @@ export default [
   "microcarpa",
   "microchiroptera",
   "microfiche",
-  "microhierax",
   "microlaser",
   "microlepidotus",
   "microlepis",
