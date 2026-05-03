@@ -5936,6 +5936,7 @@ export default [
   "ayahnya",
   "ayak",
   "ayakan",
+  "ayakoi",
   "ayal",
   "ayalan",
   "ayam",
