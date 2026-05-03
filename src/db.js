@@ -31487,6 +31487,7 @@ export default [
   "gigu",
   "gih",
   "gik",
+  "gikang",
   "gil",
   "gila",
   "gilaan",
