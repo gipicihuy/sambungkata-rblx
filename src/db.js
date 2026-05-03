@@ -105939,6 +105939,7 @@ export default [
   "uidagang",
   "uih",
   "uik",
+  "uin",
   "uing",
   "uinsa",
   "uinsi",
