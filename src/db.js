@@ -32873,7 +32873,6 @@ export default [
   "halaik",
   "halakah",
   "halal",
-  "halal bihalal",
   "halalbihalal",
   "halalnya",
   "halaman",
