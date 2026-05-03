@@ -5108,6 +5108,7 @@ export default [
   "asiafili",
   "asiafilia",
   "asian",
+  "asiat",
   "asiatenggara",
   "asiati",
   "asiatica",
