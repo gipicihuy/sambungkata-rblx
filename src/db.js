@@ -32865,7 +32865,6 @@ export default [
   "haknya",
   "hakpen",
   "hakul",
-  "hakul adam",
   "hakulah",
   "hakulyakin",
   "hal",
