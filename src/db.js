@@ -106720,6 +106720,7 @@ export default [
   "unis",
   "uniseks",
   "uniseluler",
+  "unisex",
   "unisirau",
   "unisovyet",
   "unit",
