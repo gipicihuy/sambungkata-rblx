@@ -3349,6 +3349,7 @@ export default [
   "angankan",
   "anganku",
   "angannya",
+  "angatereng",
   "angau",
   "angciu",
   "angdam",
