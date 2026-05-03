@@ -31434,6 +31434,7 @@ export default [
   "giatan",
   "giatkan",
   "giatnya",
+  "giatter",
   "gib",
   "giba",
   "gibah",
