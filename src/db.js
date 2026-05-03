@@ -31550,6 +31550,7 @@ export default [
   "ginggang",
   "ginggung",
   "gingham",
+  "gingivektomi",
   "gingivitis",
   "gingivostomatitis",
   "ginglimus",
