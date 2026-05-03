@@ -27713,6 +27713,7 @@ export default [
   "equational",
   "equative",
   "equiaetifolia",
+  "equilibrum",
   "equimus",
   "equisetifolia",
   "equisetum",
