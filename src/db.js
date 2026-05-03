@@ -108529,6 +108529,7 @@ export default [
   "yakult",
   "yakun",
   "yakut",
+  "yakutia",
   "yakuza",
   "yal",
   "yalamlam",
