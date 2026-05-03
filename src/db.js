@@ -14053,6 +14053,7 @@ export default [
   "bioekonomi",
   "bioelektrik",
   "bioenergi",
+  "bioenergy",
   "bioetanol",
   "bioetika",
   "biof",
