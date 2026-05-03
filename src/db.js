@@ -74055,7 +74055,6 @@ export default [
   "ouguiya",
   "oukup",
   "oula",
-  "oupung",
   "ouratea",
   "ouzo",
   "ova",
