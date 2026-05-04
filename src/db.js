@@ -18304,6 +18304,7 @@ export default [
   "cyanophyta",
   "cyanus",
   "cyathea",
+  "cyathocalyx",
   "cyathula",
   "cycas",
   "cycle",
