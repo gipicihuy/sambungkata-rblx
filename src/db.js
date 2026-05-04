@@ -18312,6 +18312,7 @@ export default [
   "cyclone",
   "cyclophorus",
   "cylindrica",
+  "cyminum",
   "cymnogrullus",
   "cymosa",
   "cynara",
