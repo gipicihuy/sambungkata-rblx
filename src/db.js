@@ -73751,6 +73751,7 @@ export default [
   "orak",
   "orakel",
   "oral",
+  "oralisme",
   "oralit",
   "oram",
   "oramin",
