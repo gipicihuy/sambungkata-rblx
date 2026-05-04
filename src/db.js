@@ -47370,6 +47370,7 @@ export default [
   "kriwil",
   "kriya",
   "kriyaloka",
+  "kriyamana",
   "krl",
   "krn",
   "kro",
