@@ -45415,6 +45415,7 @@ export default [
   "kloramin",
   "kloramina",
   "klorat",
+  "klorheksidin",
   "klorhidroksida",
   "klorida",
   "kloridim",
