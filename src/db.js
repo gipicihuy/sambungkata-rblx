@@ -3066,6 +3066,7 @@ export default [
   "anakronisme",
   "anakronistis",
   "anakrus",
+  "anaksungai",
   "anaktiri",
   "anakusis",
   "anal",
