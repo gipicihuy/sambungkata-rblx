@@ -85538,6 +85538,7 @@ export default [
   "potongnya",
   "potr",
   "potret",
+  "poulan",
   "pound",
   "poundal",
   "pounder",
