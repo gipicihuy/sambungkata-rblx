@@ -73547,8 +73547,6 @@ export default [
   "oolit",
   "oologi",
   "oolong",
-  "oop",
-  "oor",
   "oorlogsrecht",
   "oort",
   "oosfer",
