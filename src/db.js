@@ -47369,6 +47369,7 @@ export default [
   "kriuk",
   "kriwil",
   "kriya",
+  "kriyaloka",
   "krl",
   "krn",
   "kro",
