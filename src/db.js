@@ -29682,7 +29682,6 @@ export default [
   "gaji",
   "gajian",
   "gajih",
-  "gajik",
   "gajiku",
   "gajinya",
   "gajul",
