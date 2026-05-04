@@ -70369,6 +70369,7 @@ export default [
   "ngetuk",
   "ngeyel",
   "ngg",
+  "nggaduh",
   "nggak",
   "nggang",
   "nggar",
