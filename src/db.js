@@ -70393,6 +70393,7 @@ export default [
   "ngidul",
   "ngigau",
   "ngih",
+  "ngihik",
   "ngik",
   "ngikut",
   "ngil",
