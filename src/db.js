@@ -73130,6 +73130,7 @@ export default [
   "ologisasi",
   "ologisme",
   "ologiwan",
+  "olografis",
   "ologram",
   "oloh",
   "olohok",
