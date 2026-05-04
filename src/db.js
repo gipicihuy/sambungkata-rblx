@@ -18307,7 +18307,6 @@ export default [
   "cyathocalyx",
   "cyathula",
   "cycas",
-  "cycle",
   "cyclea",
   "cyclocheilichthys",
   "cyclone",
