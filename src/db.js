@@ -73587,6 +73587,7 @@ export default [
   "oogonia",
   "oogonium",
   "ooh",
+  "ooi",
   "ookinesis",
   "oolit",
   "oologi",
