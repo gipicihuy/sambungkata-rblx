@@ -56585,7 +56585,6 @@ export default [
   "memejalkan",
   "memejam",
   "memejamkan",
-  "memek",
   "memeka",
   "memekak",
   "memekakkan",
