@@ -107068,6 +107068,7 @@ export default [
   "uzal",
   "uzam",
   "uzbek",
+  "uzbekistan",
   "uzel",
   "uzlah",
   "uzur",
