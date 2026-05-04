@@ -49344,6 +49344,7 @@ export default [
   "lata",
   "lataan",
   "latah",
+  "latahawa",
   "latak",
   "latam",
   "latan",
