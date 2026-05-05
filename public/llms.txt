@@ -1,0 +1,39 @@
+# Sambung Kata
+
+> Kamus referensi kata Bahasa Indonesia untuk bermain map Roblox Sambung Kata.
+
+## Tentang Website Ini
+
+Sambung Kata (sambungkata.web.id) adalah aplikasi web gratis yang berfungsi sebagai kamus dan database kata Bahasa Indonesia. Website ini dibuat khusus untuk membantu pemain mencari referensi kata saat bermain di map Roblox yang bernama "Sambung Kata".
+
+**Developer:** Givyx  
+**TikTok:** @_yudxx  
+**URL:** https://sambungkata.web.id  
+**Versi:** 2.0.0  
+**Bahasa:** Indonesia  
+**Gratis:** Ya  
+
+## Fitur Utama
+
+- **Mode Awalan** – Cari semua kata Bahasa Indonesia yang diawali huruf/suku kata tertentu (misal: semua kata yang diawali "ka")
+- **Mode Akhiran** – Cari semua kata yang diakhiri huruf/suku kata tertentu (misal: semua kata yang diakhiri "an")
+- **Mode Awal+Akhir (Kepit)** – Cari kata berdasarkan awalan dan akhiran sekaligus
+- **Database ribuan kata** Bahasa Indonesia
+- **Fitur Favorit** – Simpan kata-kata yang sering dipakai
+- **Lapor Kata** – User bisa melaporkan kata yang tidak valid di map Roblox
+- **PWA** – Bisa diinstall sebagai aplikasi di Android dan iOS
+- **APK Android** – Tersedia versi APK untuk download
+
+## Konteks Penggunaan
+
+Website ini digunakan oleh pemain game Roblox Indonesia yang sedang bermain di map "Sambung Kata" di mana pemain harus menyambung kata sesuai huruf tertentu. Website ini membantu mereka menemukan kata yang valid dengan cepat.
+
+## Developer
+
+Website ini dibuat dan dikelola oleh **Givyx**, developer Indonesia muda yang juga aktif membuat konten di TikTok (@_yudxx). Proyek ini adalah buatan pribadi (indie developer) yang sudah memiliki ribuan pengguna aktif.
+
+## Halaman
+
+- `/` – Halaman utama (pencarian kata)
+- `/download` – Download APK Android dan panduan install iOS
+- `/donatur` – Halaman donasi untuk mendukung pengembangan website
