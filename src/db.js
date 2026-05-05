@@ -36244,7 +36244,6 @@ export default [
   "ipri",
   "iprit",
   "ipsap",
-  "ipsi",
   "ipsilateral",
   "ipso",
   "iptek",
