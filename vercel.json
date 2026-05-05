@@ -3,6 +3,7 @@
   "outputDirectory": "dist",
   "rewrites": [
     {"source": "/download", "destination": "/download.html"},
-    {"source": "/donatur", "destination": "/donatur.html"}
+    {"source": "/donatur", "destination": "/donatur.html"},
+    {"source": "/about", "destination": "/about.html"}
   ]
 }
