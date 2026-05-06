@@ -53209,6 +53209,7 @@ export default [
   "manager",
   "manah",
   "manahan",
+  "manahelo",
   "manai",
   "manajem",
   "manajemen",
