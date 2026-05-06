@@ -107084,6 +107084,7 @@ export default [
   "uzbekistan",
   "uzel",
   "uzlah",
+  "uzu",
   "uzur",
   "vadem",
   "vadikaraste",
