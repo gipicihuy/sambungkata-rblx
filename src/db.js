@@ -98746,6 +98746,7 @@ export default [
   "taer",
   "taf",
   "tafadal",
+  "tafahum",
   "tafahus",
   "tafakaur",
   "tafakkur",
