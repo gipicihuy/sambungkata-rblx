@@ -7729,6 +7729,7 @@ export default [
   "behena",
   "behina",
   "bei",
+  "beib",
   "beijing",
   "beirut",
   "bejana",
