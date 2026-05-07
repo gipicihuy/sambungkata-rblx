@@ -235,8 +235,9 @@ export default function Main(){
 
   const renderAwal=()=>{
     const vis=getVisible(hasil)
+    const boosted=[...vis.filter(k=>isFav(k)),...vis.filter(k=>!isFav(k))]
     const page=(currentPage-1)*PAGE_SIZE
-    return vis.slice(page,page+PAGE_SIZE).map((k,i)=>{
+    return boosted.slice(page,page+PAGE_SIZE).map((k,i)=>{
       const num=page+i+1
       const highlighted=`<span class="chip-prefix">${k.slice(0,lastInputAwalMode.length)}</span>${k.slice(lastInputAwalMode.length)}`
       return makeWordRow(k,num,highlighted)
