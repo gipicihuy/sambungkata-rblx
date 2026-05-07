@@ -51346,6 +51346,7 @@ export default [
   "lohok",
   "lohor",
   "loid",
+  "loir",
   "lois",
   "loji",
   "lojik",
