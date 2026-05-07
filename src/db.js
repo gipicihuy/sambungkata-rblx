@@ -14843,7 +14843,6 @@ export default [
   "bordeaux",
   "bordel",
   "bordes",
-  "bordeux",
   "bordil",
   "bordir",
   "bordiran",
