@@ -49592,7 +49592,6 @@ export default [
   "lea",
   "lead",
   "leak",
-  "leang",
   "leary",
   "leb",
   "leba",
