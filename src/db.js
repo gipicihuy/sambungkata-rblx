@@ -7552,6 +7552,7 @@ export default [
   "bebak",
   "bebal",
   "bebalan",
+  "bebaleq",
   "bebali",
   "bebalnya",
   "bebalun",
