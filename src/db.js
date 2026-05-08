@@ -18304,7 +18304,6 @@ export default [
   "cuyi",
   "cyanophyta",
   "cyanus",
-  "cyarus",
   "cyathea",
   "cyathocalyx",
   "cyathula",
