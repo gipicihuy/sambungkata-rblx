@@ -3033,6 +3033,7 @@ export default [
   "anaerobik",
   "anaesthesia",
   "anaesthesiologist",
+  "anaesthesiology",
   "anaesthetic",
   "anafilaksis",
   "anafora",
