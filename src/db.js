@@ -70525,6 +70525,7 @@ export default [
   "ngubek",
   "nguber",
   "ngucek",
+  "ngudoroso",
   "ngue",
   "nguh",
   "ngui",
