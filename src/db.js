@@ -3516,6 +3516,7 @@ export default [
   "angsa",
   "angsana",
   "angsang",
+  "angsar",
   "angsari",
   "angsel",
   "angsio",
