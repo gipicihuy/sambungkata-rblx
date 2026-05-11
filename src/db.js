@@ -34977,6 +34977,7 @@ export default [
   "ikatlah",
   "ikatnya",
   "ike",
+  "ikea",
   "ikebana",
   "ikh",
   "ikhbar",
