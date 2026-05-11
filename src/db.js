@@ -5931,6 +5931,7 @@ export default [
   "axioo",
   "axis",
   "axises",
+  "axolotl",
   "axonema",
   "axoneme",
   "axones",
