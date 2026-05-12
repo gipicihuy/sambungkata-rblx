@@ -85041,6 +85041,7 @@ export default [
   "pneumonik",
   "pneumonitis",
   "pneumonoultramicroscopicsilicovolcanoconiosis",
+  "pneumonoultramikroskopisilikovolkanokoliosis",
   "pneumosistis",
   "png",
   "pnigerofobia",
