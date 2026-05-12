@@ -108498,6 +108498,7 @@ export default [
   "wput",
   "wraji",
   "wrang",
+  "wrasani",
   "wrase",
   "wraspati",
   "wre",
