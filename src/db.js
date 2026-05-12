@@ -108862,6 +108862,7 @@ export default [
   "yawatbon",
   "yawi",
   "yayasan",
+  "yayay",
   "yayu",
   "yech",
   "yeh",
