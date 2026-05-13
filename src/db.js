@@ -29745,6 +29745,7 @@ export default [
   "galawala",
   "galbani",
   "galcopithecus",
+  "gale",
   "galeatus",
   "galeberan",
   "galendang",
