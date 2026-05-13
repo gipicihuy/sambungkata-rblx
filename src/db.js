@@ -72386,7 +72386,6 @@ export default [
   "nyalar",
   "nyale",
   "nyali",
-  "nyalindung",
   "nyalon",
   "nyam",
   "nyamai",
