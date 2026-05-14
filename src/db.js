@@ -17775,7 +17775,6 @@ export default [
   "comelan",
   "comifolia",
   "comite",
-  "comix",
   "commander",
   "commersoni",
   "commersonia",
