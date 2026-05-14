@@ -70608,6 +70608,8 @@ export default [
   "nikat",
   "nike",
   "nikel",
+  "nikelin",
+  "nikelodeon",
   "nikh",
   "nikil",
   "nikim",
