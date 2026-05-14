@@ -17387,6 +17387,7 @@ export default [
   "cimahi",
   "cimanuk",
   "cimeng",
+  "cimex",
   "cimin",
   "cimol",
   "cimory",
