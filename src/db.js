@@ -5422,6 +5422,7 @@ export default [
   "atalakiah",
   "atalat",
   "atam",
+  "atambua",
   "atan",
   "ataninai",
   "atap",
