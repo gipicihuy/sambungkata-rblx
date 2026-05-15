@@ -108490,6 +108490,7 @@ export default [
   "yalusi",
   "yam",
   "yamadipati",
+  "yamaha",
   "yamahan",
   "yaman",
   "yamato",
