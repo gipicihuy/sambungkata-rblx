@@ -34737,7 +34737,6 @@ export default [
   "ialah",
   "iambik",
   "iambus",
-  "iamina",
   "ian",
   "iap",
   "iat",
