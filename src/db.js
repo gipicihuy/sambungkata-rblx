@@ -73403,6 +73403,7 @@ export default [
   "oosit",
   "oospora",
   "oost",
+  "ooteka",
   "opa",
   "opak",
   "opakus",
