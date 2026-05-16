@@ -17207,7 +17207,6 @@ export default [
   "charantia",
   "charg",
   "charge",
-  "chargoggagoggmanchaubunagungamungamagg",
   "charles",
   "charm",
   "charta",
