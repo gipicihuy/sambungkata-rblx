@@ -66172,6 +66172,7 @@ export default [
   "meristik",
   "merit",
   "meritokrasi",
+  "meritrix",
   "meritul",
   "meritus",
   "meriuhkan",
