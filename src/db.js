@@ -105752,6 +105752,7 @@ export default [
   "tuyul",
   "tvri",
   "tweebuffelsmeteenskootmorsdoodgeskietfontein",
+  "twindemik",
   "twinged",
   "twinging",
   "twit",
