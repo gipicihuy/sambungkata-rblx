@@ -47066,6 +47066,7 @@ export default [
   "koturnus",
   "koulrofobia",
   "koumpounofobia",
+  "koun",
   "koval",
   "kovalen",
   "kovalensi",
