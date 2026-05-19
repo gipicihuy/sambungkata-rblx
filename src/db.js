@@ -96732,6 +96732,7 @@ export default [
   "sroto",
   "ssat",
   "sta",
+  "staatsblad",
   "staatsfundamentalnorm",
   "stabil",
   "stabilisasi",
