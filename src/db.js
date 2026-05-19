@@ -50342,6 +50342,7 @@ export default [
   "letraset",
   "letter",
   "letters",
+  "letti",
   "lettre",
   "lettsomia",
   "lettu",
