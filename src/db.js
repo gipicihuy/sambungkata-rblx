@@ -32372,6 +32372,7 @@ export default [
   "guanin",
   "guanina",
   "guano",
+  "guanosin",
   "guar",
   "guarani",
   "guardian",
