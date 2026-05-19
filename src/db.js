@@ -96702,6 +96702,7 @@ export default [
   "sql",
   "squamosa",
   "squarrosus",
+  "squat",
   "squeemishness",
   "squirter",
   "sra",
