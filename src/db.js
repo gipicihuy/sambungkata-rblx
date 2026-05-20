@@ -17186,6 +17186,7 @@ export default [
   "chai",
   "chailettia",
   "chairil",
+  "chalcococyx",
   "chalet",
   "challattia",
   "chama",
