@@ -48463,7 +48463,6 @@ export default [
   "kwartal",
   "kwartet",
   "kwartir",
-  "kwasiorkor",
   "kwe",
   "kwek",
   "kweni",
