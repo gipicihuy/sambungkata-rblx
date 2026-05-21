@@ -104221,6 +104221,7 @@ export default [
   "toksoid",
   "toksoplasma",
   "toksoplasmasis",
+  "toksoplasmosis",
   "toktok",
   "tokwi",
   "tokyo",
