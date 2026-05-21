@@ -104219,6 +104219,7 @@ export default [
   "toksin",
   "toksisitas",
   "toksoid",
+  "toksokariasis",
   "toksoplasma",
   "toksoplasmasis",
   "toksoplasmosis",
