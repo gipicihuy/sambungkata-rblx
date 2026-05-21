@@ -28043,6 +28043,7 @@ export default [
   "eutenika",
   "euthynnus",
   "euthynus",
+  "eutiroid",
   "eutosia",
   "eutrofik",
   "eutrofikasi",
