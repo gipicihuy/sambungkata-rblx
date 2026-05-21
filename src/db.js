@@ -74362,6 +74362,7 @@ export default [
   "paksalah",
   "paksangko",
   "paksi",
+  "paksian",
   "paksina",
   "paksu",
   "pakta",
