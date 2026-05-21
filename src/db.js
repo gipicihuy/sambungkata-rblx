@@ -103722,6 +103722,8 @@ export default [
   "tikong",
   "tikpi",
   "tiksofobia",
+  "tiksotropi",
+  "tiksotropik",
   "tiktok",
   "tiku",
   "tikul",
