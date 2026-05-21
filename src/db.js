@@ -66920,6 +66920,7 @@ export default [
   "milas",
   "milat",
   "mile",
+  "milenarianisme",
   "milenial",
   "milenium",
   "mileu",
