@@ -69354,6 +69354,8 @@ export default [
   "naq",
   "naqal",
   "naqli",
+  "naqsabandi",
+  "naqsyabandi",
   "nar",
   "nara",
   "narablog",
