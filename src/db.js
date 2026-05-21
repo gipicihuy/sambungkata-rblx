@@ -99967,6 +99967,8 @@ export default [
   "teksnya",
   "tekstil",
   "tekstual",
+  "tekstualisasi",
+  "tekstualisme",
   "tekstur",
   "tekstural",
   "tekte",
