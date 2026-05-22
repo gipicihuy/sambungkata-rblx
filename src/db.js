@@ -73172,6 +73172,8 @@ export default [
   "onid",
   "onigiri",
   "onikofagia",
+  "onikolisis",
+  "onikomikosis",
   "oniks",
   "onin",
   "oniomania",
