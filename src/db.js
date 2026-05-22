@@ -70054,6 +70054,7 @@ export default [
   "ngau",
   "ngawi",
   "ngawur",
+  "ngayab",
   "ngayal",
   "ngayuman",
   "ngb",
