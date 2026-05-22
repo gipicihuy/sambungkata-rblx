@@ -35588,6 +35588,7 @@ export default [
   "inkan",
   "inkanas",
   "inkantansi",
+  "inkantasi",
   "inkar",
   "inkarnasi",
   "inkarnasinya",
