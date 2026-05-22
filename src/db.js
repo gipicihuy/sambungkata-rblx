@@ -19807,6 +19807,7 @@ export default [
   "dfd",
   "dgn",
   "dha",
+  "dhaka",
   "dhalim",
   "dhamm",
   "dhammas",
