@@ -48916,6 +48916,7 @@ export default [
   "landur",
   "landut",
   "lang",
+  "langa",
   "langah",
   "langak",
   "langar",
