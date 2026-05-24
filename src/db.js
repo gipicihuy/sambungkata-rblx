@@ -87860,6 +87860,7 @@ export default [
   "recharacterized",
   "recharacterizing",
   "rechewing",
+  "rechstsstaat",
   "rechtsstaat",
   "rechtsstaats",
   "recik",
