@@ -87497,6 +87497,7 @@ export default [
   "rans",
   "ransel",
   "ranselnya",
+  "ransi",
   "ransum",
   "ransuman",
   "ransus",
