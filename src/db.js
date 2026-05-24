@@ -93694,6 +93694,7 @@ export default [
   "seprei",
   "seprofesi",
   "seps",
+  "sepsi",
   "sepsis",
   "sept",
   "september",
