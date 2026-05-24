@@ -103593,6 +103593,7 @@ export default [
   "tikas",
   "tikasnya",
   "tike",
+  "tikel",
   "tiket",
   "tiketcom",
   "tikh",
