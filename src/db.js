@@ -27654,7 +27654,6 @@ export default [
   "eratik",
   "eratkan",
   "eratnya",
-  "erb",
   "erbis",
   "erbium",
   "erbpalsi",
