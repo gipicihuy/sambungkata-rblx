@@ -34668,6 +34668,7 @@ export default [
   "iatrofobik",
   "iatrogenik",
   "iatrologi",
+  "iatromathematics",
   "iba",
   "ibadah",
   "ibadahmu",
