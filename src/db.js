@@ -5887,8 +5887,6 @@ export default [
   "axillas",
   "axils",
   "axiobelitan",
-  "axiologi",
-  "axiologis",
   "axioma",
   "axiomatis",
   "axions",
