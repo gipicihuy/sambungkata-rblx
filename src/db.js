@@ -34929,6 +34929,7 @@ export default [
   "iklim",
   "iklimatisasi",
   "iklimnya",
+  "ikmal",
   "ikn",
   "iko",
   "ikon",
