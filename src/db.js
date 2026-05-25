@@ -36186,7 +36186,6 @@ export default [
   "iramatis",
   "iran",
   "iranga",
-  "irania",
   "iranika",
   "irap",
   "iras",
