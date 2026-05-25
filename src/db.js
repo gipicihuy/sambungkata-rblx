@@ -5451,6 +5451,7 @@ export default [
   "atif",
   "atifikasi",
   "atik",
+  "atika",
   "atikifobia",
   "atil",
   "atinggola",
