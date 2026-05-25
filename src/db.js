@@ -104057,6 +104057,8 @@ export default [
   "toil",
   "toilet",
   "toiletris",
+  "tois",
+  "toitan",
   "tojo",
   "tojoh",
   "tok",
