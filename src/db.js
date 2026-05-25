@@ -73785,6 +73785,7 @@ export default [
   "otopet",
   "otophora",
   "otopsi",
+  "otorhinolaringolog",
   "otorisasi",
   "otorisator",
   "otorit",
