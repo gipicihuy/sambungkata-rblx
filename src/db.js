@@ -47175,6 +47175,7 @@ export default [
   "krimsus",
   "krin",
   "kring",
+  "kringkring",
   "krinok",
   "krinolin",
   "krinologi",
