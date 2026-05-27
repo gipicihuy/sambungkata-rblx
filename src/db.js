@@ -5109,6 +5109,7 @@ export default [
   "asik",
   "asiklik",
   "asiklis",
+  "asiklovir",
   "asikron",
   "asil",
   "asilabis",
