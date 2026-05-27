@@ -34633,6 +34633,7 @@ export default [
   "iat",
   "iata",
   "iatric",
+  "iatrochemist",
   "iatrochemistry",
   "iatrofobia",
   "iatrofobik",
