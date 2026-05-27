@@ -17153,6 +17153,7 @@ export default [
   "chaperon",
   "character",
   "charantia",
+  "chargoggagoggmanchauggagoggchaubunagungamaugg",
   "charles",
   "charm",
   "charta",
