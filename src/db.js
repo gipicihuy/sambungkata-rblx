@@ -89872,7 +89872,6 @@ export default [
   "saidi",
   "saif",
   "saik",
-  "saikua",
   "sailan",
   "sailboarding",
   "sailo",
