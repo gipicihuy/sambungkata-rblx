@@ -37591,7 +37591,6 @@ export default [
   "jesus",
   "jet",
   "jetha",
-  "jethsam",
   "jetis",
   "jetnya",
   "jetsam",
