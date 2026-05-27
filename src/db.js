@@ -50211,7 +50211,6 @@ export default [
   "letor",
   "letos",
   "letraset",
-  "letter",
   "letters",
   "letti",
   "lettre",
