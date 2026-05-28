@@ -16,6 +16,7 @@ export default [
   "abahan",
   "abahui",
   "abai",
+  "abak",
   "abalu",
   "aban",
   "abangan",
