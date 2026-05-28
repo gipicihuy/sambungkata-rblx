@@ -97803,6 +97803,7 @@ export default [
   "tabanas",
   "tabar",
   "tabarak",
+  "tabarang",
   "tabaruj",
   "tabaruk",
   "tabat",
