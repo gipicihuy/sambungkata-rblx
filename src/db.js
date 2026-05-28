@@ -39533,6 +39533,8 @@ export default [
   "kaswi",
   "kasy",
   "kasya",
+  "kasyaf",
+  "kasyapa",
   "kasyi",
   "kat",
   "kata",
