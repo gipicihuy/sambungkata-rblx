@@ -4495,6 +4495,7 @@ export default [
   "aqi",
   "aqidah",
   "aqil",
+  "aqiqah",
   "aqli",
   "aqua",
   "aquarius",
