@@ -5941,6 +5941,7 @@ export default [
   "azotemia",
   "azpilicuetagaraycosaroyarenberecolarrea",
   "azrak",
+  "aztek",
   "aztreonam",
   "azu",
   "azukan",
