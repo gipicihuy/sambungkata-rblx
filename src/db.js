@@ -36681,6 +36681,7 @@ export default [
   "jakgung",
   "jaki",
   "jakman",
+  "jakmania",
   "jako",
   "jakobson",
   "jakpus",
