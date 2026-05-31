@@ -14228,6 +14228,8 @@ export default [
   "bisulnya",
   "bit",
   "bita",
+  "bitak",
+  "bitakir",
   "bitase",
   "bitchin",
   "bitgula",
