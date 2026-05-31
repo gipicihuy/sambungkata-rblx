@@ -28127,6 +28127,7 @@ export default [
   "exultation",
   "exvoto",
   "eyang",
+  "eyanggu",
   "eyd",
   "eye",
   "eyel",
