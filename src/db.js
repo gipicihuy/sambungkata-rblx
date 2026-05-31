@@ -4263,6 +4263,7 @@ export default [
   "apanase",
   "apanders",
   "apang",
+  "apangadeg",
   "apanya",
   "apapun",
   "apar",
