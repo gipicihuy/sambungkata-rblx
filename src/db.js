@@ -30720,6 +30720,7 @@ export default [
   "gempi",
   "gempil",
   "gempita",
+  "gemplang",
   "gempol",
   "gempor",
   "gemprang",
