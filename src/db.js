@@ -85019,8 +85019,6 @@ export default [
   "ppn",
   "ppnbm",
   "ppns",
-  "ppp",
-  "pppp",
   "pra",
   "praacara",
   "praadjudikasi",
