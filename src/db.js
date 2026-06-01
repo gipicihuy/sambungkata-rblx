@@ -51091,6 +51091,7 @@ export default [
   "logging",
   "logika",
   "logis",
+  "logisformal",
   "logistik",
   "logo",
   "logofili",
