@@ -69802,6 +69802,7 @@ export default [
   "ngatupkan",
   "ngatur",
   "ngau",
+  "ngawesi",
   "ngawi",
   "ngawur",
   "ngayab",
