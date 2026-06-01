@@ -87545,6 +87545,7 @@ export default [
   "recharacterizing",
   "rechewing",
   "rechstsstaat",
+  "rechten",
   "rechtsstaat",
   "rechtsstaats",
   "recik",
