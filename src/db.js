@@ -94059,6 +94059,7 @@ export default [
   "setingkat",
   "setinja",
   "setip",
+  "setipe",
   "setipinna",
   "setipinnataty",
   "setipis",
