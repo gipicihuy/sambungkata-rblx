@@ -37737,6 +37737,7 @@ export default [
   "jkn",
   "jlang",
   "jle",
+  "jlegor",
   "jlegur",
   "jling",
   "jln",
