@@ -15374,6 +15374,7 @@ export default [
   "buking",
   "bukit",
   "bukitnya",
+  "bukittinggi",
   "bukl",
   "buklet",
   "bukong",
