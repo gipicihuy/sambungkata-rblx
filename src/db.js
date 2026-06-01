@@ -51103,6 +51103,7 @@ export default [
   "logon",
   "logop",
   "logopedia",
+  "logore",
   "logos",
   "logosentris",
   "logosentrisme",
