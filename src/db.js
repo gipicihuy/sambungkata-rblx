@@ -1547,6 +1547,7 @@ export default [
   "akhlaq",
   "akhlas",
   "akhli",
+  "akhoikoi",
   "akhtaj",
   "akhwal",
   "akhwan",
