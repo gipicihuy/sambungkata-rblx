@@ -51097,6 +51097,7 @@ export default [
   "logofili",
   "logofilia",
   "logofobia",
+  "logograi",
   "logogram",
   "logok",
   "logon",
