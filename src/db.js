@@ -86604,8 +86604,6 @@ export default [
   "qada",
   "qadar",
   "qadha",
-  "qadhi",
-  "qadi",
   "qadim",
   "qadr",
   "qaf",
