@@ -36496,7 +36496,6 @@ export default [
   "itu",
   "itulah",
   "iud",
-  "iudeorum",
   "iudisasi",
   "iur",
   "iuran",
