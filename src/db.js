@@ -53408,6 +53408,7 @@ export default [
   "markas",
   "markasi",
   "markasit",
+  "markenas",
   "market",
   "marketer",
   "marketri",
