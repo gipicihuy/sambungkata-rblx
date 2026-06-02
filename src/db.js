@@ -5351,6 +5351,7 @@ export default [
   "ataksia",
   "ataksofobia",
   "atal",
+  "atalakia",
   "atalakiah",
   "atalat",
   "atam",
