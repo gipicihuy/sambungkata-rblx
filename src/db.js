@@ -86632,7 +86632,6 @@ export default [
   "qul",
   "qunut",
   "quo",
-  "quod",
   "qur",
   "qur'an",
   "qurah",
