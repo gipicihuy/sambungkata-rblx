@@ -86608,7 +86608,6 @@ export default [
   "qisas",
   "qiyam",
   "qiyamuhu",
-  "qiyas",
   "qodrat",
   "qolbu",
   "qolqolah",
