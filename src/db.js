@@ -34633,6 +34633,7 @@ export default [
   "ibarat",
   "ibaratkan",
   "ibayuh",
+  "iber",
   "ibi",
   "ibid",
   "ibidem",
