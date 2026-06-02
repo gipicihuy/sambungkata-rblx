@@ -69913,6 +69913,7 @@ export default [
   "nggol",
   "nggong",
   "nggor",
+  "nggore",
   "nggot",
   "ngi",
   "ngiang",
