@@ -34595,6 +34595,7 @@ export default [
   "iah",
   "iaido",
   "iaidoka",
+  "iaju",
   "ialah",
   "iambik",
   "iambus",
