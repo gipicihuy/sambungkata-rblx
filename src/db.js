@@ -27823,7 +27823,6 @@ export default [
   "etenoida",
   "eter",
   "eteris",
-  "eternal",
   "eternet",
   "eternit",
   "etext",
