@@ -69876,6 +69876,7 @@ export default [
   "nggar",
   "nggarai",
   "nggarap",
+  "nggareng",
   "nggaris",
   "nggaro",
   "nggarong",
