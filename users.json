@@ -10,5 +10,9 @@
   "nanz": {
     "hash": "22bda055a31bf3020dbfb831d86cc6baca45fa6a0596e7a3d9d869fb4c9af08f",
     "role": "member"
+  },
+  "givy": {
+    "hash": "8fbb581db605e4b731b84a10d69fe2b4346a6bbc3c980ab79d0aea4c641bc0a5",
+    "role": "admin"
   }
 }
