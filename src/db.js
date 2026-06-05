@@ -98806,6 +98806,7 @@ export default [
   "tantangan",
   "tantangannya",
   "tante",
+  "tantene",
   "tanti",
   "tantiem",
   "tantra",
