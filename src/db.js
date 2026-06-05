@@ -5961,6 +5961,7 @@ export default [
   "babad",
   "babah",
   "babak",
+  "babaka",
   "babakan",
   "babal",
   "babala",
