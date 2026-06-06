@@ -34605,6 +34605,8 @@ export default [
   "iambik",
   "iambus",
   "ian",
+  "ianfu",
+  "iang",
   "iap",
   "iat",
   "iata",
