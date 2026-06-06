@@ -95054,6 +95054,7 @@ export default [
   "sirkulasinya",
   "sirkuler",
   "sirkulus",
+  "sirkumduksi",
   "sirkumfiks",
   "sirkumfl",
   "sirkumfleks",
