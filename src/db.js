@@ -33821,6 +33821,7 @@ export default [
   "hindustan",
   "hing",
   "hingar",
+  "hinge",
   "hingga",
   "hinggap",
   "hinggapi",
