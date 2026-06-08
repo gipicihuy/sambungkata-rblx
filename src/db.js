@@ -87179,6 +87179,7 @@ export default [
   "ransel",
   "ranselnya",
   "ransi",
+  "ransidifikasi",
   "ransum",
   "ransuman",
   "ransus",
