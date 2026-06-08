@@ -38951,6 +38951,7 @@ export default [
   "kantar",
   "kantasi",
   "kantata",
+  "kantenan",
   "kanter",
   "kanti",
   "kantih",
