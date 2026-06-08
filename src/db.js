@@ -104964,6 +104964,7 @@ export default [
   "tunggulnya",
   "tunggur",
   "tungi",
+  "tungiasis",
   "tungkahan",
   "tungkai",
   "tungkak",
