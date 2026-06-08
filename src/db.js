@@ -107925,6 +107925,7 @@ export default [
   "yasu",
   "yat",
   "yata",
+  "yatagan",
   "yatane",
   "yati",
   "yatim",
