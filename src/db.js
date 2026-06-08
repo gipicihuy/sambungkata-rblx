@@ -49082,6 +49082,7 @@ export default [
   "laparotomi",
   "lapas",
   "lapat",
+  "lapatelan",
   "lapaz",
   "lapel",
   "lapet",
