@@ -5027,7 +5027,6 @@ export default [
   "asetilkolin",
   "asetilkolina",
   "asetilkolinesterase",
-  "asetilkolineterase",
   "asetilsalisilat",
   "asetimeter",
   "asetimetri",
