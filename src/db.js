@@ -2437,6 +2437,7 @@ export default [
   "alup",
   "alur",
   "aluran",
+  "alurfobia",
   "alurnya",
   "alus",
   "alusi",
