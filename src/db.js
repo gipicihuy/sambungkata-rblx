@@ -88937,6 +88937,7 @@ export default [
   "rintis",
   "rintisan",
   "rinyai",
+  "rinyuk",
   "rio",
   "riodat",
   "riode",
