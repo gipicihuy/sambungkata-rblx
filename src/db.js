@@ -25941,6 +25941,7 @@ export default [
   "duki",
   "dukremek",
   "duksi",
+  "duksionis",
   "duksionisme",
   "duktif",
   "duktil",
