@@ -97846,6 +97846,7 @@ export default [
   "taati",
   "taatilah",
   "taawud",
+  "taawuz",
   "taazur",
   "tab",
   "taba",
