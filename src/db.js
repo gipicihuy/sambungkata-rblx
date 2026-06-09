@@ -18599,6 +18599,8 @@ export default [
   "dandenzipur",
   "dandi",
   "dandim",
+  "dandow",
+  "dandronkav",
   "dane",
   "danein",
   "danek",
