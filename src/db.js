@@ -107982,6 +107982,7 @@ export default [
   "xantomatosis",
   "xantopsia",
   "xantosis",
+  "xeme",
   "xenia",
   "xenial",
   "xenobiologi",
