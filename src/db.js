@@ -19218,6 +19218,7 @@ export default [
   "delikan",
   "delikat",
   "delikates",
+  "delikuesens",
   "delima",
   "delimukan",
   "delin",
