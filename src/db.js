@@ -103170,7 +103170,6 @@ export default [
   "tiflofili",
   "tiflofilia",
   "tiflologi",
-  "tiflologis",
   "tifoid",
   "tifonia",
   "tifosa",
