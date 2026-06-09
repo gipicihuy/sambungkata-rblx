@@ -24518,6 +24518,7 @@ export default [
   "diskiasis",
   "disklimaks",
   "disko",
+  "diskogenik",
   "diskografi",
   "diskoid",
   "diskolorasi",
