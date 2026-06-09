@@ -71351,6 +71351,8 @@ export default [
   "nri",
   "nrima",
   "nrp",
+  "nsama",
+  "nsambya",
   "ntabel",
   "ntabilitas",
   "ntagin",
