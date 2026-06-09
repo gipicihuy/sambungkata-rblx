@@ -47526,6 +47526,7 @@ export default [
   "ksal",
   "ksama",
   "ksatria",
+  "ksatrian",
   "ksaya",
   "ksi",
   "ksn",
