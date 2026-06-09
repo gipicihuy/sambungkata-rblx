@@ -19823,6 +19823,7 @@ export default [
   "dewi",
   "dewisri",
   "dextrose",
+  "deyuk",
   "dfd",
   "dgn",
   "dha",
