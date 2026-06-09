@@ -18656,6 +18656,7 @@ export default [
   "dansa",
   "dansanak",
   "dansat",
+  "dansattis",
   "dansek",
   "dansi",
   "dansilang",
