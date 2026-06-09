@@ -18466,6 +18466,7 @@ export default [
   "dakron",
   "daksa",
   "daksina",
+  "daksiya",
   "daktil",
   "daktilitas",
   "daktilitis",
