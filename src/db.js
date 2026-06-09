@@ -19851,6 +19851,7 @@ export default [
   "diabetik",
   "diabetikum",
   "diabetofobia",
+  "diabetogenik",
   "diabjad",
   "diabolik",
   "diabolis",
