@@ -51102,6 +51102,8 @@ export default [
   "logging",
   "logika",
   "logis",
+  "logisisme",
+  "logisitas",
   "logisme",
   "logistik",
   "logo",
