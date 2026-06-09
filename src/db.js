@@ -25976,6 +25976,7 @@ export default [
   "duki",
   "dukremek",
   "duksi",
+  "duksibilitas",
   "duksional",
   "duksionis",
   "duksionisme",
