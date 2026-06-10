@@ -52457,6 +52457,7 @@ export default [
   "magog",
   "magogi",
   "magogis",
+  "magohiki",
   "magon",
   "magori",
   "magrib",
