@@ -40398,7 +40398,6 @@ export default [
   "kebo",
   "kebobolan",
   "kebobrokan",
-  "kebocah",
   "kebocahan",
   "kebocoran",
   "kebodohan",
