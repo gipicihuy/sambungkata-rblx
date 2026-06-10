@@ -103515,7 +103515,6 @@ export default [
   "tewaskan",
   "texas",
   "text",
-  "texte",
   "textilia",
   "textilis",
   "teya",
