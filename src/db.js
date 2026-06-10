@@ -40234,7 +40234,6 @@ export default [
   "kebaruan",
   "kebas",
   "kebasaan",
-  "kebasah",
   "kebasahan",
   "kebasian",
   "kebaskan",
