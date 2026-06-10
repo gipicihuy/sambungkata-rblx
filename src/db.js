@@ -102738,7 +102738,6 @@ export default [
   "terputuskan",
   "terputusnya",
   "terra",
-  "terrible",
   "terrorizer",
   "ters",
   "tersabar",
