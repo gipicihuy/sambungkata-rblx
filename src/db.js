@@ -74164,6 +74164,7 @@ export default [
   "pagari",
   "pagarkan",
   "pagarnya",
+  "pagarwesi",
   "pagas",
   "pagat",
   "pagebluk",
