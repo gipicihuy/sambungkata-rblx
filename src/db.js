@@ -41023,6 +41023,7 @@ export default [
   "keik",
   "keikatan",
   "keikhlasan",
+  "keiki",
   "keikliman",
   "keikutan",
   "keikutcampuran",
