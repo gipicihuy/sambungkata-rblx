@@ -90938,6 +90938,7 @@ export default [
   "sarafnya",
   "saragan",
   "sarageni",
+  "sarah",
   "sarahan",
   "sarai",
   "saraju",
