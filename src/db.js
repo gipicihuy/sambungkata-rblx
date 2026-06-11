@@ -25087,6 +25087,7 @@ export default [
   "ditetaskan",
   "diteteskan",
   "ditewaskan",
+  "dithubad",
   "ditiadakan",
   "ditiarapkan",
   "ditiduri",
