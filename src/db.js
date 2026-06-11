@@ -67536,6 +67536,7 @@ export default [
   "momuna",
   "mon",
   "mona",
+  "monabong",
   "monad",
   "monak",
   "monako",
