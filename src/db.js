@@ -72144,7 +72144,6 @@ export default [
   "nyal",
   "nyala",
   "nyalah",
-  "nyalak",
   "nyalakan",
   "nyalang",
   "nyalanya",
