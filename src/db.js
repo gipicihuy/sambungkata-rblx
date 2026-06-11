@@ -52179,6 +52179,7 @@ export default [
   "lutam",
   "lutan",
   "lutar",
+  "lutare",
   "lutas",
   "lutein",
   "luter",
