@@ -66601,6 +66601,7 @@ export default [
   "meubel",
   "meul",
   "meulaboh",
+  "meulampu",
   "meunasah",
   "meurah",
   "mev",
