@@ -103661,6 +103661,7 @@ export default [
   "tikai",
   "tikaian",
   "tikal",
+  "tikalas",
   "tikam",
   "tikaman",
   "tikan",
