@@ -26864,6 +26864,7 @@ export default [
   "ektotermik",
   "ektraversi",
   "ektropik",
+  "ektropion",
   "eku",
   "ekuador",
   "ekualisasi",
