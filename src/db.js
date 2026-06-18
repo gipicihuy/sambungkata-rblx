@@ -35648,6 +35648,7 @@ export default [
   "inggang",
   "inggeris",
   "inggil",
+  "inggit",
   "inggris",
   "inggrisan",
   "inggrisraya",
