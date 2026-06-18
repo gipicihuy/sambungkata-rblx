@@ -49268,6 +49268,8 @@ export default [
   "lantur",
   "lanturan",
   "lanud",
+  "lanudad",
+  "lanudal",
   "lanugo",
   "lanula",
   "lanuma",
