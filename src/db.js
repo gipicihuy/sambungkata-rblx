@@ -3594,6 +3594,7 @@ export default [
   "anjangsana",
   "anjangsono",
   "anjar",
+  "anjarung",
   "anjasmoro",
   "anjat",
   "anjay",
