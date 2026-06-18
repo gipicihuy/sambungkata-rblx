@@ -49230,6 +49230,8 @@ export default [
   "lansiran",
   "lansium",
   "lanskap",
+  "lanso",
+  "lansoprazol",
   "lant",
   "lanta",
   "lantah",
