@@ -11291,7 +11291,6 @@ export default [
   "berloncat",
   "berloncatan",
   "berlonggok",
-  "berlonggoklonggok",
   "berlontaran",
   "berlopak",
   "berloreng",
