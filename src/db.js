@@ -27804,6 +27804,7 @@ export default [
   "erigo",
   "erik",
   "ering",
+  "eringo",
   "erioglossum",
   "erioglosum",
   "eriopetala",
