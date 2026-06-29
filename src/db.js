@@ -34523,7 +34523,6 @@ export default [
   "horak",
   "horas",
   "horay",
-  "horay!",
   "hordeng",
   "hordeum",
   "hore",
