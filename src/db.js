@@ -104581,6 +104581,8 @@ export default [
   "toris",
   "torisalo",
   "torisme",
+  "torispheric",
+  "torispherical",
   "torium",
   "torka",
   "torm",
