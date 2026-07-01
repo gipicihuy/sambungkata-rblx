@@ -99780,6 +99780,7 @@ export default [
   "taulan",
   "tauliah",
   "tauman",
+  "taumatawhakatangihangakoauauotamateapokaiwhenuakitanatahu",
   "taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu",
   "taun",
   "taung",
