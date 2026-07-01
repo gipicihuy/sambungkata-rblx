@@ -99781,7 +99781,6 @@ export default [
   "tauliah",
   "tauman",
   "taumatawhakatangihangakoauauotamateapokaiwhenuakitanatahu",
-  "taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu",
   "taun",
   "taung",
   "taup",
