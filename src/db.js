@@ -106622,6 +106622,7 @@ export default [
   "ungsari",
   "ungsi",
   "ungsikan",
+  "ungsir",
   "ungsur",
   "ungsuran",
   "ungti",
