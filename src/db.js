@@ -11516,6 +11516,7 @@ export default [
   "bermutasi",
   "bermutu",
   "bermuwajahah",
+  "bern",
   "bernada",
   "bernadi",
   "bernafas",
