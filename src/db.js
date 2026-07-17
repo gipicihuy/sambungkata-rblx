@@ -14481,6 +14481,7 @@ export default [
   "blokir",
   "blokiran",
   "bloknot",
+  "blombongan",
   "blondo",
   "blondos",
   "blong",
