@@ -89758,6 +89758,7 @@ export default [
   "rit",
   "rita",
   "ritak",
+  "ritardando",
   "ritase",
   "ritel",
   "riteler",
