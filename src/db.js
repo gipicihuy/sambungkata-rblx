@@ -26163,6 +26163,7 @@ export default [
   "dunsanak",
   "duo",
   "duod",
+  "duodenogastritis",
   "duodenum",
   "duodesimal",
   "duodrama",
