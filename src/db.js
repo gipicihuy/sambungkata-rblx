@@ -5483,6 +5483,7 @@ export default [
   "atika",
   "atikifobia",
   "atil",
+  "ating",
   "atinggola",
   "atipikal",
   "atir",
