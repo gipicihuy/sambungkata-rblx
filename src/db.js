@@ -29076,6 +29076,7 @@ export default [
   "flofela",
   "flogopit",
   "floit",
+  "floksinausinihilipilifikasipaktapertahananatlantikutaraencephaloduroarteriosynangiosis",
   "flokulan",
   "flokulasi",
   "flokus",
