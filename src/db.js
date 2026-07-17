@@ -39378,6 +39378,7 @@ export default [
   "kangenan",
   "kangguru",
   "kangi",
+  "kangihu",
   "kangin",
   "kangka",
   "kangkang",
