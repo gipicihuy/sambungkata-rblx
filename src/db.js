@@ -104418,6 +104418,7 @@ export default [
   "tipuan",
   "tipunya",
   "tipus",
+  "tipuse",
   "tiq",
   "tir",
   "tira",
