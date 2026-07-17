@@ -89049,6 +89049,7 @@ export default [
   "republik",
   "republikan",
   "republikceko",
+  "republikdemokratikfederaletiopia",
   "republikdominika",
   "republiken",
   "republikserbiabosnia",
