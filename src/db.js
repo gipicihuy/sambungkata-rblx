@@ -3511,6 +3511,7 @@ export default [
   "angropoid",
   "angrungkebi",
   "angsa",
+  "angsabatu",
   "angsana",
   "angsang",
   "angsar",
