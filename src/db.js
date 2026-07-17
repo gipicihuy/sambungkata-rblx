@@ -99593,6 +99593,7 @@ export default [
   "tanah",
   "tanahnya",
   "tanai",
+  "tanaiyang",
   "tanak",
   "tanakan",
   "tanakh",
