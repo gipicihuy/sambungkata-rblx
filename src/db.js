@@ -51454,7 +51454,6 @@ export default [
   "litigasi",
   "litik",
   "litikafobia",
-  "litikofobia",
   "litioforit",
   "litir",
   "litis",
