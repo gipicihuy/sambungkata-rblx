@@ -14588,6 +14588,7 @@ export default [
   "bodhisatwa",
   "bodi",
   "bodianus",
+  "bodin",
   "bodo",
   "bodoh",
   "bodohnya",
