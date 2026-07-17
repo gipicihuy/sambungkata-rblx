@@ -107802,6 +107802,7 @@ export default [
   "vrah",
   "vrahoto",
   "vrijdenker",
+  "vrijspaark",
   "vug",
   "vul",
   "vulcanism",
