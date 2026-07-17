@@ -51520,6 +51520,7 @@ export default [
   "liwet",
   "liyan",
   "lizat",
+  "ljubljana",
   "lkir",
   "lkt",
   "lman",
