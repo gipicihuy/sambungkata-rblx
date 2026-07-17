@@ -36940,6 +36940,7 @@ export default [
   "itarad",
   "itaraf",
   "itas",
+  "itasya",
   "itb",
   "ite",
   "item",
