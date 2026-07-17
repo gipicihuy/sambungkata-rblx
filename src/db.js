@@ -25852,7 +25852,6 @@ export default [
   "dotu",
   "dotuk",
   "dou",
-  "double",
   "douche",
   "doula",
   "douroneusis",
