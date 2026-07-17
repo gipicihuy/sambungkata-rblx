@@ -89527,6 +89527,7 @@ export default [
   "riksa",
   "riksaan",
   "riksakeun",
+  "riksauji",
   "rikso",
   "rikuh",
   "rikus",
