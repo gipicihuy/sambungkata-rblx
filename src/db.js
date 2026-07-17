@@ -14572,6 +14572,7 @@ export default [
   "bocahan",
   "bochmeria",
   "bocil",
+  "bocimi",
   "bocok",
   "bocokok",
   "bocong",
