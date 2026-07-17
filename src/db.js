@@ -34075,6 +34075,7 @@ export default [
   "hidrokinematika",
   "hidrokinetika",
   "hidroklorida",
+  "hidroklorofluorokarbonetnopsikofarmakologis",
   "hidrokoloid",
   "hidrokori",
   "hidrokortison",
