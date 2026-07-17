@@ -45531,6 +45531,7 @@ export default [
   "kismat",
   "kisme",
   "kismet",
+  "kismetik",
   "kismis",
   "kiso",
   "kisruh",
