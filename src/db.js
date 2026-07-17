@@ -3537,6 +3537,7 @@ export default [
   "angur",
   "angus",
   "angustifolia",
+  "angustopila",
   "angut",
   "angwain",
   "anhedonia",
