@@ -86973,6 +86973,7 @@ export default [
   "punai",
   "punakawan",
   "punan",
+  "punanaput",
   "punani",
   "punar",
   "punarbawa",
