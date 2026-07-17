@@ -97358,6 +97358,7 @@ export default [
   "stnk",
   "sto",
   "stock",
+  "stockholm",
   "stockpile",
   "stof",
   "stoi",
