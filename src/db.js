@@ -73998,6 +73998,7 @@ export default [
   "ortopedi",
   "ortopedis",
   "ortoreksia",
+  "ortorfikasi",
   "ortorombik",
   "ortostatik",
   "ortotik",
