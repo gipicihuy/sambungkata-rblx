@@ -29079,6 +29079,7 @@ export default [
   "flofela",
   "flogopit",
   "floit",
+  "floksinausinihilipilifikasi",
   "flokulan",
   "flokulasi",
   "flokus",
