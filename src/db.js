@@ -1818,6 +1818,7 @@ export default [
   "akuif",
   "akuifer",
   "akuik",
+  "akuiklud",
   "akuilah",
   "akuisisi",
   "akuk",
