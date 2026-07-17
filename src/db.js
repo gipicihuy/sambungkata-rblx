@@ -70268,6 +70268,8 @@ export default [
   "neurotologi",
   "neurotransmiter",
   "neus",
+  "neustin",
+  "neuston",
   "neustonologi",
   "neut",
   "neuter",
