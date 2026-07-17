@@ -106673,6 +106673,7 @@ export default [
   "unionis",
   "unipas",
   "unir",
+  "unirepubliksosialissoviet",
   "unirrigated",
   "unis",
   "uniseks",
