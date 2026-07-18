@@ -88603,6 +88603,7 @@ export default [
   "reforestasi",
   "reformasi",
   "reformatif",
+  "reformator",
   "reformis",
   "reformisme",
   "reformulasi",
