@@ -68014,6 +68014,7 @@ export default [
   "monir",
   "monis",
   "monisme",
+  "monistik",
   "monit",
   "monitor",
   "monitoring",
