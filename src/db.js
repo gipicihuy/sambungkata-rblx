@@ -38744,6 +38744,8 @@ export default [
   "kadil",
   "kadim",
   "kadin",
+  "kadinkes",
+  "kadinsos",
   "kadipat",
   "kadipaten",
   "kadir",
