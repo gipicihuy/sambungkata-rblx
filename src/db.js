@@ -97389,6 +97389,7 @@ export default [
   "sternis",
   "sternisasi",
   "sternit",
+  "sternokleidomastoideus",
   "sternurs",
   "steroid",
   "steroidal",
