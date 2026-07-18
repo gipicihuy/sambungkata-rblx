@@ -98258,6 +98258,7 @@ export default [
   "suntuk",
   "sunu",
   "sunukung",
+  "sunyaruri",
   "sunyata",
   "sunyi",
   "suolo",
