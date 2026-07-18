@@ -16112,6 +16112,7 @@ export default [
   "calong",
   "calonkan",
   "calonneron",
+  "caloperdrix",
   "calophylla",
   "calophyllum",
   "calotes",
