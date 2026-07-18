@@ -3936,6 +3936,7 @@ export default [
   "antibodi",
   "antibusa",
   "anticadar",
+  "anticardiff",
   "anticemas",
   "antid",
   "antidegeneratif",
