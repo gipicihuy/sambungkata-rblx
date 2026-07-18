@@ -90205,6 +90205,7 @@ export default [
   "rosok",
   "rosokan",
   "rosol",
+  "rosong",
   "rosot",
   "rospora",
   "rostat",
