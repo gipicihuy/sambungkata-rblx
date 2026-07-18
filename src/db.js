@@ -4193,6 +4193,7 @@ export default [
   "antrasit",
   "antre",
   "antrean",
+  "antrede",
   "antri",
   "antrian",
   "antrocarpus",
