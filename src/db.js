@@ -102904,6 +102904,7 @@ export default [
   "termimpi",
   "termin",
   "terminal",
+  "terminaldeoxynucleotidyltransferase",
   "terminalia",
   "terminalis",
   "terminasi",
