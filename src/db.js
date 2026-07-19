@@ -68375,7 +68375,6 @@ export default [
   "movunja",
   "mowewe",
   "mowing",
-  "moxo",
   "moyah",
   "moyak",
   "moyang",
