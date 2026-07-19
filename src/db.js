@@ -86927,7 +86927,6 @@ export default [
   "puerpera",
   "puerperium",
   "puerto",
-  "pueyd",
   "pugak",
   "pugala",
   "pugar",
