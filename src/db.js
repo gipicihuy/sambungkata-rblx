@@ -46352,6 +46352,7 @@ export default [
   "koman",
   "komandan",
   "komandani",
+  "komandante",
   "komandem",
   "komandemen",
   "komandit",
