@@ -107198,6 +107198,7 @@ export default [
   "uvu",
   "uvula",
   "uvular",
+  "uvulopalatofaringoplasti",
   "uwa",
   "uwak",
   "uwar",
