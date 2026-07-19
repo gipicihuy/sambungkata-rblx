@@ -35739,6 +35739,7 @@ export default [
   "indehoi",
   "indekos",
   "indeks",
+  "indeksikalitas",
   "inden",
   "indentasi",
   "independen",
