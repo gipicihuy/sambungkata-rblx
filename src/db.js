@@ -37061,7 +37061,6 @@ export default [
   "jagabaya",
   "jagabela",
   "jagad",
-  "jagaddhita",
   "jagal",
   "jagalah",
   "jagalan",
