@@ -72630,6 +72630,7 @@ export default [
   "nyala",
   "nyalah",
   "nyalakan",
+  "nyalamangsa",
   "nyalang",
   "nyalanya",
   "nyalar",
