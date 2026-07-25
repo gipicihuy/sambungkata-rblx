@@ -70105,6 +70105,7 @@ export default [
   "negangkan",
   "negara",
   "negarakertagama",
+  "negarakesatuanrepublikindonesia",
   "negaranya",
   "negarawan",
   "negari",
