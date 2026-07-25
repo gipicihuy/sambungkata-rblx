@@ -28218,6 +28218,7 @@ export default [
   "euseksual",
   "eusideroxylon",
   "eusinantropus",
+  "eusistolisme",
   "eusporangium",
   "eustachia",
   "eustachius",
