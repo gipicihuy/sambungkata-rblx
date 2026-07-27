@@ -28290,7 +28290,6 @@ export default [
   "excoecaria",
   "exe",
   "exelse",
-  "exemption",
   "exhibition",
   "exocarpus",
   "exocecaria",
