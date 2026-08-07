@@ -50298,6 +50298,7 @@ export default [
   "latif",
   "latifolia",
   "latifolius",
+  "latifundia",
   "latifundium",
   "latih",
   "latihan",
