@@ -50220,6 +50220,8 @@ export default [
   "larva",
   "larvanya",
   "larvarium",
+  "larvasida",
+  "larvasidasi",
   "larvatus",
   "larwo",
   "las",
