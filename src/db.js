@@ -71608,6 +71608,7 @@ export default [
   "nigella",
   "niger",
   "nigeria",
+  "nigersaurus",
   "night",
   "nigma",
   "nigra",
