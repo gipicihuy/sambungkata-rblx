@@ -51578,6 +51578,7 @@ export default [
   "likah",
   "likan",
   "likanaka",
+  "likang",
   "likantropi",
   "likas",
   "likasi",
