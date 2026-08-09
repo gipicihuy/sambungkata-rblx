@@ -92674,6 +92674,7 @@ export default [
   "satyalencana",
   "satyaloka",
   "satyawacana",
+  "satyayuga",
   "satyrus",
   "sau",
   "saucu",
