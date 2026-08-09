@@ -92669,6 +92669,7 @@ export default [
   "saturometer",
   "satusetengah",
   "satwa",
+  "satwaboga",
   "satwacarita",
   "satyagraha",
   "satyalencana",
