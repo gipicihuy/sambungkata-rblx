@@ -101365,6 +101365,7 @@ export default [
   "tegaknya",
   "tegal",
   "tegalan",
+  "tegalrejo",
   "tegang",
   "tegangan",
   "tegangkan",
