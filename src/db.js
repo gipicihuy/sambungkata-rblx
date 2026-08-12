@@ -32294,6 +32294,8 @@ export default [
   "glanggem",
   "glans",
   "glap",
+  "glapan",
+  "glapansari",
   "glas",
   "glasial",
   "glasiasi",
