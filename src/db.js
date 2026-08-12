@@ -2876,6 +2876,7 @@ export default [
   "amm",
   "amma",
   "ammabakdu",
+  "ammatoa",
   "ammeter",
   "ammi",
   "amn",
