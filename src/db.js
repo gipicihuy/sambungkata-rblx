@@ -31694,6 +31694,7 @@ export default [
   "geranggang",
   "gerangsang",
   "geraniaceae",
+  "geraniol",
   "geranium",
   "gerantak",
   "gerantang",
