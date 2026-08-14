@@ -44143,6 +44143,7 @@ export default [
   "kepulangan",
   "kepulasan",
   "kepulauan",
+  "kepulauansiautagulandangbiaro",
   "kepulihan",
   "kepunahan",
   "kepundan",
