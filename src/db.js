@@ -100284,6 +100284,7 @@ export default [
   "sung",
   "sunga",
   "sungai",
+  "sungaiasam",
   "sungaidua",
   "sungainya",
   "sungaipenuh",
