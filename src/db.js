@@ -26038,6 +26038,7 @@ export default [
   "divermak",
   "divernis",
   "diversifikasi",
+  "diversifolia",
   "diversitas",
   "divertikel",
   "divestasi",
