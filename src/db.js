@@ -51169,6 +51169,7 @@ export default [
   "lawsonia",
   "lawu",
   "lawung",
+  "laxatum",
   "laxiflora",
   "lay",
   "laya",
