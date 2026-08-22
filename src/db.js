@@ -113326,6 +113326,7 @@ export default [
   "xixianykus",
   "xixiasaurus",
   "xixiposaurus",
+  "xolotl",
   "xuanhanosaurus",
   "xuanhuaceratops",
   "xuanhuasaurus",
