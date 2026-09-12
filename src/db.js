@@ -111287,6 +111287,7 @@ export default [
   "unyai",
   "unyil",
   "unyu",
+  "uongku",
   "upa",
   "upaboga",
   "upacara",
