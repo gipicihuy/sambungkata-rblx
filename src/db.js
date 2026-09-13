@@ -38696,6 +38696,7 @@ export default [
   "itarad",
   "itaraf",
   "itas",
+  "itasca",
   "itasya",
   "itb",
   "ite",
