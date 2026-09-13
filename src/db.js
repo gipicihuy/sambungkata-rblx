@@ -85,6 +85,7 @@ export default [
   "ablutofobia",
   "abnormal",
   "aboa",
+  "abobotulinumtoksina",
   "abolmin",
   "abomasitis",
   "abomasum",
