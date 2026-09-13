@@ -313,6 +313,33 @@ export default function Main(){
     alphaScrollTimer.current=setTimeout(()=>setAlphaIsScrolling(false),900)
   }
 
+  const toggleAlphaExpand=()=>{
+    const el=alphaJumpRef.current
+    if(!el){setAlphaExpanded(v=>!v);return}
+    const startH=el.getBoundingClientRect().height
+    el.style.transition='none'
+    el.style.height=startH+'px'
+    void el.offsetHeight
+    setAlphaExpanded(prev=>{
+      const next=!prev
+      requestAnimationFrame(()=>{
+        requestAnimationFrame(()=>{
+          const endH=el.scrollHeight
+          el.style.transition='height .28s cubic-bezier(.4,0,.2,1)'
+          el.style.height=endH+'px'
+          const onEnd=(e)=>{
+            if(e.propertyName!=='height')return
+            el.style.height=''
+            el.style.transition=''
+            el.removeEventListener('transitionend',onEnd)
+          }
+          el.addEventListener('transitionend',onEnd)
+        })
+      })
+      return next
+    })
+  }
+
   const changeSort=(newSort)=>{
     if(newSort===sortMode)return
     setSortMode(newSort)
@@ -542,7 +569,7 @@ export default function Main(){
                 }}>{l.toUpperCase()}</button>
               ))}
             </div>
-            <button className="alpha-jump-toggle" onClick={()=>setAlphaExpanded(v=>!v)} aria-label={alphaExpanded?'Ciutkan daftar huruf':'Perluas daftar huruf'}>
+            <button className="alpha-jump-toggle" onClick={toggleAlphaExpand} aria-label={alphaExpanded?'Ciutkan daftar huruf':'Perluas daftar huruf'}>
               <span className="material-icons-round">{alphaExpanded?'expand_less':'expand_more'}</span>
             </button>
           </div>
