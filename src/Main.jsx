@@ -395,7 +395,7 @@ export default function Main(){
             <img src="sambungkata.jpg" alt="logo" style={{width:'38px',height:'38px',borderRadius:'8px',objectFit:'cover',flexShrink:0}}/>
             <div>
               <h1>Sambung Kata</h1>
-              <div className="dev-tag">— by <a className="dev-link" href="https://tiktok.com/@givydev" target="_blank" rel="noopener">@Givyx</a></div>
+              <div className="dev-tag">— by <a className="dev-link" href="https://tiktok.com/@givydev" target="_blank" rel="noopener">@givydev</a></div>
             </div>
           </div>
           <div className="info-block">
