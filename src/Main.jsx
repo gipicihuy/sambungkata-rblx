@@ -36,6 +36,7 @@ export default function Main(){
   const [alphaExpanded,setAlphaExpanded]=useState(false)
   const [alphaScrollable,setAlphaScrollable]=useState(false)
   const [alphaScrollProgress,setAlphaScrollProgress]=useState(0)
+  const [alphaThumbRatio,setAlphaThumbRatio]=useState(0.4)
   const [currentPage,setCurrentPage]=useState(1)
   const [favWords,setFavWords]=useState(()=>{try{return JSON.parse(localStorage.getItem('sk_favs')||'[]')}catch{return[]}})
   const [hiddenWords,setHiddenWords]=useState(()=>{try{return new Set(JSON.parse(localStorage.getItem('sk_hidden')||'[]'))}catch{return new Set()}})
@@ -311,8 +312,12 @@ export default function Main(){
     const el=alphaJumpRef.current
     if(!el){setAlphaScrollable(false);return}
     const max=el.scrollWidth-el.clientWidth
-    setAlphaScrollable(max>4)
-    setAlphaScrollProgress(max>4?el.scrollLeft/max:0)
+    const scrollable=max>4
+    setAlphaScrollable(scrollable)
+    if(!scrollable)return
+    const ratio=Math.min(0.55,Math.max(0.22,el.clientWidth/el.scrollWidth))
+    setAlphaThumbRatio(ratio)
+    setAlphaScrollProgress(el.scrollLeft/max)
   }
 
   useEffect(()=>{
@@ -550,7 +555,7 @@ export default function Main(){
             </div>
             {!alphaExpanded&&alphaScrollable&&(
               <div className="alpha-scroll-indicator">
-                <div className="alpha-scroll-thumb" style={{left:`${alphaScrollProgress*(100-35)}%`}}></div>
+                <div className="alpha-scroll-thumb" style={{width:`${alphaThumbRatio*100}%`,left:`${alphaScrollProgress*(100-alphaThumbRatio*100)}%`}}></div>
               </div>
             )}
             <button className="alpha-jump-toggle" onClick={()=>setAlphaExpanded(v=>!v)} aria-label={alphaExpanded?'Ciutkan daftar huruf':'Perluas daftar huruf'}>
