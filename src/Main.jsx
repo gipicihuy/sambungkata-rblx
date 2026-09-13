@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect,useLayoutEffect, useRef } from 'react'
 import { _k, _e } from './db.js'
 import './Main.css'
 
@@ -61,6 +61,8 @@ export default function Main(){
   const resultRef=useRef(null)
   const alphaJumpRef=useRef(null)
   const alphaScrollTimer=useRef(null)
+  const alphaPrevHeight=useRef(null)
+  const alphaFirstRun=useRef(true)
 
   useEffect(()=>{
     const d=new Uint8Array(_e.length)
@@ -315,30 +317,36 @@ export default function Main(){
 
   const toggleAlphaExpand=()=>{
     const el=alphaJumpRef.current
-    if(!el){setAlphaExpanded(v=>!v);return}
-    const startH=el.getBoundingClientRect().height
+    if(el){
+      alphaPrevHeight.current=el.getBoundingClientRect().height
+      el.style.transition='none'
+      el.style.height=alphaPrevHeight.current+'px'
+      void el.offsetHeight
+    }
+    alphaFirstRun.current=false
+    setAlphaExpanded(v=>!v)
+  }
+
+  useLayoutEffect(()=>{
+    const el=alphaJumpRef.current
+    if(!el||alphaFirstRun.current)return
+    const startH=alphaPrevHeight.current??el.scrollHeight
+    const endH=el.scrollHeight
     el.style.transition='none'
     el.style.height=startH+'px'
     void el.offsetHeight
-    setAlphaExpanded(prev=>{
-      const next=!prev
-      requestAnimationFrame(()=>{
-        requestAnimationFrame(()=>{
-          const endH=el.scrollHeight
-          el.style.transition='height .28s cubic-bezier(.4,0,.2,1)'
-          el.style.height=endH+'px'
-          const onEnd=(e)=>{
-            if(e.propertyName!=='height')return
-            el.style.height=''
-            el.style.transition=''
-            el.removeEventListener('transitionend',onEnd)
-          }
-          el.addEventListener('transitionend',onEnd)
-        })
-      })
-      return next
+    requestAnimationFrame(()=>{
+      el.style.transition='height .28s cubic-bezier(.4,0,.2,1)'
+      el.style.height=endH+'px'
+      const onEnd=(e)=>{
+        if(e.propertyName!=='height')return
+        el.style.height=''
+        el.style.transition=''
+        el.removeEventListener('transitionend',onEnd)
+      }
+      el.addEventListener('transitionend',onEnd)
     })
-  }
+  },[alphaExpanded])
 
   const changeSort=(newSort)=>{
     if(newSort===sortMode)return
