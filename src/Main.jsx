@@ -34,6 +34,8 @@ export default function Main(){
 
   const [sortMode,setSortMode]=useState(()=>{try{return localStorage.getItem('sk_sort')||'abjad'}catch{return 'abjad'}})
   const [alphaExpanded,setAlphaExpanded]=useState(false)
+  const [alphaScrollable,setAlphaScrollable]=useState(false)
+  const [alphaScrollProgress,setAlphaScrollProgress]=useState(0)
   const [currentPage,setCurrentPage]=useState(1)
   const [favWords,setFavWords]=useState(()=>{try{return JSON.parse(localStorage.getItem('sk_favs')||'[]')}catch{return[]}})
   const [hiddenWords,setHiddenWords]=useState(()=>{try{return new Set(JSON.parse(localStorage.getItem('sk_hidden')||'[]'))}catch{return new Set()}})
@@ -58,6 +60,7 @@ export default function Main(){
   const inputAwalRef=useRef(null)
   const inputAkhirRef=useRef(null)
   const resultRef=useRef(null)
+  const alphaJumpRef=useRef(null)
 
   useEffect(()=>{
     const d=new Uint8Array(_e.length)
@@ -304,6 +307,18 @@ export default function Main(){
   const totalPages=Math.ceil(vis.length/PAGE_SIZE)
   const showPagination=totalPages>1
 
+  const checkAlphaScroll=()=>{
+    const el=alphaJumpRef.current
+    if(!el){setAlphaScrollable(false);return}
+    const max=el.scrollWidth-el.clientWidth
+    setAlphaScrollable(max>4)
+    setAlphaScrollProgress(max>4?el.scrollLeft/max:0)
+  }
+
+  useEffect(()=>{
+    requestAnimationFrame(checkAlphaScroll)
+  },[hasil,mode,alphaExpanded])
+
   const changeSort=(newSort)=>{
     if(newSort===sortMode)return
     setSortMode(newSort)
@@ -515,7 +530,7 @@ export default function Main(){
         const letters='abcdefghijklmnopqrstuvwxyz'.split('').filter(l=>l in letterPage)
         return (
           <div className="alpha-jump-wrap visible">
-            <div className={`alpha-jump${alphaExpanded?' expanded':''}`}>
+            <div className={`alpha-jump${alphaExpanded?' expanded':''}`} ref={alphaJumpRef} onScroll={checkAlphaScroll}>
               {letters.map(l=>(
                 <button key={l} className="jump-btn" onClick={()=>{
                   const pg=letterPage[l]
@@ -533,6 +548,11 @@ export default function Main(){
                 }}>{l.toUpperCase()}</button>
               ))}
             </div>
+            {!alphaExpanded&&alphaScrollable&&(
+              <div className="alpha-scroll-indicator">
+                <div className="alpha-scroll-thumb" style={{left:`${alphaScrollProgress*(100-35)}%`}}></div>
+              </div>
+            )}
             <button className="alpha-jump-toggle" onClick={()=>setAlphaExpanded(v=>!v)} aria-label={alphaExpanded?'Ciutkan daftar huruf':'Perluas daftar huruf'}>
               <span className="material-icons-round">{alphaExpanded?'expand_less':'expand_more'}</span>
             </button>
