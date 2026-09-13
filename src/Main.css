@@ -66,7 +66,7 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .trend-chip.hot{background:rgba(255,61,87,0.07);border-color:rgba(255,61,87,0.2);color:#ff8fa3;}
 .alpha-jump-wrap{display:none;flex-direction:column;background:#1c1e21;flex-shrink:0;}
 .alpha-jump-wrap.visible:not(:empty){display:flex;border-bottom:1px solid var(--border);}
-.alpha-jump{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:5px;padding:8px 14px;}
+.alpha-jump{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:5px;padding:8px 14px;transition:height .28s cubic-bezier(.4,0,.2,1);}
 .alpha-jump:not(.expanded){scrollbar-width:thin;scrollbar-color:transparent transparent;}
 .alpha-jump:not(.expanded)::-webkit-scrollbar{height:3px;}
 .alpha-jump:not(.expanded)::-webkit-scrollbar-track{background:transparent;}
