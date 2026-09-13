@@ -326,9 +326,10 @@ export default function Main(){
     const el=alphaJumpRef.current
     if(!el||alphaFirstRun.current||alphaPrevHeight.current==null)return
     const startH=alphaPrevHeight.current
+    el.style.height='auto'
+    const endH=el.scrollHeight
     el.style.height=startH+'px'
     void el.offsetHeight
-    const endH=el.scrollHeight
     el.style.height=endH+'px'
     const onEnd=(e)=>{
       if(e.propertyName!=='height')return
