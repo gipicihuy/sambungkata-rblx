@@ -8,6 +8,12 @@ function getHardness(w){if(!w)return 99;const c=w[w.length-1].toLowerCase();retu
 
 function lowerBound(arr,t){let l=0,r=arr.length;while(l<r){let m=(l+r)>>1;if(arr[m]<t)l=m+1;else r=m}return l}
 
+function applySort(arr,sortMode){
+  if(sortMode==='pendek')return arr.sort((a,b)=>a.length-b.length||a.localeCompare(b))
+  if(sortMode==='nyerang')return arr.sort((a,b)=>getHardness(a)-getHardness(b)||a.localeCompare(b))
+  return arr.sort((a,b)=>a.localeCompare(b))
+}
+
 function showBsToast(id,delay=6000){
   const el=document.getElementById(id)
   if(!el||!window.bootstrap)return
@@ -26,6 +32,7 @@ export default function Main(){
   const [lastInputAwal,setLastInputAwal]=useState('')
   const [lastInputAkhir,setLastInputAkhir]=useState('')
 
+  const [sortMode,setSortMode]=useState(()=>{try{return localStorage.getItem('sk_sort')||'abjad'}catch{return 'abjad'}})
   const [currentPage,setCurrentPage]=useState(1)
   const [favWords,setFavWords]=useState(()=>{try{return JSON.parse(localStorage.getItem('sk_favs')||'[]')}catch{return[]}})
   const [hiddenWords,setHiddenWords]=useState(()=>{try{return new Set(JSON.parse(localStorage.getItem('sk_hidden')||'[]'))}catch{return new Set()}})
@@ -82,6 +89,7 @@ export default function Main(){
     }).catch(()=>{})
   },[])
 
+  useEffect(()=>{localStorage.setItem('sk_sort',sortMode)},[sortMode])
   useEffect(()=>{localStorage.setItem('sk_favs',JSON.stringify(favWords))},[favWords])
   useEffect(()=>{localStorage.setItem('sk_hidden',JSON.stringify([...hiddenWords]))},[hiddenWords])
   useEffect(()=>{localStorage.setItem('sk_reported',JSON.stringify([...reportedWords]))},[reportedWords])
@@ -178,11 +186,11 @@ export default function Main(){
 
     if(mode==='awal'){
       let res=database.slice(lowerBound(database,input),lowerBound(database,input+'zzz'))
-      res.sort((a,b)=>getHardness(a)-getHardness(b))
+      applySort(res,sortMode)
       setHasil(res)
     }else{
       let res=database.filter(k=>k.endsWith(input))
-      res.sort((a,b)=>a.localeCompare(b))
+      applySort(res,sortMode)
       setHasil(res)
     }
   }
@@ -202,7 +210,7 @@ export default function Main(){
       if(rawA)return k.startsWith(rawA)
       return k.endsWith(rawB)
     })
-    res.sort((a,b)=>a.localeCompare(b))
+    applySort(res,sortMode)
     setHasil(res)
   }
 
@@ -295,6 +303,13 @@ export default function Main(){
   const totalPages=Math.ceil(vis.length/PAGE_SIZE)
   const showPagination=totalPages>1
 
+  const changeSort=(newSort)=>{
+    if(newSort===sortMode)return
+    setSortMode(newSort)
+    setCurrentPage(1)
+    setHasil(prev=>applySort([...prev],newSort))
+  }
+
   const switchMode=(newMode)=>{
     if(newMode===mode)return
     setCurrentPage(1)
@@ -317,12 +332,12 @@ export default function Main(){
         if(newMode==='awal'){
           setLastInputAwalMode(currentVal)
           let res=database.slice(lowerBound(database,currentVal),lowerBound(database,currentVal+'zzz'))
-          res.sort((a,b)=>getHardness(a)-getHardness(b))
+          applySort(res,sortMode)
           setHasil(res)
         } else {
           setLastInputAkhirMode(currentVal)
           let res=database.filter(k=>k.endsWith(currentVal))
-          res.sort((a,b)=>a.localeCompare(b))
+          applySort(res,sortMode)
           setHasil(res)
         }
       },0)
@@ -458,6 +473,17 @@ export default function Main(){
               <input ref={inputAkhirRef} type="text" maxLength="5" placeholder={dbReady?"Akhiran":"..."} onChange={cariKepit} onInput={(e)=>{if(e.target.value.length>5)e.target.value=e.target.value.slice(0,5)}}/>
               {lastInputAkhir&&<button className="input-clear visible" onClick={()=>{if(inputAkhirRef.current){inputAkhirRef.current.value='';setLastInputAkhir('');cariKepit()}}} title="Hapus">✕</button>}
             </div>
+          </div>
+        )}
+        {hasSearch&&vis.length>0&&(
+          <div className="sort-wrap">
+            <div className="sort-label">Urutkan hasil</div>
+            <div className="sort-chips">
+              <button className={`sort-chip${sortMode==='abjad'?' active':''}`} onClick={()=>changeSort('abjad')}>A-Z</button>
+              <button className={`sort-chip${sortMode==='pendek'?' active':''}`} onClick={()=>changeSort('pendek')}>Terpendek</button>
+              <button className={`sort-chip${sortMode==='nyerang'?' active':''}`} onClick={()=>changeSort('nyerang')}>Nyerang</button>
+            </div>
+            {sortMode==='nyerang'&&<div className="sort-hint">Nyerang = kasih kata yang susah dilanjut ke lawan</div>}
           </div>
         )}
       </div>
