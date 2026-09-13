@@ -48098,6 +48098,8 @@ export default [
   "kohl",
   "kohlea",
   "kohol",
+  "koholasae",
+  "koholimembona",
   "kohong",
   "kohor",
   "kohort",
