@@ -66,12 +66,9 @@ h1{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;line-height:1
 .trend-chip.hot{background:rgba(255,61,87,0.07);border-color:rgba(255,61,87,0.2);color:#ff8fa3;}
 .alpha-jump-wrap{display:none;flex-direction:column;background:#1c1e21;flex-shrink:0;}
 .alpha-jump-wrap.visible:not(:empty){display:flex;border-bottom:1px solid var(--border);}
-.alpha-jump-row{position:relative;}
 .alpha-jump{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:5px;padding:8px 14px;-ms-overflow-style:none;scrollbar-width:none;}
 .alpha-jump::-webkit-scrollbar{display:none;}
 .alpha-jump.expanded{flex-wrap:wrap;overflow-x:visible;}
-.alpha-jump-scroll-hint{position:absolute;top:0;right:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:flex-end;pointer-events:none;background:linear-gradient(to right,rgba(28,30,33,0),#1c1e21 75%);}
-.alpha-jump-scroll-hint .material-icons-round{font-size:18px;color:#64748b;margin-right:2px;}
 .alpha-jump-toggle{display:flex;align-items:center;justify-content:center;width:100%;padding:1px 0 5px;background:transparent;border:none;cursor:pointer;color:#64748b;}
 .alpha-jump-toggle:hover{color:var(--green);}
 .alpha-jump-toggle .material-icons-round{font-size:20px;}
