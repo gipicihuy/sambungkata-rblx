@@ -317,35 +317,25 @@ export default function Main(){
 
   const toggleAlphaExpand=()=>{
     const el=alphaJumpRef.current
-    if(el){
-      alphaPrevHeight.current=el.getBoundingClientRect().height
-      el.style.transition='none'
-      el.style.height=alphaPrevHeight.current+'px'
-      void el.offsetHeight
-    }
+    if(el)alphaPrevHeight.current=el.getBoundingClientRect().height
     alphaFirstRun.current=false
     setAlphaExpanded(v=>!v)
   }
 
   useLayoutEffect(()=>{
     const el=alphaJumpRef.current
-    if(!el||alphaFirstRun.current)return
-    const startH=alphaPrevHeight.current??el.scrollHeight
-    const endH=el.scrollHeight
-    el.style.transition='none'
+    if(!el||alphaFirstRun.current||alphaPrevHeight.current==null)return
+    const startH=alphaPrevHeight.current
     el.style.height=startH+'px'
     void el.offsetHeight
-    requestAnimationFrame(()=>{
-      el.style.transition='height .28s cubic-bezier(.4,0,.2,1)'
-      el.style.height=endH+'px'
-      const onEnd=(e)=>{
-        if(e.propertyName!=='height')return
-        el.style.height=''
-        el.style.transition=''
-        el.removeEventListener('transitionend',onEnd)
-      }
-      el.addEventListener('transitionend',onEnd)
-    })
+    const endH=el.scrollHeight
+    el.style.height=endH+'px'
+    const onEnd=(e)=>{
+      if(e.propertyName!=='height')return
+      el.style.height=''
+      el.removeEventListener('transitionend',onEnd)
+    }
+    el.addEventListener('transitionend',onEnd)
   },[alphaExpanded])
 
   const changeSort=(newSort)=>{
