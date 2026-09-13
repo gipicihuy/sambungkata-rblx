@@ -7,7 +7,7 @@
 Sambung Kata (sambungkata.web.id) adalah aplikasi web gratis yang berfungsi sebagai kamus dan database kata Bahasa Indonesia. Website ini dibuat khusus untuk membantu pemain mencari referensi kata saat bermain di map Roblox yang bernama "Sambung Kata".
 
 **Developer:** Givyx  
-**TikTok:** @_yudxx  
+**TikTok:** @givydev  
 **URL:** https://sambungkata.web.id  
 **Versi:** 2.0.0  
 **Bahasa:** Indonesia  
@@ -30,7 +30,7 @@ Website ini digunakan oleh pemain game Roblox Indonesia yang sedang bermain di m
 
 ## Developer
 
-Website ini dibuat dan dikelola oleh **Givyx**, developer Indonesia muda yang juga aktif membuat konten di TikTok (@_yudxx). Proyek ini adalah buatan pribadi (indie developer) yang sudah memiliki ribuan pengguna aktif.
+Website ini dibuat dan dikelola oleh **Givyx**, developer Indonesia muda yang juga aktif membuat konten di TikTok (@givydev). Proyek ini adalah buatan pribadi (indie developer) yang sudah memiliki ribuan pengguna aktif.
 
 ## Halaman
 
