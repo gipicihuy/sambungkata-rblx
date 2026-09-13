@@ -261,7 +261,7 @@ export default function Main(){
       const num=page+i+1
       const letter=w[0].toUpperCase()
       const items=[]
-      if(letter!==lastLetter){
+      if(sortMode==='abjad'&&letter!==lastLetter){
         lastLetter=letter
         items.push(<div key={'header-'+letter} className="alpha-header-row"><span className="alpha-badge">{letter}</span></div>)
       }
@@ -280,7 +280,7 @@ export default function Main(){
       const num=page+i+1
       const letter=w[0].toUpperCase()
       const items=[]
-      if(letter!==lastLetter){
+      if(sortMode==='abjad'&&letter!==lastLetter){
         lastLetter=letter
         items.push(<div key={'header-'+letter} className="alpha-header-row"><span className="alpha-badge">{letter}</span></div>)
       }
