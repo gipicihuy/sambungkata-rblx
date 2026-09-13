@@ -33,6 +33,7 @@ export default function Main(){
   const [lastInputAkhir,setLastInputAkhir]=useState('')
 
   const [sortMode,setSortMode]=useState(()=>{try{return localStorage.getItem('sk_sort')||'abjad'}catch{return 'abjad'}})
+  const [alphaExpanded,setAlphaExpanded]=useState(false)
   const [currentPage,setCurrentPage]=useState(1)
   const [favWords,setFavWords]=useState(()=>{try{return JSON.parse(localStorage.getItem('sk_favs')||'[]')}catch{return[]}})
   const [hiddenWords,setHiddenWords]=useState(()=>{try{return new Set(JSON.parse(localStorage.getItem('sk_hidden')||'[]'))}catch{return new Set()}})
@@ -513,23 +514,28 @@ export default function Main(){
         }
         const letters='abcdefghijklmnopqrstuvwxyz'.split('').filter(l=>l in letterPage)
         return (
-          <div className="alpha-jump visible">
-            {letters.map(l=>(
-              <button key={l} className="jump-btn" onClick={()=>{
-                const pg=letterPage[l]
-                setCurrentPage(pg)
-                resultRef.current?.scrollTo(0,0)
-                requestAnimationFrame(()=>{
-                  const headers=resultRef.current?.querySelectorAll('.alpha-header-row')
-                  if(!headers)return
-                  for(const h of headers){
-                    if(h.querySelector('.alpha-badge')?.textContent.toLowerCase()===l){
-                      h.scrollIntoView({block:'start',behavior:'smooth'});break
+          <div className="alpha-jump-wrap visible">
+            <div className={`alpha-jump${alphaExpanded?' expanded':''}`}>
+              {letters.map(l=>(
+                <button key={l} className="jump-btn" onClick={()=>{
+                  const pg=letterPage[l]
+                  setCurrentPage(pg)
+                  resultRef.current?.scrollTo(0,0)
+                  requestAnimationFrame(()=>{
+                    const headers=resultRef.current?.querySelectorAll('.alpha-header-row')
+                    if(!headers)return
+                    for(const h of headers){
+                      if(h.querySelector('.alpha-badge')?.textContent.toLowerCase()===l){
+                        h.scrollIntoView({block:'start',behavior:'smooth'});break
+                      }
                     }
-                  }
-                })
-              }}>{l.toUpperCase()}</button>
-            ))}
+                  })
+                }}>{l.toUpperCase()}</button>
+              ))}
+            </div>
+            <button className="alpha-jump-toggle" onClick={()=>setAlphaExpanded(v=>!v)} aria-label={alphaExpanded?'Ciutkan daftar huruf':'Perluas daftar huruf'}>
+              <span className="material-icons-round">{alphaExpanded?'expand_less':'expand_more'}</span>
+            </button>
           </div>
         )
       })()}
