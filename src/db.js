@@ -115249,7 +115249,6 @@ export default [
   "ylmethyl",
   "ylmethylpyrrolidine",
   "yloxy",
-  "ylthiometyl",
   "yme",
   "ynotata",
   "yodi",
