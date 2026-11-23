@@ -400,7 +400,7 @@ export default function Main(){
             <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"/>
           </div>
           <div className="toast-body">
-            Follow saluran WhatsApp untuk mendapatkan info terbaru! <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener">Klik di sini 🔔</a>
+            Follow saluran WhatsApp untuk mendapatkan info terbaru! <a href="https://whatsapp.com/channel/0029Vb6dsXw6xCSY9sn9aD2r" target="_blank" rel="noopener">Klik di sini 🔔</a>
           </div>
         </div>
         <div id="toastFavInfo" className="toast toast-fav-info align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
@@ -462,7 +462,7 @@ export default function Main(){
             </div>
           </div>
         </div>
-        <a href="https://whatsapp.com/channel/0029Vb7dTNqGk1FzeHcvEs2N" target="_blank" rel="noopener" className="wa-banner"
+        <a href="https://whatsapp.com/channel/0029Vb6dsXw6xCSY9sn9aD2r" target="_blank" rel="noopener" className="wa-banner"
           style={{marginBottom:'10px'}}
           onPointerDown={e=>{
             const banner=e.currentTarget
